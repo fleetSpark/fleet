@@ -17,21 +17,21 @@ export default defineConfig({
         { icon: 'github', label: 'GitHub', href: 'https://github.com/fleetSpark/fleet' },
       ],
       sidebar: [
-        { label: 'Getting Started', slug: 'getting-started' },
+        { label: 'Getting Started', link: '/getting-started/' },
         {
           label: 'Concepts',
           items: [
-            { label: 'Protocol', slug: 'protocol' },
-            { label: 'Adapters', slug: 'adapters' },
+            { label: 'Protocol', link: '/protocol/' },
+            { label: 'Adapters', link: '/adapters/' },
           ],
         },
         {
           label: 'Reference',
           items: [
-            { label: 'Configuration', slug: 'configuration' },
+            { label: 'Configuration', link: '/configuration/' },
           ],
         },
-        { label: 'Contributing', slug: 'contributing' },
+        { label: 'Contributing', link: '/contributing/' },
       ],
     }),
   ],
