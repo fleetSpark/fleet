@@ -1,0 +1,287 @@
+/* Fleet brand colors — dark + electric theme */
+:root[data-theme='dark'] {
+  --sl-color-bg: #0a0e17;
+  --sl-color-bg-nav: #0d1120;
+  --sl-color-bg-sidebar: #0d1120;
+  --sl-color-hairline: #1a2035;
+  --sl-color-hairline-light: #1a2035;
+  --sl-color-accent-low: #422006;
+  --sl-color-accent: #facc15;
+  --sl-color-accent-high: #fef9c3;
+  --sl-color-text: #f1f5f9;
+  --sl-color-text-accent: #facc15;
+  --sl-color-white: #f1f5f9;
+  --sl-color-gray-1: #e2e8f0;
+  --sl-color-gray-2: #cbd5e1;
+  --sl-color-gray-3: #94a3b8;
+  --sl-color-gray-4: #64748b;
+  --sl-color-gray-5: #334155;
+  --sl-color-gray-6: #1a2035;
+  --sl-color-gray-7: #0d1120;
+  --sl-color-black: #0a0e17;
+}
+
+/* Force dark mode only */
+:root {
+  color-scheme: dark;
+}
+
+/* Code blocks — terminal glow effect */
+.expressive-code pre {
+  border: 1px solid #1a2035 !important;
+  box-shadow: 0 0 15px rgba(250, 204, 21, 0.05);
+}
+
+/* Links — electric blue */
+:root[data-theme='dark'] a:not([class]) {
+  color: #38bdf8;
+}
+
+:root[data-theme='dark'] a:not([class]):hover {
+  color: #7dd3fc;
+}
+
+/* Landing page styles */
+.landing-hero {
+  text-align: center;
+  padding: 4rem 1rem 3rem;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.landing-hero h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  color: #f1f5f9;
+}
+
+.landing-hero .tagline {
+  font-size: 1.5rem;
+  color: #94a3b8;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.landing-hero .tagline strong {
+  color: #facc15;
+}
+
+.landing-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.landing-ctas a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.cta-primary {
+  background: #facc15;
+  color: #0a0e17;
+}
+
+.cta-primary:hover {
+  background: #fde047;
+}
+
+.cta-secondary {
+  border: 1px solid #334155;
+  color: #f1f5f9;
+}
+
+.cta-secondary:hover {
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+.landing-section {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+.landing-section h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #f1f5f9;
+}
+
+.landing-section .subtitle {
+  color: #94a3b8;
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+}
+
+/* Terminal code block on landing page */
+.terminal {
+  background: #111827;
+  border: 1px solid #1a2035;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  text-align: left;
+  max-width: 36rem;
+  margin: 0 auto;
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.05);
+  overflow-x: auto;
+}
+
+.terminal .comment {
+  color: #64748b;
+}
+
+.terminal .prompt {
+  color: #facc15;
+}
+
+.terminal .cmd {
+  color: #38bdf8;
+}
+
+/* Spark execution cards */
+.spark-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.spark-card {
+  background: #111827;
+  border: 1px solid #1a2035;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.spark-card h3 {
+  color: #facc15;
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+}
+
+.spark-card p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Comparison table */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #1a2035;
+}
+
+.comparison-table th {
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.comparison-table td {
+  color: #e2e8f0;
+}
+
+.comparison-table tr:last-child {
+  background: rgba(250, 204, 21, 0.05);
+}
+
+.comparison-table tr:last-child td {
+  color: #facc15;
+  font-weight: 600;
+}
+
+/* Architecture diagram */
+.diagram {
+  background: #111827;
+  border: 1px solid #1a2035;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+  line-height: 1.8;
+  max-width: 36rem;
+  margin: 2rem auto 0;
+  overflow-x: auto;
+}
+
+.diagram .label {
+  color: #facc15;
+  font-weight: 600;
+}
+
+.diagram .muted {
+  color: #64748b;
+}
+
+.diagram .accent {
+  color: #38bdf8;
+}
+
+/* Footer */
+.landing-footer {
+  text-align: center;
+  padding: 3rem 1rem;
+  border-top: 1px solid #1a2035;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.landing-footer a {
+  color: #94a3b8;
+  text-decoration: none;
+}
+
+.landing-footer a:hover {
+  color: #38bdf8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .landing-hero h1 {
+    font-size: 2.25rem;
+  }
+
+  .landing-hero .tagline {
+    font-size: 1.125rem;
+  }
+
+  .terminal {
+    font-size: 0.8rem;
+  }
+
+  .spark-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
