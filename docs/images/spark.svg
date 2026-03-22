@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" width="800" height="340">
+  <rect width="800" height="340" fill="#0D1117" rx="12"/>
+
+  <text x="400" y="36" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#E6EDF3" letter-spacing="2">SPARK EXECUTION STRATEGIES</text>
+
+  <!-- Strategy 1: Parallel DAG -->
+  <rect x="30" y="60" width="226" height="240" rx="10" fill="#0D1F3C" stroke="#0066FF" stroke-width="1.5"/>
+  <text x="143" y="86" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#0066FF">① Parallel DAG</text>
+  <text x="143" y="104" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#7D8590">no artificial sequencing</text>
+
+  <rect x="54" y="118" width="178" height="30" rx="6" fill="#1D9E75" fill-opacity="0.2" stroke="#1D9E75" stroke-width="1"/>
+  <text x="143" y="138" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#1D9E75">M1 feature/oauth →</text>
+  <rect x="54" y="156" width="178" height="30" rx="6" fill="#1D9E75" fill-opacity="0.2" stroke="#1D9E75" stroke-width="1"/>
+  <text x="143" y="176" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#1D9E75">M2 feature/rate  →</text>
+  <rect x="54" y="194" width="178" height="30" rx="6" fill="#444E5A" fill-opacity="0.3" stroke="#444E5A" stroke-width="1"/>
+  <text x="143" y="214" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7D8590">M3 depends on M1</text>
+
+  <text x="143" y="248" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#7D8590">M1 + M2 start instantly</text>
+  <text x="143" y="264" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#7D8590">M3 waits only for M1</text>
+  <text x="143" y="284" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#0066FF">zero idle time</text>
+
+  <!-- Strategy 2: Shadow Dispatch -->
+  <rect x="287" y="60" width="226" height="240" rx="10" fill="#1A0D1F" stroke="#7F77DD" stroke-width="1.5"/>
+  <text x="400" y="86" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#7F77DD">② Shadow Dispatch</text>
+  <text x="400" y="104" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#7D8590">kill the straggler</text>
+
+  <rect x="311" y="118" width="178" height="30" rx="6" fill="#854F0B" fill-opacity="0.3" stroke="#EF9F27" stroke-width="1"/>
+  <text x="400" y="138" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#EF9F27">Ship A — stalled 30min</text>
+  <rect x="311" y="156" width="178" height="30" rx="6" fill="#1D9E75" fill-opacity="0.2" stroke="#1D9E75" stroke-width="1"/>
+  <text x="400" y="176" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#1D9E75">Ship B — clone dispatched</text>
+  <rect x="311" y="194" width="178" height="30" rx="6" fill="#E24B4A" fill-opacity="0.2" stroke="#E24B4A" stroke-width="1"/>
+  <text x="400" y="214" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#E24B4A">Ship A — cancelled</text>
+
+  <text x="400" y="248" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#7D8590">first to complete wins</text>
+  <text x="400" y="264" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#7D8590">loser is cancelled cleanly</text>
+  <text x="400" y="284" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#7F77DD">no straggler tax</text>
+
+  <!-- Strategy 3: Fleet Brief -->
+  <rect x="544" y="60" width="226" height="240" rx="10" fill="#0D2415" stroke="#1D9E75" stroke-width="1.5"/>
+  <text x="657" y="86" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#1D9E75">③ Fleet Brief</text>
+  <text x="657" y="104" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#7D8590">shared intelligence</text>
+
+  <rect x="568" y="118" width="178" height="30" rx="6" fill="#185FA5" fill-opacity="0.3" stroke="#378ADD" stroke-width="1"/>
+  <text x="657" y="138" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#85B7EB">fleet brief --generate</text>
+  <rect x="568" y="156" width="178" height="30" rx="6" fill="#1D9E75" fill-opacity="0.2" stroke="#1D9E75" stroke-width="1"/>
+  <text x="657" y="176" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#1D9E75">FLEET_CONTEXT.md</text>
+  <rect x="568" y="194" width="178" height="30" rx="6" fill="#1D9E75" fill-opacity="0.1" stroke="#1D9E75" stroke-width="1"/>
+  <text x="657" y="214" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#9FE1CB">all ships pull before start</text>
+
+  <text x="657" y="248" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#7D8590">one Opus call ~$0.15</text>
+  <text x="657" y="264" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#7D8590">saves 15-30 turns per ship</text>
+  <text x="657" y="284" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#1D9E75">skip exploration phase</text>
+</svg>

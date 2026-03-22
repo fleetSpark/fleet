@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="800" height="420">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#0066FF" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#1D9E75" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+    <marker id="arr-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="420" fill="#0D1117" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="36" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#E6EDF3" letter-spacing="2">HOW FLEET WORKS</text>
+
+  <!-- Commander box -->
+  <rect x="290" y="60" width="220" height="72" rx="10" fill="#0D1F3C" stroke="#0066FF" stroke-width="1.5"/>
+  <text x="400" y="88" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">Commander</text>
+  <text x="400" y="108" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7D8590">your laptop · fleet command</text>
+  <text x="400" y="124" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7D8590">plans · dispatches · merges</text>
+
+  <!-- GitHub box -->
+  <rect x="290" y="178" width="220" height="64" rx="10" fill="#161B22" stroke="#30363D" stroke-width="1.5"/>
+  <text x="400" y="204" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">GitHub</text>
+  <text x="400" y="222" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7D8590">FLEET.md · MISSION.md · branches</text>
+  <text x="400" y="236" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#0066FF">the message bus</text>
+
+  <!-- Commander to GitHub -->
+  <line x1="400" y1="132" x2="400" y2="178" stroke="#0066FF" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="406" y1="178" x2="406" y2="132" stroke="#0066FF" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+
+  <!-- Ship A -->
+  <rect x="30" y="300" width="170" height="88" rx="10" fill="#0D2B1F" stroke="#1D9E75" stroke-width="1.5"/>
+  <text x="115" y="324" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">Ship A</text>
+  <text x="115" y="342" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7D8590">your laptop</text>
+  <text x="115" y="358" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#1D9E75">Claude Code</text>
+  <text x="115" y="374" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#444E5A">feature/oauth</text>
+
+  <!-- Ship B -->
+  <rect x="315" y="300" width="170" height="88" rx="10" fill="#0D2B1F" stroke="#1D9E75" stroke-width="1.5"/>
+  <text x="400" y="324" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">Ship B</text>
+  <text x="400" y="342" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7D8590">home desktop</text>
+  <text x="400" y="358" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#1D9E75">Codex</text>
+  <text x="400" y="374" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#444E5A">feature/ratelimiter</text>
+
+  <!-- Ship C -->
+  <rect x="600" y="300" width="170" height="88" rx="10" fill="#0D2B1F" stroke="#1D9E75" stroke-width="1.5"/>
+  <text x="685" y="324" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">Ship C</text>
+  <text x="685" y="342" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7D8590">EC2 instance</text>
+  <text x="685" y="358" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#1D9E75">Aider</text>
+  <text x="685" y="374" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#444E5A">feature/docs</text>
+
+  <!-- GitHub to ships (push mission) -->
+  <path d="M340 242 Q220 260 200 300" fill="none" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <path d="M400 242 L400 300" fill="none" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <path d="M460 242 Q580 260 600 300" fill="none" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+  <!-- Ships to GitHub (heartbeat push) -->
+  <path d="M185 300 Q210 255 340 248" fill="none" stroke="#1D9E75" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr-green)"/>
+  <path d="M400 300 L400 242" fill="none" stroke="#1D9E75" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr-green)" transform="translate(8,0)"/>
+  <path d="M615 300 Q590 255 460 248" fill="none" stroke="#1D9E75" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr-green)"/>
+
+  <!-- Labels -->
+  <text x="250" y="270" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#1D9E75">mission</text>
+  <text x="136" y="278" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#444E5A">heartbeat</text>
+
+  <!-- Legend -->
+  <line x1="30" y1="406" x2="56" y2="406" stroke="#0066FF" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="62" y="410" font-family="system-ui, sans-serif" font-size="10" fill="#7D8590">commander r/w</text>
+  <line x1="180" y1="406" x2="206" y2="406" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <text x="212" y="410" font-family="system-ui, sans-serif" font-size="10" fill="#7D8590">mission push</text>
+  <line x1="340" y1="406" x2="366" y2="406" stroke="#1D9E75" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr-green)"/>
+  <text x="372" y="410" font-family="system-ui, sans-serif" font-size="10" fill="#7D8590">heartbeat (60s)</text>
+</svg>

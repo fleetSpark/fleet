@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+  <rect width="400" height="160" fill="#0D1117" rx="12"/>
+
+  <!-- Fleet formation: 3 ships as pill shapes with motion arrows -->
+  <!-- Lead ship (top) -->
+  <rect x="52" y="44" width="44" height="20" rx="10" fill="#0066FF"/>
+  <line x1="96" y1="54" x2="126" y2="54" stroke="#0066FF" stroke-width="2" stroke-linecap="round"/>
+  <path d="M120 50L128 54L120 58" fill="none" stroke="#0066FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Mid ship -->
+  <rect x="52" y="72" width="38" height="17" rx="8.5" fill="#0066FF" opacity="0.75"/>
+  <line x1="90" y1="80.5" x2="118" y2="80.5" stroke="#0066FF" stroke-width="1.5" stroke-linecap="round" opacity="0.75"/>
+  <path d="M113 77L120 80.5L113 84" fill="none" stroke="#0066FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.75"/>
+
+  <!-- Rear ship -->
+  <rect x="52" y="97" width="32" height="15" rx="7.5" fill="#0066FF" opacity="0.6"/>
+  <line x1="84" y1="104.5" x2="110" y2="104.5" stroke="#0066FF" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  <path d="M106 101L112 104.5L106 108" fill="none" stroke="#0066FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+
+  <!-- Wordmark -->
+  <text x="148" y="92" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-2">fleet</text>
+
+  <!-- Tagline -->
+  <text x="148" y="116" font-family="system-ui, sans-serif" font-size="12" fill="#7D8590" letter-spacing="1.5">STEROIDS FOR AI CODING</text>
+
+  <!-- Domain -->
+  <text x="148" y="136" font-family="system-ui, sans-serif" font-size="11" fill="#0066FF">fleetspark.dev</text>
+</svg>

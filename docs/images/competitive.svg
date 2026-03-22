@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" width="800" height="320">
+  <rect width="800" height="320" fill="#0D1117" rx="12"/>
+
+  <text x="400" y="36" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#E6EDF3" letter-spacing="2">COMPETITIVE LANDSCAPE</text>
+
+  <!-- Header row -->
+  <text x="160" y="68" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7D8590">Tool</text>
+  <text x="330" y="68" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7D8590">Multi-machine</text>
+  <text x="470" y="68" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7D8590">Auto planning</text>
+  <text x="610" y="68" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7D8590">Sleep + merge</text>
+  <text x="730" y="68" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7D8590">Agent-agnostic</text>
+  <line x1="30" y1="74" x2="770" y2="74" stroke="#21262D" stroke-width="1"/>
+
+  <!-- Rows -->
+  <!-- Claude Code -->
+  <text x="160" y="100" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#E6EDF3">Claude Code</text>
+  <text x="330" y="100" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#E24B4A">✗</text>
+  <text x="470" y="100" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#E24B4A">✗</text>
+  <text x="610" y="100" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#E24B4A">✗</text>
+  <text x="730" y="100" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#E24B4A">✗</text>
+  <line x1="30" y1="112" x2="770" y2="112" stroke="#21262D" stroke-width="0.5"/>
+
+  <!-- Codex App -->
+  <text x="160" y="138" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#E6EDF3">Codex App</text>
+  <text x="330" y="138" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#E24B4A">✗</text>
+  <text x="470" y="138" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#E24B4A">✗</text>
+  <text x="610" y="138" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#E24B4A">✗</text>
+  <text x="730" y="138" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#E24B4A">✗</text>
+  <line x1="30" y1="150" x2="770" y2="150" stroke="#21262D" stroke-width="0.5"/>
+
+  <!-- Conductor -->
+  <text x="160" y="176" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#E6EDF3">Conductor</text>
+  <text x="330" y="176" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#E24B4A">✗</text>
+  <text x="470" y="176" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#E24B4A">✗</text>
+  <text x="610" y="176" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#E24B4A">✗</text>
+  <text x="730" y="176" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#EF9F27">Claude only</text>
+  <line x1="30" y1="188" x2="770" y2="188" stroke="#21262D" stroke-width="0.5"/>
+
+  <!-- AI Maestro -->
+  <text x="160" y="214" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#E6EDF3">AI Maestro</text>
+  <text x="330" y="214" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#EF9F27">partial</text>
+  <text x="470" y="214" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#E24B4A">✗</text>
+  <text x="610" y="214" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#E24B4A">✗</text>
+  <text x="730" y="214" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#1D9E75">✓</text>
+  <line x1="30" y1="226" x2="770" y2="226" stroke="#21262D" stroke-width="0.5"/>
+
+  <!-- Fleet — highlighted row -->
+  <rect x="20" y="234" width="760" height="46" rx="8" fill="#0D1F3C" stroke="#0066FF" stroke-width="1.5"/>
+  <text x="160" y="262" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">Fleet ⚡</text>
+  <text x="330" y="262" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1D9E75">✓</text>
+  <text x="470" y="262" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1D9E75">✓</text>
+  <text x="610" y="262" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1D9E75">✓</text>
+  <text x="730" y="262" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#1D9E75">✓</text>
+
+  <text x="400" y="302" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7D8590">github.com/fleetSpark/fleet  ·  fleetspark.dev</text>
+</svg>
