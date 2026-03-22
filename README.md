@@ -29,6 +29,18 @@ npx fleet ship --join git@github.com:you/your-repo.git
 
 Fleet is architecturally a Map-Reduce system for software development.
 
+![Fleet logo](docs/images/logo.svg)
+
+![Architecture](docs/images/architecture.svg)
+
+## Spark execution strategies
+
+![Spark strategies](docs/images/spark.svg)
+
+## Why Fleet
+
+![Competitive landscape](docs/images/competitive.svg)
+
 **Map:** Each ship (worker machine) independently executes its mission on its own git branch. Ships never talk to each other — only to GitHub.
 
 **Reduce:** The commander collects completed branches, validates them, and merges into main.
