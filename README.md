@@ -37,7 +37,7 @@ Fleet is architecturally a Map-Reduce system for software development.
 
 ![Spark strategies](docs/images/spark.svg)
 
-## Why Fleet
+## Architecture
 
 ![Competitive landscape](docs/images/competitive.svg)
 
@@ -118,7 +118,7 @@ Ship: ship-a  |  Agent: claude-code  |  Status: in-progress
 last_push: 2026-03-22T14:28Z
 ```
 
-Full protocol spec → [docs/protocol.md](docs/protocol.md)
+Full protocol spec → [protocol.md](protocol.md)
 
 ---
 
@@ -142,12 +142,13 @@ Any coding agent works. Adapters handle the translation between Fleet's mission 
 
 | Adapter | Package | Status |
 |---------|---------|--------|
-| Claude Code | `@fleet/claude` | v1.0 |
-| OpenAI Codex | `@fleet/codex` | v1.0 |
-| Aider | `@fleet/aider` | v1.0 |
-| Custom / A2A | `@fleet/a2a` | v1.1 |
+| Claude Code | `@fleet/claude` | v0.1 — shipping |
+| OpenAI Codex | `@fleet/codex` | v0.5 — planned |
+| Aider | `@fleet/aider` | v1.0 — planned |
+| OpenCode | `@fleet/opencode` | v1.1 — planned |
+| Custom / A2A | `@fleet/a2a` | v1.1 — planned |
 
-Writing an adapter takes ~30 lines. See [docs/adapters.md](docs/adapters.md).
+Writing an adapter takes ~30 lines. See [adapters.md](adapters.md).
 
 ---
 
@@ -221,7 +222,16 @@ Fleet answers that question.
 
 ## Status
 
-**v0.1 — active development.** Protocol spec is stable. CLI commands `fleet init`, `fleet status`, and `fleet ship --join` are working. Agent adapters and commander loop in progress.
+**v0.1 — active development.** Protocol spec is stable. CLI implementation in progress.
+
+| Component | Status |
+|-----------|--------|
+| Protocol (FLEET.md / MISSION.md) | Stable — spec v1.0 |
+| `fleet init`, `fleet status` | In progress |
+| `fleet ship --join`, `fleet command` | In progress |
+| Claude adapter | In progress |
+| Codex / Aider adapters | Planned (v0.5 / v1.0) |
+| Merge commander, Spark mode | Planned (v0.5) |
 
 Star the repo to follow along. Issues and PRs welcome.
 

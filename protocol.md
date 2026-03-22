@@ -2,6 +2,8 @@
 
 Fleet coordinates distributed AI coding agents through two plain Markdown files committed to your git repository. Any machine that can read and write to GitHub can participate in a Fleet.
 
+> **Status:** Stable — v1.0 spec. CLI implementation in progress.
+
 ---
 
 ## FLEET.md — The Fleet Manifest

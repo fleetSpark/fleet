@@ -126,7 +126,7 @@ Use existing session middleware. Tests required.
 none
 
 ## Heartbeat
-last_push: 2026-03-22T14:28Z  |  push_interval: 60s
+last_push: 2026-03-22T14:28Z  |  push_interval_seconds: 60
 ```
 
 ### 6.3 FLEET_CONTEXT.md

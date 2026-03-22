@@ -4,9 +4,9 @@ Fleet is early-stage and contributions are very welcome. Here's what's most need
 
 ## What we need most
 
-**Adapters** — wrappers for Gemini CLI, OpenCode, Cursor CLI, Amp, and others. See [docs/adapters.md](docs/adapters.md). This is the highest-impact contribution.
+**Adapters** — wrappers for Gemini CLI, OpenCode, Cursor CLI, Amp, and others. See [adapters.md](adapters.md). This is the highest-impact contribution.
 
-**Protocol feedback** — read [docs/protocol.md](docs/protocol.md) and open an issue if anything is unclear, broken, or missing. The protocol is v1.0 and we want it stable before v1.0 CLI release.
+**Protocol feedback** — read [protocol.md](protocol.md) and open an issue if anything is unclear, broken, or missing. The protocol is v1.0 and we want it stable before v1.0 CLI release.
 
 **Real-world testing** — try `fleet init` and `fleet ship --join` on your actual projects. File issues for anything that breaks or feels wrong.
 

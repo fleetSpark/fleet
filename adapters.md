@@ -2,6 +2,8 @@
 
 An adapter is a thin wrapper that translates between Fleet's mission brief format and a specific coding agent's CLI or API. Writing one takes about 30 lines of TypeScript.
 
+> **Status:** Interface is stable. Claude Code adapter shipping in v0.1. Codex (v0.5), Aider (v1.0), OpenCode (v1.1) planned.
+
 ---
 
 ## The adapter interface
