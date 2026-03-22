@@ -141,3 +141,7 @@ vite.config.ts.timestamp-*
 # Local tool state (Claude Code, Superpowers)
 .claude/
 .superpowers/
+
+# Astro build cache
+website/.astro/
+website/dist/
