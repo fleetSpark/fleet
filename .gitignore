@@ -143,7 +143,7 @@ vite.config.ts.timestamp-*
 .superpowers/
 
 # Internal planning docs
-docs/superpowers/
+docs/sp/
 
 # Astro build cache
 website/.astro/
