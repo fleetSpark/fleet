@@ -1,0 +1,2 @@
+// @fleet/adapter-claude
+export {};

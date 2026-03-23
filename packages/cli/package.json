@@ -1,0 +1,26 @@
+{
+  "name": "fleet-cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "fleet": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@fleet/core": "*",
+    "@fleet/adapter-claude": "*",
+    "commander": "^13.1.0",
+    "yaml": "^2.7.1"
+  },
+  "peerDependencies": {
+    "@anthropic-ai/sdk": "^0.52.0"
+  },
+  "peerDependenciesMeta": {
+    "@anthropic-ai/sdk": {
+      "optional": true
+    }
+  }
+}

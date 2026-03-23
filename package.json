@@ -1,0 +1,22 @@
+{
+  "name": "fleet-monorepo",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/core",
+    "packages/cli",
+    "packages/adapters/*"
+  ],
+  "scripts": {
+    "build": "tsc -b packages/core packages/adapters/claude packages/cli",
+    "test": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:all": "vitest run",
+    "test:watch": "vitest watch tests/unit",
+    "clean": "rm -rf packages/*/dist"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.1"
+  }
+}
