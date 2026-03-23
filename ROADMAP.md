@@ -86,9 +86,10 @@ Full multi-agent support, production hardening, and documentation.
 
 Features mentioned in docs or design discussions, not yet assigned to a milestone.
 
+- [x] Interactive mission board (`fleet dashboard` — Ink/React TUI)
+- [ ] Web dashboard — browser-based fleet monitoring with mobile support (check progress from your phone while on the road)
 - [ ] `fleet replay <mission-id>` — re-run a failed mission
 - [ ] Ship health scoring (success rate, avg completion time)
 - [ ] Mission templates (reusable task patterns)
 - [ ] Git provider abstraction (GitLab, Bitbucket support)
 - [ ] Remote ship mode (EC2/cloud VM auto-provisioning)
-- [x] Interactive mission board (`fleet dashboard` — Ink/React TUI)
