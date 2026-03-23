@@ -10,5 +10,6 @@ export { type GitOps, RealGitOps, type PRStatus } from './git/git-ops.js';
 export { ShipHeartbeat } from './heartbeat/ship-heartbeat.js';
 export { CommanderMonitor, type MonitorConfig, type ShipHealth } from './heartbeat/commander-monitor.js';
 export { MergeCommander, type MergeConfig, type MergeResult } from './merge/merge-commander.js';
+export { ConflictDetector, type ConflictReport } from './merge/conflict-detector.js';
 export { BriefGenerator } from './brief/brief-generator.js';
 export { resolveAdapter } from './adapters/registry.js';
