@@ -3,19 +3,11 @@ name: CI
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - 'website/**'
-      - 'docs/**'
-      - '*.md'
   pull_request:
     branches: [main]
-    paths-ignore:
-      - 'website/**'
-      - 'docs/**'
-      - '*.md'
 
 jobs:
-  test:
+  build-and-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -35,8 +27,131 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Unit tests
-        run: npm test
+      - name: All tests
+        run: npm run test:all
 
-      - name: Integration tests
-        run: npm run test:integration
+  # Check that no new TypeScript errors were introduced
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Strict typecheck
+        run: npm run build
+
+  # Verify the PR doesn't break the protocol format
+  protocol-safety:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check protocol file changes
+        run: |
+          PROTOCOL_FILES=$(git diff --name-only origin/main...HEAD | grep -E 'packages/core/src/protocol/|packages/core/src/state/' || true)
+          if [ -n "$PROTOCOL_FILES" ]; then
+            echo "::warning::⚠️ This PR modifies protocol or state machine files:"
+            echo "$PROTOCOL_FILES"
+            echo ""
+            echo "Protocol changes require extra review. Please justify in the PR description."
+            echo "PROTOCOL_CHANGED=true" >> $GITHUB_ENV
+          else
+            echo "✅ No protocol changes detected."
+          fi
+
+  # Check test coverage — new code must have tests
+  test-coverage:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+
+      - name: Check for new source files without tests
+        run: |
+          # Find new/modified source files in this PR
+          CHANGED_SRC=$(git diff --name-only origin/main...HEAD | grep -E 'packages/.*/src/.*\.tsx?$' | grep -v '\.test\.' | grep -v '\.d\.ts' || true)
+
+          if [ -z "$CHANGED_SRC" ]; then
+            echo "✅ No source file changes to check."
+            exit 0
+          fi
+
+          echo "Source files changed:"
+          echo "$CHANGED_SRC"
+          echo ""
+
+          # Check if any test files were also changed/added
+          CHANGED_TESTS=$(git diff --name-only origin/main...HEAD | grep -E 'tests/.*\.test\.ts' || true)
+
+          if [ -z "$CHANGED_TESTS" ]; then
+            echo "::warning::⚠️ Source files were changed but no test files were added or modified."
+            echo "Please add tests for your changes."
+          else
+            echo "✅ Test files also changed:"
+            echo "$CHANGED_TESTS"
+          fi
+
+  # PR size check — flag large PRs
+  pr-size:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check PR size
+        run: |
+          ADDITIONS=$(git diff --stat origin/main...HEAD | tail -1 | awk '{print $4}')
+          DELETIONS=$(git diff --stat origin/main...HEAD | tail -1 | awk '{print $6}')
+          TOTAL=$((${ADDITIONS:-0} + ${DELETIONS:-0}))
+
+          echo "PR size: +${ADDITIONS:-0} -${DELETIONS:-0} (${TOTAL} total lines changed)"
+
+          if [ "$TOTAL" -gt 1000 ]; then
+            echo "::warning::⚠️ Large PR (${TOTAL} lines). Consider splitting into smaller PRs."
+          elif [ "$TOTAL" -gt 500 ]; then
+            echo "::notice::This PR is moderately large (${TOTAL} lines)."
+          else
+            echo "✅ PR size is manageable."
+          fi
+
+  # Verify website still builds if website files changed
+  website-build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check if website files changed
+        id: website-check
+        run: |
+          WEBSITE_FILES=$(git diff --name-only origin/main...HEAD | grep -E '^website/' || true)
+          if [ -n "$WEBSITE_FILES" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+      - uses: actions/setup-node@v4
+        if: steps.website-check.outputs.changed == 'true'
+        with:
+          node-version: 22
+      - name: Build website
+        if: steps.website-check.outputs.changed == 'true'
+        run: |
+          cd website
+          npm ci
+          npm run build
