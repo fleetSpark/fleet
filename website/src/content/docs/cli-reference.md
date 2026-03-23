@@ -126,3 +126,29 @@ fleet logs <ship-id> --follow
 | Flag | Description |
 |------|-------------|
 | `--follow` | Keep polling for updates |
+
+---
+
+## fleet dashboard
+
+Interactive terminal UI for monitoring the fleet in real-time.
+
+```bash
+fleet dashboard
+# or
+fleet dash
+```
+
+Features:
+- **Mission board** — color-coded status table with progress tracking
+- **Ship health** — live heartbeat monitoring with alive/stale/dead indicators
+- **Merge queue** — PR and CI status at a glance
+- **Log viewer** — drill into any mission's steps and blockers
+
+| Key | Action |
+|-----|--------|
+| `j`/`k` or arrows | Navigate missions |
+| `Tab` | Switch between board and log views |
+| `q` | Quit |
+
+The dashboard auto-refreshes every 10 seconds.

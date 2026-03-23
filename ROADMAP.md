@@ -91,4 +91,4 @@ Features mentioned in docs or design discussions, not yet assigned to a mileston
 - [ ] Mission templates (reusable task patterns)
 - [ ] Git provider abstraction (GitLab, Bitbucket support)
 - [ ] Remote ship mode (EC2/cloud VM auto-provisioning)
-- [ ] Interactive mission board (TUI with blessed/ink)
+- [x] Interactive mission board (`fleet dashboard` — Ink/React TUI)

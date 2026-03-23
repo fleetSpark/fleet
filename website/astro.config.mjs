@@ -15,6 +15,7 @@ export default defineConfig({
       customCss: ['./src/styles/custom.css'],
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/fleetSpark/fleet' },
+        { icon: 'open-book', label: 'Docs', href: 'https://fleetspark.dev/getting-started/' },
       ],
       sidebar: [
         { label: 'Getting Started', link: '/getting-started/' },
