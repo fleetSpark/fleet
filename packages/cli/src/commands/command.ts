@@ -12,8 +12,10 @@ import {
   getReadyMissions,
   CommanderMonitor,
   transition,
+  MergeCommander,
+  parseMissionLog,
 } from '@fleet/core';
-import type { FleetManifest, Mission, MissionLog, TaskBrief } from '@fleet/core';
+import type { FleetManifest, Mission, MissionLog, TaskBrief, MergeResult } from '@fleet/core';
 
 export function registerCommandCommand(program: Cmd): void {
   program
@@ -247,27 +249,93 @@ async function startMonitorLoop(git: RealGitOps, config: any): Promise<void> {
     unresponsiveThresholdMin: config.execution.unresponsive_threshold_min,
   });
 
+  const mergeCommander = new MergeCommander(git, {
+    ciRequired: config.merge.ci_required,
+    autoRebase: config.merge.auto_rebase,
+  });
+
   const pollMs = config.commander.poll_interval_minutes * 60 * 1000;
 
   const doPoll = async () => {
     try {
       const content = await git.readFile('fleet/state', 'FLEET.md');
       const manifest = parseFleetManifest(content);
-      const health = await monitor.poll(manifest.missions);
 
       let changed = false;
+
+      // Phase 1: Health check
+      const health = await monitor.poll(manifest.missions);
       for (const h of health) {
         const mission = manifest.missions.find((m) => m.id === h.missionId);
         if (!mission) continue;
-
         if (h.status === 'dead' && mission.status === 'in-progress') {
-          mission.status = 'stalled';
+          mission.status = transition(mission.status, 'stall');
           mission.blocker = 'Ship unresponsive';
           changed = true;
         }
       }
 
-      // Check for newly ready missions (dependencies resolved)
+      // Phase 2: Merge commander
+      const mergeResults = await mergeCommander.tick(manifest);
+      for (const result of mergeResults) {
+        const mission = manifest.missions.find((m) => m.id === result.missionId);
+        if (!mission) continue;
+
+        switch (result.action) {
+          case 'pr-created':
+            mission.status = transition(mission.status, 'queue_merge');
+            manifest.mergeQueue.push({
+              missionId: mission.id,
+              branch: mission.branch,
+              ciStatus: 'pending',
+              note: `PR: ${result.prUrl}`,
+            });
+            changed = true;
+            break;
+          case 'merged':
+            mission.status = transition(mission.status, 'merge');
+            manifest.mergeQueue = manifest.mergeQueue.filter(
+              (e) => e.missionId !== mission.id
+            );
+            manifest.completed.push({
+              missionId: mission.id,
+              branch: mission.branch,
+              mergedDate: new Date(),
+            });
+            changed = true;
+            break;
+          case 'ci-failed': {
+            const entry = manifest.mergeQueue.find((e) => e.missionId === mission.id);
+            if (entry) entry.ciStatus = 'failed';
+            mission.blocker = 'CI failed';
+            if (mission.ship) {
+              try {
+                const missionContent = await git.readFile(mission.branch, 'MISSION.md');
+                const missionLog = parseMissionLog(missionContent);
+                const minutesAgo = (Date.now() - missionLog.heartbeat.lastPush.getTime()) / 60_000;
+                if (minutesAgo < config.execution.stall_threshold_min) {
+                  mission.status = transition(mission.status, 'reject');
+                }
+              } catch {
+                // Can't read heartbeat — ship is likely dead
+              }
+            }
+            changed = true;
+            break;
+          }
+          case 'conflict':
+            mission.blocker = 'Merge conflict — requires human approval';
+            changed = true;
+            break;
+          case 'ci-pending': {
+            const queueEntry = manifest.mergeQueue.find((e) => e.missionId === mission.id);
+            if (queueEntry) queueEntry.ciStatus = 'pending';
+            break;
+          }
+        }
+      }
+
+      // Phase 3: DAG resolution
       const ready = getReadyMissions(manifest.missions);
       for (const m of ready) {
         m.status = transition(m.status, 'dependencies_met');
