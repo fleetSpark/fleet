@@ -41,8 +41,12 @@
   color: #7dd3fc;
 }
 
-/* Hide Starlight's default hero on splash pages — we use our own */
-[data-page-type="splash"] .hero {
+/* Hide Starlight's default hero on the landing page — we use our own custom Hero component */
+[data-has-hero] .content-panel .hero:has([data-page-title]) {
+  display: none !important;
+}
+/* Fallback for browsers without :has() support */
+[data-has-hero] .content-panel > .sl-container > .hero:first-child {
   display: none !important;
 }
 
