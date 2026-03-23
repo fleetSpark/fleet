@@ -50,16 +50,20 @@ Close the gaps that prevent Fleet from running a real mission without manual int
 
 ---
 
-## v0.5 — Multi-agent + Spark
+## v0.5 — Multi-agent + Spark (shipped)
 
 Support for additional coding agents and the full Spark execution model.
 
-- [ ] Codex adapter (`@fleet/codex`)
-- [ ] Aider adapter (`@fleet/aider`)
-- [ ] Shadow dispatch — stalled ship triggers parallel execution on spare machine
-- [ ] Fleet brief injection into agent system prompts
-- [ ] Conflict detection before merge (cross-branch file overlap)
-- [ ] `fleet status --json` — machine-readable output
+- [x] Adapter registry — dynamic resolution of adapters by name (`resolveAdapter`)
+- [x] Codex adapter (`@fleet/adapter-codex`) — spawns `codex --full-auto --quiet`
+- [x] Aider adapter (`@fleet/adapter-aider`) — spawns `aider --yes-always --no-git --message`
+- [x] Ship command uses adapter registry + Fleet brief injection (`FLEET_CONTEXT.md`)
+- [x] GitOps: `diffNameOnly` method for cross-branch file comparison
+- [x] Conflict detection before merge (cross-branch file overlap via `ConflictDetector`)
+- [x] Conflict warnings integrated into MergeCommander PR body
+- [x] Shadow dispatch — stalled ship triggers parallel execution after configurable delay
+- [x] `fleet status --json` — machine-readable output
+- [x] 116 tests across 24 test files (15 new)
 
 ---
 
