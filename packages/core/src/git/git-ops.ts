@@ -3,6 +3,14 @@ import { promisify } from 'node:util';
 
 const execFile = promisify(execFileCb);
 
+export interface PRStatus {
+  state: 'open' | 'closed' | 'merged';
+  mergeable: boolean;
+  ciStatus: 'pending' | 'success' | 'failure' | 'none';
+  hasConflicts: boolean;
+  url: string;
+}
+
 export interface GitOps {
   clone(repo: string, dir: string): Promise<void>;
   checkout(branch: string): Promise<void>;
@@ -21,6 +29,10 @@ export interface GitOps {
   getRemoteUrl(): Promise<string>;
   addAndCommit(paths: string[], message: string): Promise<void>;
   pushNewBranch(branch: string): Promise<void>;
+  fetchBranch(branch: string): Promise<void>;
+  createPR(branch: string, base: string, title: string, body: string): Promise<string>;
+  getPRStatus(branch: string): Promise<PRStatus | null>;
+  mergePR(branch: string, method?: 'merge' | 'squash' | 'rebase'): Promise<void>;
 }
 
 export class RealGitOps implements GitOps {
@@ -134,5 +146,53 @@ export class RealGitOps implements GitOps {
 
   async pushNewBranch(branch: string): Promise<void> {
     await this.exec('push', '-u', 'origin', branch);
+  }
+
+  async fetchBranch(branch: string): Promise<void> {
+    await this.exec('fetch', 'origin', branch);
+  }
+
+  async createPR(branch: string, base: string, title: string, body: string): Promise<string> {
+    const { stdout } = await execFile('gh', ['pr', 'create',
+      '--head', branch, '--base', base,
+      '--title', title, '--body', body,
+    ], { cwd: this.cwd });
+    return stdout.trim();
+  }
+
+  async getPRStatus(branch: string): Promise<PRStatus | null> {
+    try {
+      const { stdout } = await execFile('gh', ['pr', 'view', branch,
+        '--json', 'state,mergeable,statusCheckRollup,url',
+      ], { cwd: this.cwd });
+      const data = JSON.parse(stdout);
+
+      let ciStatus: PRStatus['ciStatus'] = 'none';
+      if (data.statusCheckRollup?.length > 0) {
+        const allPassed = data.statusCheckRollup.every(
+          (c: any) => c.conclusion === 'SUCCESS'
+        );
+        const anyPending = data.statusCheckRollup.some(
+          (c: any) => !c.conclusion || c.status === 'PENDING' || c.status === 'IN_PROGRESS'
+        );
+        if (anyPending) ciStatus = 'pending';
+        else if (allPassed) ciStatus = 'success';
+        else ciStatus = 'failure';
+      }
+
+      return {
+        state: data.state.toLowerCase(),
+        mergeable: data.mergeable !== 'CONFLICTING',
+        ciStatus,
+        hasConflicts: data.mergeable === 'CONFLICTING',
+        url: data.url,
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  async mergePR(branch: string, method: 'merge' | 'squash' | 'rebase' = 'merge'): Promise<void> {
+    await execFile('gh', ['pr', 'merge', branch, `--${method}`, '--delete-branch'], { cwd: this.cwd });
   }
 }
