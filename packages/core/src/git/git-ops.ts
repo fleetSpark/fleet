@@ -33,6 +33,7 @@ export interface GitOps {
   createPR(branch: string, base: string, title: string, body: string): Promise<string>;
   getPRStatus(branch: string): Promise<PRStatus | null>;
   mergePR(branch: string, method?: 'merge' | 'squash' | 'rebase'): Promise<void>;
+  diffNameOnly(base: string, head: string): Promise<string[]>;
 }
 
 export class RealGitOps implements GitOps {
@@ -194,5 +195,10 @@ export class RealGitOps implements GitOps {
 
   async mergePR(branch: string, method: 'merge' | 'squash' | 'rebase' = 'merge'): Promise<void> {
     await execFile('gh', ['pr', 'merge', branch, `--${method}`, '--delete-branch'], { cwd: this.cwd });
+  }
+
+  async diffNameOnly(base: string, head: string): Promise<string[]> {
+    const result = await this.exec('diff', '--name-only', `${base}...${head}`);
+    return result ? result.split('\n').filter(Boolean) : [];
   }
 }
