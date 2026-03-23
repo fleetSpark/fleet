@@ -7,23 +7,23 @@
   <div class="diagram">
     <div><span class="label">Your laptop (commander)</span></div>
     <div><span class="muted">    │</span></div>
-    <div><span class="muted">    ├──</span> reads/writes FLEET.md on main branch</div>
+    <div><span class="muted">    ├──</span> reads/writes FLEET.md on <code>fleet/state</code> branch</div>
     <div><span class="muted">    │</span></div>
-    <div><span class="label">GitHub (message bus)</span></div>
+    <div><span class="label">GitHub (message bus)</span> — the only infrastructure</div>
     <div><span class="muted">    │</span></div>
-    <div><span class="muted">    ├──</span> Machine B <span class="accent">→ feature/auth</span></div>
-    <div><span class="muted">    ├──</span> Machine C <span class="accent">→ feature/ratelimiter</span></div>
-    <div><span class="muted">    └──</span> EC2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="accent">→ feature/docs</span></div>
+    <div><span class="muted">    ├──</span> Machine B <span class="accent">→ feature/auth</span> (Claude Code)</div>
+    <div><span class="muted">    ├──</span> Machine C <span class="accent">→ feature/ratelimiter</span> (Codex)</div>
+    <div><span class="muted">    └──</span> Server &nbsp;&nbsp;&nbsp;<span class="accent">→ feature/docs</span> (Aider)</div>
   </div>
 
   <div style="margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1rem;">
     <div>
       <h3 style="color: #facc15;">Map</h3>
-      <p style="color: #94a3b8;">Each ship independently executes its mission on its own git branch. Ships never talk to each other — only to GitHub.</p>
+      <p style="color: #94a3b8;">Each ship independently executes its mission on its own git branch. Ships never talk to each other — only to GitHub. Mix any agents: Claude Code, Codex, Aider, OpenCode, or A2A.</p>
     </div>
     <div>
       <h3 style="color: #facc15;">Reduce</h3>
-      <p style="color: #94a3b8;">The commander collects completed branches, validates them, and merges into main. No SSH. No shared filesystem.</p>
+      <p style="color: #94a3b8;">The commander collects completed branches, detects conflicts, runs CI, and auto-merges into main. No SSH. No shared filesystem. No servers.</p>
     </div>
   </div>
 </div>
