@@ -1,2 +1,2 @@
 // @fleet/core — public API
-export {};
+export * from './protocol/types.js';
