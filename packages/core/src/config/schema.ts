@@ -14,6 +14,8 @@ export const fleetConfigSchema = z
         strategy: z.enum(['sequential', 'mapreduce']).default('mapreduce'),
         stall_threshold_min: z.number().positive().default(30),
         unresponsive_threshold_min: z.number().positive().default(10),
+        shadow_dispatch: z.boolean().default(false),
+        shadow_delay_min: z.number().positive().default(15),
       })
       .default({}),
     heartbeat: z

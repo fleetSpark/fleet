@@ -306,6 +306,23 @@ async function startMonitorLoop(git: RealGitOps, config: any): Promise<void> {
         }
       }
 
+      // Shadow dispatch: spawn parallel ship on stale missions
+      if (config.execution.shadow_dispatch) {
+        for (const h of health) {
+          if (h.status === 'stale') {
+            const mission = manifest.missions.find((m) => m.id === h.missionId);
+            if (!mission || mission.blocker === 'shadow-dispatched') continue;
+
+            const minutesSinceStale = (Date.now() - h.lastSeen.getTime()) / 60_000;
+            if (minutesSinceStale >= config.execution.shadow_delay_min) {
+              mission.blocker = 'shadow-dispatched';
+              changed = true;
+              console.log(`Shadow dispatch triggered for ${mission.id} (ship ${h.ship} stale for ${Math.round(minutesSinceStale)}m)`);
+            }
+          }
+        }
+      }
+
       // Phase 2: Merge commander
       const mergeResults = await mergeCommander.tick(manifest);
       for (const result of mergeResults) {
