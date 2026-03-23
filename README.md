@@ -50,7 +50,7 @@ Fleet is architecturally a Map-Reduce system for software development.
 ```
 Your laptop (commander)
     │
-    ├── reads/writes FLEET.md on main branch
+    ├── reads/writes FLEET.md on fleet/state branch
     │
 GitHub (message bus)
     │
@@ -82,7 +82,7 @@ execution:
 
 Fleet coordinates through two plain Markdown files in your repo.
 
-**`FLEET.md`** — lives on `main`. The commander writes it. All machines read it.
+**`FLEET.md`** — lives on the `fleet/state` branch. The commander writes it. All machines read it.
 
 ```markdown
 # Fleet manifest
@@ -222,14 +222,14 @@ Fleet answers that question.
 
 ## Status
 
-**v0.1 — active development.** Protocol spec is stable. CLI implementation in progress.
+**v0.1 — core CLI shipped.** Protocol spec is stable. Core commands implemented and tested.
 
 | Component | Status |
 |-----------|--------|
 | Protocol (FLEET.md / MISSION.md) | Stable — spec v1.0 |
-| `fleet init`, `fleet status` | In progress |
-| `fleet ship --join`, `fleet command` | In progress |
-| Claude adapter | In progress |
+| `fleet init`, `fleet status` | Shipped |
+| `fleet ship --join`, `fleet command` | Shipped |
+| Claude adapter | Shipped |
 | Codex / Aider adapters | Planned (v0.5 / v1.0) |
 | Merge commander, Spark mode | Planned (v0.5) |
 
