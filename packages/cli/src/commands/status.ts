@@ -1,16 +1,41 @@
 import type { Command } from 'commander';
 import { RealGitOps, parseFleetManifest } from '@fleet/core';
+import type { FleetManifest } from '@fleet/core';
+
+export function formatManifestJson(manifest: FleetManifest): string {
+  return JSON.stringify({
+    updated: manifest.updated.toISOString(),
+    commander: {
+      host: manifest.commander.host,
+      status: manifest.commander.status,
+      lastCheckin: manifest.commander.lastCheckin.toISOString(),
+      timeoutMinutes: manifest.commander.timeoutMinutes,
+    },
+    missions: manifest.missions,
+    mergeQueue: manifest.mergeQueue,
+    completed: manifest.completed.map(c => ({
+      ...c,
+      mergedDate: c.mergedDate.toISOString(),
+    })),
+  }, null, 2);
+}
 
 export function registerStatusCommand(program: Command): void {
   program
     .command('status')
     .description('Display the current fleet mission board')
     .option('-w, --watch', 'Refresh every 5 seconds')
+    .option('--json', 'Output machine-readable JSON')
     .action(async (options) => {
       const render = async () => {
         const git = new RealGitOps(process.cwd());
         const content = await git.readFile('fleet/state', 'FLEET.md');
         const manifest = parseFleetManifest(content);
+
+        if (options.json) {
+          console.log(formatManifestJson(manifest));
+          return;
+        }
 
         const updatedAgo = formatTimeAgo(manifest.updated);
 
