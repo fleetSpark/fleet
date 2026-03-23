@@ -13,7 +13,8 @@
     "test:integration": "vitest run tests/integration",
     "test:all": "vitest run",
     "test:watch": "vitest watch tests/unit",
-    "clean": "rm -rf packages/*/dist"
+    "clean": "rm -rf packages/*/dist",
+    "test:smoke": "bash scripts/smoke-test.sh"
   },
   "devDependencies": {
     "@types/node": "^25.5.0",
