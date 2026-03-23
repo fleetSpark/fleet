@@ -35,6 +35,12 @@ export const fleetConfigSchema = z
         mode: z.enum(['static', 'llm']).default('static'),
       })
       .default({}),
+    resources: z
+      .object({
+        max_missions_per_ship: z.number().positive().default(1),
+        mission_timeout_min: z.number().positive().default(120),
+      })
+      .default({}),
     ships: z
       .array(
         z.object({
@@ -43,6 +49,19 @@ export const fleetConfigSchema = z
         })
       )
       .default([]),
+    notifications: z
+      .object({
+        webhooks: z
+          .array(
+            z.object({
+              url: z.string(),
+              events: z.array(z.string()).optional(),
+              format: z.enum(['json', 'slack']).default('json'),
+            })
+          )
+          .default([]),
+      })
+      .default({}),
   })
   .default({});
 

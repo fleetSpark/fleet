@@ -13,3 +13,5 @@ export { MergeCommander, type MergeConfig, type MergeResult } from './merge/merg
 export { ConflictDetector, type ConflictReport } from './merge/conflict-detector.js';
 export { BriefGenerator } from './brief/brief-generator.js';
 export { resolveAdapter } from './adapters/registry.js';
+export { Notifier, type FleetEvent, type NotificationConfig, type WebhookConfig } from './notifications/notifier.js';
+export { ResourceManager, type ResourceConfig } from './resources/resource-manager.js';
