@@ -4,6 +4,8 @@ const builtinAdapters: Record<string, string> = {
   'claude-code': '@fleet/adapter-claude',
   'codex': '@fleet/adapter-codex',
   'aider': '@fleet/adapter-aider',
+  'opencode': '@fleet/adapter-opencode',
+  'a2a': '@fleet/adapter-a2a',
 };
 
 export async function resolveAdapter(name: string): Promise<FleetAdapter> {
