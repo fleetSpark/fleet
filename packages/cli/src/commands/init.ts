@@ -45,7 +45,15 @@ export function registerInitCommand(program: Command): void {
       const manifestContent = writeFleetManifest(emptyManifest);
 
       // Save current branch, create orphan fleet/state, write FLEET.md, return
-      const currentBranch = await git.getCurrentBranch();
+      let currentBranch: string;
+      try {
+        currentBranch = await git.getCurrentBranch();
+      } catch {
+        // Fresh repo with no commits — create an initial commit so we have a branch to return to
+        await writeFile(join(cwd, '.gitkeep'), '', 'utf-8');
+        await git.addAndCommit(['.gitkeep'], 'chore: initial commit');
+        currentBranch = await git.getCurrentBranch();
+      }
 
       await git.createOrphanBranch('fleet/state');
       await writeFile(join(cwd, 'FLEET.md'), manifestContent, 'utf-8');
@@ -66,7 +74,7 @@ export function registerInitCommand(program: Command): void {
       console.log('  State: fleet/state branch (FLEET.md)');
       console.log('');
       console.log('Next steps:');
-      console.log('  fleet command --plan "your goal here"');
-      console.log('  fleet command --plan-file missions.yml');
+      console.log('  fleetspark command --plan "your goal here"');
+      console.log('  fleetspark command --plan-file missions.yml');
     });
 }

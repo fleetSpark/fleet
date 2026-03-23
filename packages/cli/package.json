@@ -1,6 +1,6 @@
 {
   "name": "fleetspark",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "bin": {
     "fleetspark": "dist/index.js",
