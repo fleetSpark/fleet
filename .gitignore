@@ -138,6 +138,10 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+# Build output
+packages/*/dist/
+packages/adapters/*/dist/
+
 # Local tool state (Claude Code, Superpowers)
 .claude/
 .superpowers/

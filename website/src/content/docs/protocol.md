@@ -9,7 +9,7 @@ Fleet coordinates distributed AI coding agents through two plain Markdown files 
 
 ## FLEET.md — The Fleet Manifest
 
-Lives on the `main` branch. Written by the commander. Read by all ships.
+Lives on the `fleet/state` branch. Written by the commander. Read by all ships. This branch is never merged to main — it exists solely for fleet coordination state.
 
 ### Schema
 
@@ -141,7 +141,7 @@ The full fleet state lives in git. No data is lost when a commander machine goes
 
 Any tool can implement the Fleet protocol by:
 
-1. Reading `FLEET.md` from the `main` branch
+1. Reading `FLEET.md` from the `fleet/state` branch
 2. Writing `MISSION.md` to the ship's feature branch on a 60-second interval
 3. Reading `.fleet/task_brief.json` for mission instructions
 4. Marking `status: completed` in MISSION.md when done
