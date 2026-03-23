@@ -35,6 +35,7 @@ export default defineConfig({
           ],
         },
         { label: 'Contributing', link: '/contributing/' },
+        { label: 'FAQ', link: '/faq/' },
       ],
     }),
   ],
