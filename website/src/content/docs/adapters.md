@@ -9,7 +9,7 @@ An adapter is a thin wrapper that translates between Fleet's mission brief forma
 
 ## Built-in adapters
 
-Fleet ships with five adapters out of the box:
+Fleet ships with eight adapters out of the box:
 
 | Adapter | npm package | Agent | How it works |
 |---------|------------|-------|-------------|
@@ -17,6 +17,9 @@ Fleet ships with five adapters out of the box:
 | `codex` | `@fleet/adapter-codex` | [Codex CLI](https://github.com/openai/codex) | Spawns `codex --full-auto --quiet` |
 | `aider` | `@fleet/adapter-aider` | [Aider](https://aider.chat) | Spawns `aider --yes-always --no-git --message` |
 | `opencode` | `@fleet/adapter-opencode` | [OpenCode](https://opencode.ai) | Spawns `opencode --non-interactive --message` |
+| `gemini` | `@fleet/adapter-gemini` | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Spawns `gemini --noinput --prompt` |
+| `cursor` | `@fleet/adapter-cursor` | [Cursor](https://cursor.com) | Spawns `cursor --cli --prompt` |
+| `amp` | `@fleet/adapter-amp` | [Amp](https://ampcode.com) | Spawns `amp --non-interactive --message` |
 | `a2a` | `@fleet/adapter-a2a` | Any A2A agent | JSON-RPC over HTTP (Google A2A protocol) |
 
 ### Using an adapter
@@ -178,7 +181,7 @@ export function createMyAPIAdapter(config: { apiUrl: string }): FleetAdapter {
 
 Fleet resolves adapters in this order:
 
-1. **Built-in name** — `claude-code`, `codex`, `aider`, `opencode`, `a2a`
+1. **Built-in name** — `claude-code`, `codex`, `aider`, `opencode`, `gemini`, `cursor`, `amp`, `a2a`
 2. **npm package** — `require.resolve(name)` for custom adapters installed as dependencies
 3. **Factory function** — A2A adapters use `createA2AAdapter(config)` with a URL
 

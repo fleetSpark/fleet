@@ -6,6 +6,9 @@ const builtinAdapters: Record<string, string> = {
   'aider': '@fleet/adapter-aider',
   'opencode': '@fleet/adapter-opencode',
   'a2a': '@fleet/adapter-a2a',
+  'gemini': '@fleet/adapter-gemini',
+  'cursor': '@fleet/adapter-cursor',
+  'amp': '@fleet/adapter-amp',
 };
 
 export async function resolveAdapter(name: string): Promise<FleetAdapter> {
