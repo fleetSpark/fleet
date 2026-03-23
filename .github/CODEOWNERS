@@ -1,0 +1,15 @@
+# Fleet CODEOWNERS — these people must approve PRs that touch these paths.
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default: you review everything
+* @vontl
+
+# Protocol changes are critical — never merge without owner review
+packages/core/src/protocol/ @vontl
+packages/core/src/state/ @vontl
+
+# Config schema changes affect all users
+packages/core/src/config/ @vontl
+
+# Adapters can be reviewed more leniently (community contributions)
+# packages/adapters/ @vontl
