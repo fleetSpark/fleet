@@ -1,8 +1,8 @@
 ---
 ---
 <div class="landing-section">
-  <h2>How it works</h2>
-  <p class="subtitle">Fleet is architecturally a Map-Reduce system for software development.</p>
+  <h2>Simple architecture, no servers</h2>
+  <p class="subtitle">Fleet uses Git as its only message bus. No infrastructure to deploy. No accounts to create.</p>
 
   <div class="diagram">
     <div><span class="label">Your laptop (commander)</span></div>
@@ -18,12 +18,12 @@
 
   <div style="margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1rem;">
     <div>
-      <h3 style="color: #facc15;">Map</h3>
-      <p style="color: #94a3b8;">Each ship independently executes its mission on its own git branch. Ships never talk to each other — only to GitHub. Mix any agents: Claude Code, Codex, Aider, OpenCode, or A2A.</p>
+      <h3 style="color: #facc15;">Distribute</h3>
+      <p style="color: #94a3b8;">Each machine picks up a mission and works independently on its own branch. Mix any AI agent — Claude Code, Codex, Gemini, Aider, and more.</p>
     </div>
     <div>
-      <h3 style="color: #facc15;">Reduce</h3>
-      <p style="color: #94a3b8;">The commander collects completed branches, detects conflicts, runs CI, and auto-merges into main. No SSH. No shared filesystem. No servers.</p>
+      <h3 style="color: #facc15;">Converge</h3>
+      <p style="color: #94a3b8;">The commander watches for completed branches, detects conflicts, runs your CI pipeline, and auto-merges clean code.</p>
     </div>
   </div>
 </div>

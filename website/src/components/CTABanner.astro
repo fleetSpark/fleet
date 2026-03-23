@@ -1,0 +1,95 @@
+---
+---
+<section class="cta-banner">
+  <div class="cta-content">
+    <h2>Ready to put your idle machines to work?</h2>
+    <p class="cta-subtitle">Get started in under 5 minutes. No servers, no accounts, no infrastructure.</p>
+    <div class="cta-buttons">
+      <a href="/getting-started/" class="btn-primary">Get Started</a>
+      <a href="https://github.com/fleetSpark/fleet" class="btn-secondary">View on GitHub</a>
+    </div>
+    <div class="cta-install">
+      <code>npx fleet init</code>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-banner {
+    background: #111;
+    width: 100%;
+    padding: 5rem 2rem;
+    text-align: center;
+  }
+
+  .cta-content {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 1rem;
+    line-height: 1.2;
+  }
+
+  .cta-subtitle {
+    font-size: 1.125rem;
+    color: #94a3b8;
+    margin: 0 0 2rem;
+    line-height: 1.6;
+  }
+
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+    background: linear-gradient(135deg, #facc15, #f59e0b);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    background: transparent;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: #94a3b8;
+  }
+
+  .cta-install code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.875rem;
+    color: #64748b;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    display: inline-block;
+  }
+</style>

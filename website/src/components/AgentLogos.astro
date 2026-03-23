@@ -1,0 +1,140 @@
+---
+const agents = [
+  'Claude Code',
+  'Codex',
+  'Aider',
+  'OpenCode',
+  'Gemini CLI',
+  'Cursor',
+  'Amp',
+  'A2A Protocol',
+];
+
+const stats = [
+  { value: '8', label: 'Adapters' },
+  { value: '230+', label: 'Tests' },
+  { value: '44', label: 'Test Files' },
+  { value: '10', label: 'CLI Commands' },
+];
+---
+
+<div class="landing-section agent-logos-section">
+  <h2>Works with every major AI coding agent</h2>
+  <p class="subtitle">8 built-in adapters. Bring your own via the plugin API.</p>
+
+  <div class="agent-row">
+    {agents.map((name) => (
+      <span class="agent-badge">{name}</span>
+    ))}
+  </div>
+
+  <div class="stats-row">
+    {stats.map((stat) => (
+      <div class="stat-item">
+        <span class="stat-value">{stat.value}</span>
+        <span class="stat-label">{stat.label}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .agent-logos-section {
+    text-align: center;
+    background: #0d1120;
+    border-top: 1px solid #1a2035;
+    border-bottom: 1px solid #1a2035;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .agent-logos-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 0.75rem;
+  }
+
+  .agent-logos-section .subtitle {
+    color: #94a3b8;
+    font-size: 1.125rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .agent-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    max-width: 48rem;
+    margin: 0 auto 3rem;
+  }
+
+  .agent-badge {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #e2e8f0;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #334155;
+    transition: all 0.25s ease;
+    cursor: default;
+  }
+
+  .agent-badge:hover {
+    border-color: #facc15;
+    color: #facc15;
+    background: rgba(250, 204, 21, 0.06);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(250, 204, 21, 0.1);
+  }
+
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    padding-top: 2rem;
+    border-top: 1px solid #1a2035;
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .stat-value {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #facc15;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .agent-logos-section h2 {
+      font-size: 1.5rem;
+    }
+
+    .stats-row {
+      gap: 2rem;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+    }
+  }
+</style>

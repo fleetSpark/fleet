@@ -206,7 +206,11 @@
     border-bottom: 1px solid #2a2a2a;
   }
   .wm-brand { font-weight: 700; font-size: 0.85rem; }
-  .wm-live { color: #22c55e; font-size: 0.7rem; }
+  .wm-live { color: #22c55e; font-size: 0.7rem; animation: livePulse 2s ease-in-out infinite; }
+  @keyframes livePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
   .wm-header {
     background: #1a1a1a;
     border: 1px solid #2a2a2a;

@@ -1,31 +1,219 @@
 ---
 ---
-<div class="landing-hero">
-  <h1>fleet ⚡</h1>
-  <div class="tagline">
-    <strong>Take your development to cloud scale — steroids for AI coding.</strong><br><br>
-    Your laptop is running Claude Code. Your desktop is idle.<br>
-    Three machines. One codebase. None coordinated.<br>
-    <strong>Fleet fixes that.</strong>
+<section class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="brand-mark">⚡ Fleet</div>
+    <h1>
+      Run AI coding agents in parallel
+      <span class="gradient-text">across every machine you own</span>
+    </h1>
+    <p class="subtitle">
+      Fleet orchestrates Claude Code, Gemini, Codex, Aider, and 4 more agents — across your laptop, desktop, and servers. One command to plan. One command to join. Zero infrastructure.
+    </p>
+    <div class="value-metric">
+      <span class="metric-highlight">3 machines. 6 missions. 23 minutes.</span>
+      <span class="metric-follow">What used to take a full day.</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="/getting-started/" class="cta-solid">
+        Get Started
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="https://github.com/fleetSpark/fleet" class="cta-outline" target="_blank" rel="noopener">
+        <img
+          src="https://img.shields.io/github/stars/fleetSpark/fleet?style=social"
+          alt="GitHub stars"
+          width="84"
+          height="20"
+          loading="eager"
+        />
+        Star on GitHub
+      </a>
+      <a href="/getting-started/" class="cta-text">
+        Read the Docs <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
   </div>
+</section>
 
-  <div class="terminal">
-    <div><span class="comment"># On your laptop (becomes the commander)</span></div>
-    <div><span class="prompt">$</span> <span class="cmd">npx fleet init</span></div>
-    <div><span class="prompt">$</span> <span class="cmd">npx fleet command --plan</span> "Add OAuth, fix rate limiter, update docs"</div>
-    <div style="margin-top: 0.75rem;"><span class="comment"># On any other machine</span></div>
-    <div><span class="prompt">$</span> <span class="cmd">npx fleet ship --join</span> git@github.com:you/your-repo.git</div>
-    <div style="margin-top: 0.75rem;"><span class="comment"># Watch the live dashboard</span></div>
-    <div><span class="prompt">$</span> <span class="cmd">npx fleet dashboard</span></div>
-  </div>
+<style>
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 6rem 1.5rem 5rem;
+    max-width: 52rem;
+    margin: 0 auto;
+    overflow: hidden;
+  }
 
-  <div class="landing-ctas">
-    <a href="https://github.com/fleetSpark/fleet" class="cta-primary">
-      <img src="https://img.shields.io/github/stars/fleetSpark/fleet?style=social" alt="GitHub stars" style="vertical-align: middle; margin-right: 0.25rem;" />
-      Star on GitHub
-    </a>
-    <a href="/getting-started/" class="cta-secondary">
-      Read the Docs →
-    </a>
-  </div>
-</div>
+  /* Radial gold/blue glow behind hero */
+  .hero-glow {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    translate: -50% 0;
+    width: 140%;
+    height: 100%;
+    background:
+      radial-gradient(ellipse 60% 50% at 40% 40%, rgba(250, 204, 21, 0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 50% at 60% 60%, rgba(56, 189, 248, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Brand mark */
+  .brand-mark {
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Heading */
+  .hero h1 {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: #f1f5f9;
+    margin: 0 0 1.75rem;
+  }
+
+  .gradient-text {
+    display: block;
+    background: linear-gradient(135deg, #facc15 0%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Subtitle */
+  .subtitle {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    line-height: 1.7;
+    color: #94a3b8;
+    max-width: 40rem;
+    margin: 0 auto 2.5rem;
+  }
+
+  /* Value metric */
+  .value-metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin-bottom: 3rem;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(250, 204, 21, 0.12);
+    background: rgba(250, 204, 21, 0.04);
+    max-width: 28rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .metric-highlight {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #facc15;
+    letter-spacing: -0.01em;
+  }
+
+  .metric-follow {
+    font-size: 0.95rem;
+    color: #64748b;
+  }
+
+  /* CTAs */
+  .hero-ctas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-ctas a {
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  /* Primary solid button */
+  .cta-solid {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.75rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    background: linear-gradient(135deg, #facc15, #f59e0b);
+    color: #0a0e17;
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.2);
+  }
+
+  .cta-solid:hover {
+    background: linear-gradient(135deg, #fde047, #facc15);
+    box-shadow: 0 0 30px rgba(250, 204, 21, 0.35);
+    translate: 0 -1px;
+  }
+
+  /* Secondary outline button */
+  .cta-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    border: 1px solid #334155;
+    color: #f1f5f9;
+  }
+
+  .cta-outline img {
+    display: block;
+  }
+
+  .cta-outline:hover {
+    border-color: #38bdf8;
+    color: #38bdf8;
+    translate: 0 -1px;
+  }
+
+  /* Tertiary text link */
+  .cta-text {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .cta-text:hover {
+    color: #38bdf8;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero {
+      padding: 4rem 1rem 3rem;
+    }
+
+    .hero-ctas {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .value-metric {
+      max-width: 100%;
+    }
+  }
+</style>
