@@ -1,11 +1,14 @@
 {
   "name": "fleet-cli",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.0",
   "type": "module",
   "bin": {
     "fleet": "dist/index.js"
   },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
   "scripts": {
     "build": "tsc"
   },
