@@ -34,16 +34,19 @@ The protocol, core library, Claude adapter, and essential CLI commands.
 
 ---
 
-## v0.2 — Usable end-to-end (next)
+## v0.2 — Usable end-to-end (shipped)
 
 Close the gaps that prevent Fleet from running a real mission without manual intervention.
 
-- [ ] `fleet brief --generate` — generate FLEET_CONTEXT.md from codebase analysis
-- [ ] `fleet logs <ship>` — tail a ship's MISSION.md from its branch
-- [ ] Merge commander — watch completed missions, run CI, queue for merge
-- [ ] `fleet command --handoff` — graceful commander transfer
-- [ ] End-to-end smoke test with real Claude Code session
-- [ ] npm publish workflow (scoped @fleet packages)
+- [x] `fleet brief --generate` — generate FLEET_CONTEXT.md from codebase analysis (static + LLM modes)
+- [x] `fleet logs <ship>` — tail a ship's MISSION.md from its branch (one-shot + `--follow`)
+- [x] Merge commander — watch completed missions, create PRs, check CI, auto-merge
+- [x] `fleet command --handoff` — graceful commander transfer (implicit, any machine resumes)
+- [x] End-to-end smoke test — mock-based in CI + manual real-agent script
+- [x] npm publish workflow — automated on `v*` tag push (scoped @fleet packages)
+- [x] State machine: `reject` event for CI failure recovery (`merge-queued → in-progress`)
+- [x] GitOps: PR lifecycle methods (`createPR`, `getPRStatus`, `mergePR`, `fetchBranch`)
+- [x] 101 tests (26 new: 8 merge commander + 4 brief generator + 4 git PR + 3 logs + 3 handoff + 2 monitor + 1 E2E + 1 config)
 
 ---
 
