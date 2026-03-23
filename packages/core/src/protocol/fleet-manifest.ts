@@ -85,7 +85,9 @@ function splitSections(markdown: string): Sections {
   const sectionMap: Record<string, keyof Sections> = {
     'commander': 'commander',
     'active missions': 'missions',
+    'missions': 'missions',
     'merge queue': 'mergeQueue',
+    'merge queue (empty)': 'mergeQueue',
     'completed': 'completed',
   };
 
@@ -113,28 +115,46 @@ function parseUpdatedTimestamp(header: string): Date {
 
 function parseCommander(section: string): CommanderInfo {
   const lines = section.trim().split('\n').filter(Boolean);
-  if (lines.length < 2) throw new Error('Invalid Commander section in FLEET.md');
-
-  const headerLine = lines[0];
-  const pairs = headerLine.split('|').map((s) => s.trim());
+  if (lines.length < 1) throw new Error('Invalid Commander section in FLEET.md');
 
   let host = '';
   let lastCheckin = new Date();
   let status: CommanderStatus = 'active';
+  let timeoutMinutes = 15;
 
-  for (const pair of pairs) {
-    const colonIdx = pair.indexOf(':');
-    if (colonIdx < 0) continue;
-    const key = pair.substring(0, colonIdx).trim();
-    const joinedValue = pair.substring(colonIdx + 1).trim();
-    if (key === 'host') host = joinedValue;
-    else if (key === 'last_checkin') lastCheckin = new Date(joinedValue);
-    else if (key === 'status') status = joinedValue as CommanderStatus;
+  // Support both inline format (host: x | last_checkin: y) and bullet-list format (- Host: x)
+  const isBulletList = lines.some((l) => l.startsWith('- '));
+  if (isBulletList) {
+    for (const line of lines) {
+      const bulletMatch = line.match(/^-\s+(.+?):\s*(.+)$/);
+      if (!bulletMatch) continue;
+      const key = bulletMatch[1].trim().toLowerCase();
+      const value = bulletMatch[2].trim();
+      if (key === 'host') host = value;
+      else if (key === 'last checkin') lastCheckin = new Date(value);
+      else if (key === 'status') status = value as CommanderStatus;
+      else if (key === 'timeout') {
+        const m = value.match(/(\d+)/);
+        if (m) timeoutMinutes = parseInt(m[1], 10);
+      }
+    }
+  } else {
+    if (lines.length < 2) throw new Error('Invalid Commander section in FLEET.md');
+    const headerLine = lines[0];
+    const pairs = headerLine.split('|').map((s) => s.trim());
+    for (const pair of pairs) {
+      const colonIdx = pair.indexOf(':');
+      if (colonIdx < 0) continue;
+      const key = pair.substring(0, colonIdx).trim();
+      const joinedValue = pair.substring(colonIdx + 1).trim();
+      if (key === 'host') host = joinedValue;
+      else if (key === 'last_checkin') lastCheckin = new Date(joinedValue);
+      else if (key === 'status') status = joinedValue as CommanderStatus;
+    }
+    const timeoutLine = lines[1];
+    const timeoutMatch = timeoutLine.match(/timeout_minutes:\s*(\d+)/);
+    if (timeoutMatch) timeoutMinutes = parseInt(timeoutMatch[1], 10);
   }
-
-  const timeoutLine = lines[1];
-  const timeoutMatch = timeoutLine.match(/timeout_minutes:\s*(\d+)/);
-  const timeoutMinutes = timeoutMatch ? parseInt(timeoutMatch[1], 10) : 15;
 
   return { host, lastCheckin, status, timeoutMinutes };
 }

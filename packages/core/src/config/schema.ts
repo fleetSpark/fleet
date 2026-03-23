@@ -28,6 +28,11 @@ export const fleetConfigSchema = z
         auto_rebase: z.boolean().default(true),
       })
       .default({}),
+    brief: z
+      .object({
+        mode: z.enum(['static', 'llm']).default('static'),
+      })
+      .default({}),
     ships: z
       .array(
         z.object({
