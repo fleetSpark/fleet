@@ -45,6 +45,9 @@ Fleet is an npm workspaces monorepo:
 | `packages/adapters/codex` | `@fleet/adapter-codex` | Codex CLI adapter |
 | `packages/adapters/aider` | `@fleet/adapter-aider` | Aider adapter |
 | `packages/adapters/opencode` | `@fleet/adapter-opencode` | OpenCode adapter |
+| `packages/adapters/gemini` | `@fleet/adapter-gemini` | Gemini CLI adapter |
+| `packages/adapters/cursor` | `@fleet/adapter-cursor` | Cursor adapter |
+| `packages/adapters/amp` | `@fleet/adapter-amp` | Amp adapter |
 | `packages/adapters/a2a` | `@fleet/adapter-a2a` | A2A protocol adapter (any A2A-compatible agent) |
 
 ```
@@ -73,10 +76,13 @@ fleet/
 │       ├── codex/          Spawns codex --full-auto
 │       ├── aider/          Spawns aider --yes-always
 │       ├── opencode/       Spawns opencode --non-interactive
+│       ├── gemini/         Spawns gemini CLI
+│       ├── cursor/         Spawns cursor CLI
+│       ├── amp/            Spawns amp CLI
 │       └── a2a/            JSON-RPC A2A protocol client
 │
 ├── tests/
-│   ├── unit/               135+ unit tests by module
+│   ├── unit/               230+ unit tests by module
 │   └── integration/        Tests against real local git repos
 │
 ├── website/                Astro Starlight documentation site
@@ -270,7 +276,7 @@ interface FleetAdapter {
 }
 ```
 
-Fleet ships with adapters for Claude Code, Codex, Aider, OpenCode, and A2A.
+Fleet ships with adapters for Claude Code, Codex, Aider, OpenCode, Gemini CLI, Cursor, Amp, and A2A.
 
 See [Adapters](/adapters/) for implementation details.
 

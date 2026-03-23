@@ -129,6 +129,25 @@ fleet logs <ship-id> --follow
 
 ---
 
+## fleet web
+
+Start the browser-based Fleet web dashboard.
+
+```bash
+fleet web
+```
+
+The dashboard shows mission board, ship health, merge queue, and mission logs in real time via Server-Sent Events. Accessible from any browser including mobile — the command prints both local and LAN URLs.
+
+| Flag | Description |
+|------|-------------|
+| `-p, --port <port>` | HTTP port (default: 4000) |
+| `-H, --host <host>` | Bind address (default: 0.0.0.0) |
+| `--poll <ms>` | Poll interval in milliseconds (default: 15000) |
+| `--no-open` | Do not open browser automatically |
+
+---
+
 ## fleet dashboard
 
 Interactive terminal UI for monitoring the fleet in real-time.

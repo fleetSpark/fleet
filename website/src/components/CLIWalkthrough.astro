@@ -1,0 +1,219 @@
+---
+---
+<div class="landing-section">
+  <h2>See it in action</h2>
+  <p class="subtitle">From zero to a coordinated AI coding fleet in four steps.</p>
+
+  <div class="walkthrough">
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <h3>Initialize your project</h3>
+        <p>One command sets up Fleet in any git repo.</p>
+        <div class="terminal-frame">
+          <div class="term-bar"><span class="td red"></span><span class="td yellow"></span><span class="td green"></span><span class="term-title">Terminal</span></div>
+          <div class="term-body">
+            <div class="term-line"><span class="t-prompt">~/my-project $</span> <span class="t-cmd">npx fleet init</span></div>
+            <div class="term-line t-out"></div>
+            <div class="term-line t-out"><span class="t-success">✓</span> Created .fleet/config.yml</div>
+            <div class="term-line t-out"><span class="t-success">✓</span> Created fleet/state branch</div>
+            <div class="term-line t-out"><span class="t-success">✓</span> Initialized empty FLEET.md</div>
+            <div class="term-line t-out"></div>
+            <div class="term-line t-out"><span class="t-dim">Fleet is ready. Run</span> fleet command --plan <span class="t-dim">to get started.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <h3>Plan your work</h3>
+        <p>Describe what you want built. Fleet's LLM planner decomposes it into independent missions with dependencies.</p>
+        <div class="terminal-frame">
+          <div class="term-bar"><span class="td red"></span><span class="td yellow"></span><span class="td green"></span><span class="term-title">Terminal — Commander</span></div>
+          <div class="term-body">
+            <div class="term-line"><span class="t-prompt">~/my-project $</span> <span class="t-cmd">npx fleet command --plan</span> "Add OAuth login, fix rate limiter, update API docs"</div>
+            <div class="term-line t-out"></div>
+            <div class="term-line t-out"><span class="t-info">⚡</span> Planning 3 goals...</div>
+            <div class="term-line t-out"></div>
+            <div class="term-line t-out"><span class="t-success">✓</span> M-001 feat/oauth-login        <span class="t-dim">→ branch created</span></div>
+            <div class="term-line t-out"><span class="t-success">✓</span> M-002 fix/rate-limiter         <span class="t-dim">→ branch created</span></div>
+            <div class="term-line t-out"><span class="t-success">✓</span> M-003 docs/api-documentation   <span class="t-dim">→ branch created, depends: M-001</span></div>
+            <div class="term-line t-out"></div>
+            <div class="term-line t-out"><span class="t-info">⚡</span> Plan written to FLEET.md — 3 missions, 1 dependency</div>
+            <div class="term-line t-out"><span class="t-dim">Commander monitoring started. Waiting for ships...</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <h3>Launch ships on other machines</h3>
+        <p>Each machine joins the fleet, picks up a mission, and starts its AI coding agent autonomously.</p>
+        <div class="terminal-grid">
+          <div class="terminal-frame">
+            <div class="term-bar"><span class="td red"></span><span class="td yellow"></span><span class="td green"></span><span class="term-title">Machine 2 — Ship Alpha</span></div>
+            <div class="term-body">
+              <div class="term-line"><span class="t-prompt">~ $</span> <span class="t-cmd">npx fleet ship --join</span> git@github.com:you/project.git</div>
+              <div class="term-line t-out"></div>
+              <div class="term-line t-out"><span class="t-success">✓</span> Cloned repository</div>
+              <div class="term-line t-out"><span class="t-success">✓</span> Assigned mission M-001 (feat/oauth-login)</div>
+              <div class="term-line t-out"><span class="t-info">⚡</span> Starting claude-code adapter...</div>
+              <div class="term-line t-out"><span class="t-dim">Heartbeat: pushing every 60s</span></div>
+              <div class="term-line t-out"><span class="t-yellow">●</span> Agent working on M-001...</div>
+            </div>
+          </div>
+          <div class="terminal-frame">
+            <div class="term-bar"><span class="td red"></span><span class="td yellow"></span><span class="td green"></span><span class="term-title">Machine 3 — Ship Beta</span></div>
+            <div class="term-body">
+              <div class="term-line"><span class="t-prompt">~ $</span> <span class="t-cmd">npx fleet ship --join</span> git@github.com:you/project.git</div>
+              <div class="term-line t-out"></div>
+              <div class="term-line t-out"><span class="t-success">✓</span> Cloned repository</div>
+              <div class="term-line t-out"><span class="t-success">✓</span> Assigned mission M-002 (fix/rate-limiter)</div>
+              <div class="term-line t-out"><span class="t-info">⚡</span> Starting gemini adapter...</div>
+              <div class="term-line t-out"><span class="t-dim">Heartbeat: pushing every 60s</span></div>
+              <div class="term-line t-out"><span class="t-yellow">●</span> Agent working on M-002...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">4</div>
+      <div class="step-content">
+        <h3>Watch, merge, ship</h3>
+        <p>Monitor from the terminal or your phone. Fleet auto-creates PRs, runs CI, and merges clean code.</p>
+        <div class="terminal-frame">
+          <div class="term-bar"><span class="td red"></span><span class="td yellow"></span><span class="td green"></span><span class="term-title">Terminal — Status</span></div>
+          <div class="term-body">
+            <div class="term-line"><span class="t-prompt">~/my-project $</span> <span class="t-cmd">npx fleet status</span></div>
+            <div class="term-line t-out"></div>
+            <div class="term-line t-out"><span class="t-info">⚡</span> Fleet Status  <span class="t-dim">Updated 5s ago</span></div>
+            <div class="term-line t-out"></div>
+            <div class="term-line t-out"> <span class="t-success">✓</span> M-001 feat/oauth-login       ship-alpha   <span class="t-green">completed</span>  → PR #12 <span class="t-green">merged</span></div>
+            <div class="term-line t-out"> <span class="t-success">✓</span> M-002 fix/rate-limiter       ship-beta    <span class="t-green">completed</span>  → PR #13 <span class="t-green">merged</span></div>
+            <div class="term-line t-out"> <span class="t-yellow">●</span> M-003 docs/api-docs          ship-alpha   <span class="t-yellow">in-progress</span> 2/4 steps</div>
+            <div class="term-line t-out"></div>
+            <div class="term-line t-out"><span class="t-dim">  Ships: 2 alive │ Merged: 2/3 │ Time: 23 min</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .walkthrough {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .step {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .step-number {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .step-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .step-content h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: #e5e5e5;
+  }
+
+  .step-content > p {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 1rem;
+  }
+
+  .terminal-frame {
+    background: #0a0a0a;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,.4);
+  }
+
+  .terminal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .term-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: #1a1a1a;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .td {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .td.red { background: #ff5f56; }
+  .td.yellow { background: #ffbd2e; }
+  .td.green { background: #27c93f; }
+
+  .term-title {
+    font-size: 0.7rem;
+    color: #666;
+    margin-left: 8px;
+    font-family: monospace;
+  }
+
+  .term-body {
+    padding: 12px 16px;
+    font-family: 'Menlo', 'Consolas', 'Courier New', monospace;
+    font-size: 0.78rem;
+    line-height: 1.7;
+  }
+
+  .term-line { white-space: pre-wrap; word-break: break-all; }
+  .t-out { padding-left: 0; }
+  .t-prompt { color: #3b82f6; font-weight: 600; }
+  .t-cmd { color: #e5e5e5; font-weight: 600; }
+  .t-dim { color: #555; }
+  .t-success { color: #22c55e; }
+  .t-info { color: #f59e0b; }
+  .t-green { color: #22c55e; }
+  .t-yellow { color: #f59e0b; }
+
+  @media (max-width: 700px) {
+    .step { flex-direction: column; gap: 0.75rem; }
+    .step-number { width: 32px; height: 32px; font-size: 0.9rem; }
+    .terminal-grid { grid-template-columns: 1fr; }
+    .term-body { font-size: 0.68rem; padding: 10px 12px; }
+  }
+</style>

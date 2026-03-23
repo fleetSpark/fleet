@@ -56,7 +56,7 @@ Fleet creates PRs and can auto-merge them **only if CI passes and there are no c
 
 1. **Node.js 18+** on every machine
 2. **Git** with push access to a GitHub repository
-3. A **coding agent** installed on each machine (Claude Code, Codex, Aider, OpenCode, or any A2A-compatible agent)
+3. A **coding agent** installed on each machine (Claude Code, Codex, Aider, OpenCode, Gemini CLI, Cursor, Amp, or any A2A-compatible agent)
 4. API keys for your chosen agent(s)
 
 ### Which coding agents are supported?
@@ -66,6 +66,9 @@ Fleet ships with adapters for:
 - **Codex** — OpenAI's coding agent
 - **Aider** — open source AI pair programming
 - **OpenCode** — open source coding agent
+- **Gemini CLI** — Google's Gemini coding agent
+- **Cursor** — Cursor's AI coding agent
+- **Amp** — Sourcegraph's coding agent
 - **A2A** — any agent supporting Google's Agent-to-Agent protocol
 
 You can also [write your own adapter](/adapters/) — it's about 30 lines of TypeScript.
@@ -91,7 +94,7 @@ Three options:
 
 ### Can I check progress from my phone?
 
-Not yet — a browser-based web dashboard is on the [roadmap](/). Once available, you'll be able to check progress from any device with a browser.
+Yes! Run `fleet web` to start the browser-based dashboard. It shows the mission board, ship health, merge queue, and mission logs in real time. The command prints both local and LAN URLs, so you can open it on any device — including your phone.
 
 ---
 

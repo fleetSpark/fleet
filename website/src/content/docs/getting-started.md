@@ -9,7 +9,7 @@ Fleet turns your idle machines into a coordinated AI coding workforce. Here's ho
 
 - **Node.js 18+** on every machine
 - **Git** with push access to the same GitHub repository
-- A **coding agent** installed on each machine (Claude Code, Codex, Aider, OpenCode, or any A2A-compatible agent)
+- A **coding agent** installed on each machine (Claude Code, Codex, Aider, OpenCode, Gemini CLI, Cursor, Amp, or any A2A-compatible agent)
 
 ## Initialize your repo
 
@@ -74,7 +74,7 @@ The dashboard shows every ship's status, health, progress, merge queue, and bloc
 
 Fleet is configured via `.fleet/config.yml`. See the [Configuration reference](/configuration/) for all options, including:
 
-- Agent selection per ship (Claude Code, Codex, Aider, OpenCode, A2A)
+- Agent selection per ship (Claude Code, Codex, Aider, OpenCode, Gemini CLI, Cursor, Amp, A2A)
 - Shadow dispatch for stalled ship recovery
 - Webhook notifications (Slack, custom)
 - Resource limits (per-ship concurrency, mission timeouts)

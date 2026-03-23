@@ -1,0 +1,375 @@
+---
+---
+<div class="landing-section">
+  <h2>Real-time dashboards</h2>
+  <p class="subtitle">Monitor your fleet from the terminal or any browser — including your phone.</p>
+
+  <div class="dashboard-tabs">
+    <button class="dash-tab active" data-target="web">Web Dashboard</button>
+    <button class="dash-tab" data-target="mobile">Mobile View</button>
+    <button class="dash-tab" data-target="tui">Terminal TUI</button>
+  </div>
+
+  <div class="dashboard-showcase">
+    <div class="dash-panel active" id="dash-web">
+      <div class="dash-frame">
+        <div class="frame-bar">
+          <span class="frame-dot red"></span>
+          <span class="frame-dot yellow"></span>
+          <span class="frame-dot green"></span>
+          <span class="frame-url">localhost:4000</span>
+        </div>
+        <div class="frame-content web-mock">
+          <div class="wm-topbar"><span class="wm-brand">⚡ Fleet Dashboard</span><span class="wm-live">● Live</span></div>
+          <div class="wm-header">
+            <div class="wm-title">⚡ Fleet</div>
+            <div class="wm-commander">Commander: <strong>macbook-pro-1</strong> <span class="wm-active">active</span></div>
+            <div class="wm-stats">
+              <span class="wm-stat"><strong>6</strong> Total</span>
+              <span class="wm-stat"><strong class="wm-pending">1</strong> Pending</span>
+              <span class="wm-stat"><strong class="wm-progress">2</strong> Active</span>
+              <span class="wm-stat"><strong class="wm-done">2</strong> Done</span>
+              <span class="wm-stat"><strong>2/3</strong> Ships</span>
+              <span class="wm-stat"><strong>67%</strong> Util</span>
+            </div>
+          </div>
+          <div class="wm-grid">
+            <div class="wm-board">
+              <div class="wm-panel-title">MISSIONS</div>
+              <div class="wm-mission"><span class="wm-dot done"></span><span class="wm-mname">M-001 — feat/user-auth</span><span class="wm-badge done">COMPLETED</span></div>
+              <div class="wm-mission"><span class="wm-dot active"></span><span class="wm-mname">M-002 — feat/payment</span><span class="wm-mprog">3/5</span><span class="wm-badge active">IN-PROGRESS</span></div>
+              <div class="wm-mission"><span class="wm-dot done"></span><span class="wm-mname">M-003 — fix/rate-limiter</span><span class="wm-badge done">COMPLETED</span></div>
+              <div class="wm-mission"><span class="wm-dot active"></span><span class="wm-mname">M-004 — feat/websockets</span><span class="wm-mprog">2/4</span><span class="wm-badge active">IN-PROGRESS</span></div>
+              <div class="wm-mission"><span class="wm-dot pending"></span><span class="wm-mname">M-005 — refactor/db-layer</span><span class="wm-badge pending">PENDING</span></div>
+              <div class="wm-mission"><span class="wm-dot merge"></span><span class="wm-mname">M-006 — feat/api-versioning</span><span class="wm-badge merge">MERGE-QUEUED</span></div>
+            </div>
+            <div class="wm-sidebar">
+              <div class="wm-panel-title">SHIP HEALTH</div>
+              <div class="wm-ship"><span class="wm-dot done"></span> ship-alpha <span class="wm-health alive">Alive</span></div>
+              <div class="wm-ship"><span class="wm-dot done"></span> ship-beta <span class="wm-health alive">Alive</span></div>
+              <div class="wm-ship"><span class="wm-dot stale"></span> ship-gamma <span class="wm-health stale">Stale</span></div>
+              <div class="wm-panel-title" style="margin-top:12px">MERGE QUEUE</div>
+              <div class="wm-merge">M-006 <span class="wm-ci">passing</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="dash-caption"><code>npx fleet web</code> — opens at localhost:4000, accessible from any device on your network</p>
+    </div>
+
+    <div class="dash-panel" id="dash-mobile">
+      <div class="dash-frame mobile-frame">
+        <div class="phone-notch"></div>
+        <div class="frame-content web-mock mobile-mock">
+          <div class="wm-topbar"><span class="wm-brand">⚡ Fleet Dashboard</span><span class="wm-live">● Live</span></div>
+          <div class="wm-header">
+            <div class="wm-title" style="font-size:1rem">⚡ Fleet</div>
+            <div class="wm-commander" style="font-size:.65rem">Commander: <strong>macbook-pro-1</strong> <span class="wm-active">active</span></div>
+            <div class="wm-stats" style="font-size:.6rem">
+              <span class="wm-stat"><strong>6</strong> Total</span>
+              <span class="wm-stat"><strong class="wm-progress">2</strong> Active</span>
+              <span class="wm-stat"><strong class="wm-done">2</strong> Done</span>
+              <span class="wm-stat"><strong>67%</strong> Util</span>
+            </div>
+          </div>
+          <div class="wm-board" style="font-size:.7rem">
+            <div class="wm-panel-title" style="font-size:.6rem">MISSIONS</div>
+            <div class="wm-mission"><span class="wm-dot done"></span><span class="wm-mname">M-001 — feat/user-auth</span><span class="wm-badge done">COMPLETED</span></div>
+            <div class="wm-mission"><span class="wm-dot active"></span><span class="wm-mname">M-002 — feat/payment</span><span class="wm-badge active">IN-PROGRESS</span></div>
+            <div class="wm-mission"><span class="wm-dot done"></span><span class="wm-mname">M-003 — fix/rate-limiter</span><span class="wm-badge done">COMPLETED</span></div>
+            <div class="wm-mission"><span class="wm-dot active"></span><span class="wm-mname">M-004 — feat/websockets</span><span class="wm-badge active">IN-PROGRESS</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="dash-caption">Check progress from your phone — same LAN, open <code>http://192.168.x.x:4000</code></p>
+    </div>
+
+    <div class="dash-panel" id="dash-tui">
+      <div class="dash-frame">
+        <div class="frame-bar">
+          <span class="frame-dot red"></span>
+          <span class="frame-dot yellow"></span>
+          <span class="frame-dot green"></span>
+          <span class="frame-url">Terminal</span>
+        </div>
+        <div class="frame-content tui-mock">
+          <div class="tui-line"><span class="tui-bold">⚡ Fleet Dashboard</span> <span class="tui-dim">v1.0.0</span> <span class="tui-dim" style="float:right">Updated 2s ago</span></div>
+          <div class="tui-line"><span class="tui-dim">Commander:</span> macbook-pro-1 <span class="tui-green">● active</span> <span class="tui-dim">│ Ships: 2/3 │ Util: 67%</span></div>
+          <div class="tui-line tui-dim">─────────────────────────────────────────────────────────────</div>
+          <div class="tui-line tui-bold"> Mission              Ship           Status        Progress</div>
+          <div class="tui-line tui-dim">─────────────────────────────────────────────────────────────</div>
+          <div class="tui-line"> <span class="tui-green">●</span> M-001 user-auth     ship-alpha     <span class="tui-green">completed</span>     ✓ 5/5</div>
+          <div class="tui-line"> <span class="tui-yellow">●</span> M-002 payment       ship-alpha     <span class="tui-yellow">in-progress</span>   ◐ 3/5</div>
+          <div class="tui-line"> <span class="tui-green">●</span> M-003 rate-limiter  ship-beta      <span class="tui-green">completed</span>     ✓ 4/4</div>
+          <div class="tui-line"> <span class="tui-yellow">●</span> M-004 websockets    ship-beta      <span class="tui-yellow">in-progress</span>   ◐ 2/4</div>
+          <div class="tui-line"> <span class="tui-dim">○</span> M-005 db-layer       <span class="tui-dim">—</span>              <span class="tui-dim">pending</span>        —</div>
+          <div class="tui-line"> <span class="tui-cyan">◑</span> M-006 api-version   ship-gamma     <span class="tui-cyan">merge-queued</span>  CI ✓</div>
+          <div class="tui-line tui-dim">─────────────────────────────────────────────────────────────</div>
+          <div class="tui-line tui-dim"> [↑↓] Navigate  [Enter] View log  [b] Board  [l] Logs  [q] Quit</div>
+        </div>
+      </div>
+      <p class="dash-caption"><code>npx fleet dashboard</code> — full-screen interactive TUI with keyboard navigation</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .dashboard-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #333;
+  }
+  .dash-tab {
+    background: none;
+    border: none;
+    color: #888;
+    padding: 10px 24px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    font-family: system-ui, sans-serif;
+  }
+  .dash-tab:hover { color: #e5e5e5; }
+  .dash-tab.active { color: #e5e5e5; border-bottom-color: #3b82f6; }
+
+  .dash-panel { display: none; }
+  .dash-panel.active { display: block; }
+
+  .dash-frame {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+  }
+  .mobile-frame {
+    max-width: 320px;
+    border-radius: 28px;
+    border: 3px solid #333;
+    position: relative;
+    padding-top: 24px;
+  }
+  .phone-notch {
+    width: 100px;
+    height: 20px;
+    background: #0a0a0a;
+    border-radius: 0 0 12px 12px;
+    border: 1px solid #333;
+    border-top: none;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .frame-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: #1a1a1a;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .frame-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .frame-dot.red { background: #ff5f56; }
+  .frame-dot.yellow { background: #ffbd2e; }
+  .frame-dot.green { background: #27c93f; }
+  .frame-url {
+    font-size: 0.75rem;
+    color: #888;
+    margin-left: 8px;
+    font-family: monospace;
+  }
+  .frame-content { padding: 0; }
+
+  /* Web dashboard mock */
+  .web-mock {
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #e5e5e5;
+    font-size: 0.8rem;
+  }
+  .wm-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+    background: #111;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .wm-brand { font-weight: 700; font-size: 0.85rem; }
+  .wm-live { color: #22c55e; font-size: 0.7rem; }
+  .wm-header {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 10px;
+  }
+  .wm-title { font-size: 1.15rem; font-weight: 700; }
+  .wm-commander { font-size: 0.7rem; color: #888; margin-top: 2px; }
+  .wm-active { color: #22c55e; }
+  .wm-stats {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .wm-stat {
+    font-size: 0.7rem;
+    color: #888;
+    background: #0a0a0a;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid #2a2a2a;
+  }
+  .wm-stat strong { color: #e5e5e5; }
+  .wm-pending { color: #6b7280 !important; }
+  .wm-progress { color: #f59e0b !important; }
+  .wm-done { color: #22c55e !important; }
+  .wm-grid {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 10px;
+    padding: 0 10px 10px;
+  }
+  .wm-board, .wm-sidebar {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .wm-panel-title {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+    padding: 8px 10px;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .wm-mission {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-bottom: 1px solid #2a2a2a;
+    font-size: 0.72rem;
+  }
+  .wm-mission:last-child { border-bottom: none; }
+  .wm-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .wm-dot.done { background: #22c55e; }
+  .wm-dot.active { background: #f59e0b; }
+  .wm-dot.pending { background: #6b7280; }
+  .wm-dot.merge { background: #4ade80; }
+  .wm-dot.stale { background: #f59e0b; }
+  .wm-mname { flex: 1; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .wm-mprog { font-size: 0.65rem; color: #888; }
+  .wm-badge {
+    font-size: 0.55rem;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .wm-badge.done { background: rgba(34,197,94,.15); color: #22c55e; }
+  .wm-badge.active { background: rgba(245,158,11,.15); color: #f59e0b; }
+  .wm-badge.pending { background: rgba(107,114,128,.15); color: #6b7280; }
+  .wm-badge.merge { background: rgba(74,222,128,.15); color: #4ade80; }
+  .wm-ship {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .wm-ship:last-child { border-bottom: none; }
+  .wm-health {
+    margin-left: auto;
+    font-size: 0.55rem;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 8px;
+  }
+  .wm-health.alive { background: rgba(34,197,94,.15); color: #22c55e; }
+  .wm-health.stale { background: rgba(245,158,11,.15); color: #f59e0b; }
+  .wm-merge {
+    padding: 6px 10px;
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+  .wm-ci {
+    font-size: 0.55rem;
+    background: rgba(34,197,94,.15);
+    color: #22c55e;
+    padding: 1px 6px;
+    border-radius: 8px;
+    margin-left: 6px;
+  }
+
+  /* Mobile mock adjustments */
+  .mobile-mock .wm-grid { grid-template-columns: 1fr; }
+  .mobile-mock .wm-sidebar { display: none; }
+
+  /* TUI mock */
+  .tui-mock {
+    font-family: 'Menlo', 'Consolas', 'Courier New', monospace;
+    font-size: 0.72rem;
+    line-height: 1.6;
+    padding: 10px 14px;
+    color: #e5e5e5;
+  }
+  .tui-line { white-space: pre; }
+  .tui-bold { font-weight: 700; }
+  .tui-dim { color: #666; }
+  .tui-green { color: #22c55e; }
+  .tui-yellow { color: #f59e0b; }
+  .tui-cyan { color: #06b6d4; }
+
+  .dash-caption {
+    text-align: center;
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 1rem;
+  }
+  .dash-caption code {
+    background: #1a1a1a;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 600px) {
+    .wm-grid { grid-template-columns: 1fr !important; }
+    .wm-sidebar { display: none; }
+    .dash-tab { padding: 8px 14px; font-size: 0.85rem; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.dash-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      const target = tab.getAttribute('data-target');
+      document.getElementById('dash-' + target)?.classList.add('active');
+    });
+  });
+</script>

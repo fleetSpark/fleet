@@ -7,7 +7,7 @@ Fleet is open source and contributions are welcome. See the full [Contributing G
 
 ## What we need most
 
-1. **Adapters** — wrappers for new coding agents (Gemini CLI, Cursor CLI, Amp, etc.). This is the easiest and highest-impact contribution. See [Adapters](/adapters/).
+1. **Adapters** — wrappers for new coding agents (Devin, Sweep, etc.). This is the easiest and highest-impact contribution. See [Adapters](/adapters/).
 2. **Real-world testing** — try Fleet on your actual projects and [file issues](https://github.com/fleetSpark/fleet/issues) for anything that breaks.
 3. **Bug fixes** — check [open issues](https://github.com/fleetSpark/fleet/issues?q=is%3Aissue+is%3Aopen+label%3Abug).
 4. **Documentation** — improvements to this site or inline code docs.
@@ -19,7 +19,7 @@ git clone git@github.com:fleetspark/fleet.git
 cd fleet
 npm install
 npm run build
-npm run test:all   # 218+ tests must pass
+npm run test:all   # 230+ tests must pass
 ```
 
 ## Project structure
@@ -34,6 +34,9 @@ packages/
     codex/       # Codex CLI adapter
     aider/       # Aider adapter
     opencode/    # OpenCode adapter
+    gemini/      # Gemini CLI adapter
+    cursor/      # Cursor adapter
+    amp/         # Amp adapter
     a2a/         # A2A protocol adapter
 tests/
   unit/          # Fast unit tests (mock-based)
@@ -57,7 +60,7 @@ These are non-negotiable:
 
 1. Fork the repo, create a feature branch
 2. Make your changes
-3. Run `npm run build && npm run test:all` — all 218+ tests must pass
+3. Run `npm run build && npm run test:all` — all 230+ tests must pass
 4. Submit a PR — fill out the template
 
 ### What happens automatically

@@ -48,7 +48,7 @@ notifications:
 
 ships:
   - id: ship-a
-    adapter: claude-code       # claude-code | codex | aider | opencode | a2a
+    adapter: claude-code       # claude-code | codex | aider | opencode | gemini | cursor | amp | a2a
   - id: ship-b
     adapter: codex
 ```
@@ -126,4 +126,4 @@ Each entry in `ships` defines a machine in the fleet.
 | Key | Type | Description |
 |-----|------|-------------|
 | `id` | string | Unique identifier for this ship |
-| `adapter` | string | Coding agent adapter: `claude-code`, `codex`, `aider`, `opencode`, or `a2a` |
+| `adapter` | string | Coding agent adapter: `claude-code`, `codex`, `aider`, `opencode`, `gemini`, `cursor`, `amp`, or `a2a` |
