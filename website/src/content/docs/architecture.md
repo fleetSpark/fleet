@@ -39,16 +39,16 @@ Fleet is an npm workspaces monorepo:
 
 | Package | npm name | Purpose |
 |---------|----------|---------|
-| `packages/core` | `@fleet/core` | Protocol library — types, parsers, state machine, scheduler, git ops, heartbeat, merge, notifications, telemetry, election |
+| `packages/core` | `@fleetspark/core` | Protocol library — types, parsers, state machine, scheduler, git ops, heartbeat, merge, notifications, telemetry, election |
 | `packages/cli` | `fleetspark` | The CLI tool users install — all `fleet` commands |
-| `packages/adapters/claude` | `@fleet/adapter-claude` | Claude Code adapter |
-| `packages/adapters/codex` | `@fleet/adapter-codex` | Codex CLI adapter |
-| `packages/adapters/aider` | `@fleet/adapter-aider` | Aider adapter |
-| `packages/adapters/opencode` | `@fleet/adapter-opencode` | OpenCode adapter |
-| `packages/adapters/gemini` | `@fleet/adapter-gemini` | Gemini CLI adapter |
-| `packages/adapters/cursor` | `@fleet/adapter-cursor` | Cursor adapter |
-| `packages/adapters/amp` | `@fleet/adapter-amp` | Amp adapter |
-| `packages/adapters/a2a` | `@fleet/adapter-a2a` | A2A protocol adapter (any A2A-compatible agent) |
+| `packages/adapters/claude` | `@fleetspark/adapter-claude` | Claude Code adapter |
+| `packages/adapters/codex` | `@fleetspark/adapter-codex` | Codex CLI adapter |
+| `packages/adapters/aider` | `@fleetspark/adapter-aider` | Aider adapter |
+| `packages/adapters/opencode` | `@fleetspark/adapter-opencode` | OpenCode adapter |
+| `packages/adapters/gemini` | `@fleetspark/adapter-gemini` | Gemini CLI adapter |
+| `packages/adapters/cursor` | `@fleetspark/adapter-cursor` | Cursor adapter |
+| `packages/adapters/amp` | `@fleetspark/adapter-amp` | Amp adapter |
+| `packages/adapters/a2a` | `@fleetspark/adapter-a2a` | A2A protocol adapter (any A2A-compatible agent) |
 
 ```
 fleet/

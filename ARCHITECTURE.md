@@ -34,7 +34,7 @@ npm workspaces monorepo with three packages:
 ```
 fleet/
 ├── packages/
-│   ├── core/              @fleet/core — protocol library
+│   ├── core/              @fleetspark/core — protocol library
 │   │   └── src/
 │   │       ├── protocol/  Types, FLEET.md parser/writer, MISSION.md parser/writer
 │   │       ├── state/     Mission state machine (10 states, validated transitions)
@@ -51,7 +51,7 @@ fleet/
 │   │       └── commands/  init, status, command, ship, assign, brief (v0.2), logs (v0.2)
 │   │
 │   └── adapters/
-│       └── claude/        @fleet/adapter-claude — Claude Code adapter
+│       └── claude/        @fleetspark/adapter-claude — Claude Code adapter
 │           └── src/
 │               └── index.ts  Spawns claude process, tracks PIDs
 │

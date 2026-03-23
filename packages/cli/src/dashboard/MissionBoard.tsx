@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Text } from 'ink';
-import type { Mission, MissionLog, MissionStatus } from '@fleet/core';
+import type { Mission, MissionLog, MissionStatus } from '@fleetspark/core';
 
 const STATUS_COLORS: Record<MissionStatus, string> = {
   'pending': 'gray',

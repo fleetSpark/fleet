@@ -1,4 +1,4 @@
-import type { FleetAdapter, MissionBrief, AgentSession } from '@fleet/core';
+import type { FleetAdapter, MissionBrief, AgentSession } from '@fleetspark/core';
 
 export interface A2AConfig {
   agentUrl: string;

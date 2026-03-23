@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { ampAdapter } from '@fleet/adapter-amp';
+import { ampAdapter } from '@fleetspark/adapter-amp';
 
 vi.mock('node:child_process', () => ({
   spawn: vi.fn().mockReturnValue({

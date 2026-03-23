@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { CommanderElection, writeFleetManifest, parseFleetManifest } from '@fleet/core';
-import type { GitOps, FleetManifest, CommanderInfo } from '@fleet/core';
+import { CommanderElection, writeFleetManifest, parseFleetManifest } from '@fleetspark/core';
+import type { GitOps, FleetManifest, CommanderInfo } from '@fleetspark/core';
 
 function createMockGitOps(overrides: Partial<GitOps> = {}): GitOps {
   return {

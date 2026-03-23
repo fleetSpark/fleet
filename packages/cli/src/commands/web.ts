@@ -38,7 +38,7 @@ export function registerWebCommand(program: Command): void {
     .option('--poll <ms>', 'Poll interval in milliseconds', '15000')
     .option('--no-open', 'Do not open browser automatically')
     .action(async (options) => {
-      const { createServer } = await import('@fleet/web-dashboard');
+      const { createServer } = await import('@fleetspark/web-dashboard');
 
       const port = parseInt(options.port, 10);
       const host = options.host as string;

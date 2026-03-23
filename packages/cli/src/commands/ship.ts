@@ -10,8 +10,8 @@ import {
   transition,
   ShipHeartbeat,
   resolveAdapter,
-} from '@fleet/core';
-import type { Mission } from '@fleet/core';
+} from '@fleetspark/core';
+import type { Mission } from '@fleetspark/core';
 
 export function registerShipCommand(program: Command): void {
   program
@@ -134,7 +134,7 @@ export function registerShipCommand(program: Command): void {
             try {
               // Update MISSION.md status
               missionLog.status = 'completed';
-              const { writeMissionLog } = await import('@fleet/core');
+              const { writeMissionLog } = await import('@fleetspark/core');
               await git.writeAndPush(
                 mission!.branch,
                 'MISSION.md',

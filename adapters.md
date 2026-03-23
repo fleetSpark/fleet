@@ -49,7 +49,7 @@ export interface AgentSession {
 ```typescript
 // packages/adapters/claude/src/index.ts
 import { spawn } from 'child_process';
-import { FleetAdapter, MissionBrief, AgentSession } from '@fleet/core';
+import { FleetAdapter, MissionBrief, AgentSession } from '@fleetspark/core';
 
 export const claudeAdapter: FleetAdapter = {
   name: 'claude-code',

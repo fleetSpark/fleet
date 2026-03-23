@@ -3,8 +3,8 @@ import { existsSync, mkdirSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { hostname } from 'node:os';
-import { RealGitOps, writeFleetManifest, DEFAULT_CONFIG } from '@fleet/core';
-import type { FleetManifest } from '@fleet/core';
+import { RealGitOps, writeFleetManifest, DEFAULT_CONFIG } from '@fleetspark/core';
+import type { FleetManifest } from '@fleetspark/core';
 import { stringify as yamlStringify } from 'yaml';
 
 export function registerInitCommand(program: Command): void {

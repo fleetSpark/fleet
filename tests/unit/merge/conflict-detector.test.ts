@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { ConflictDetector } from '@fleet/core';
-import type { GitOps, Mission } from '@fleet/core';
+import { ConflictDetector } from '@fleetspark/core';
+import type { GitOps, Mission } from '@fleetspark/core';
 
 function createMockGitOps(diffResults: Record<string, string[]>): GitOps {
   return {

@@ -25,32 +25,32 @@ jobs:
 
       - run: npm run test:all
 
-      - name: Publish @fleet/core
+      - name: Publish @fleetspark/core
         run: npm publish --workspace packages/core --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @fleet/adapter-claude
+      - name: Publish @fleetspark/adapter-claude
         run: npm publish --workspace packages/adapters/claude --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @fleet/adapter-codex
+      - name: Publish @fleetspark/adapter-codex
         run: npm publish --workspace packages/adapters/codex --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @fleet/adapter-aider
+      - name: Publish @fleetspark/adapter-aider
         run: npm publish --workspace packages/adapters/aider --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @fleet/adapter-opencode
+      - name: Publish @fleetspark/adapter-opencode
         run: npm publish --workspace packages/adapters/opencode --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @fleet/adapter-a2a
+      - name: Publish @fleetspark/adapter-a2a
         run: npm publish --workspace packages/adapters/a2a --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

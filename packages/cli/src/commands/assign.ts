@@ -4,7 +4,7 @@ import {
   parseFleetManifest,
   writeFleetManifest,
   transition,
-} from '@fleet/core';
+} from '@fleetspark/core';
 
 export function registerAssignCommand(program: Command): void {
   program

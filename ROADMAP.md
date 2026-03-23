@@ -10,7 +10,7 @@ The protocol, core library, Claude adapter, and essential CLI commands.
 
 - [x] Protocol spec v1.0 (FLEET.md, MISSION.md, task_brief.json)
 - [x] Protocol amendment: FLEET.md on `fleet/state` branch (not main)
-- [x] Monorepo scaffold (npm workspaces: @fleet/core, fleetspark, @fleet/adapter-claude)
+- [x] Monorepo scaffold (npm workspaces: @fleetspark/core, fleetspark, @fleetspark/adapter-claude)
 - [x] Protocol types and interfaces
 - [x] FLEET.md parser/writer with round-trip fidelity
 - [x] MISSION.md parser/writer
@@ -55,8 +55,8 @@ Close the gaps that prevent Fleet from running a real mission without manual int
 Support for additional coding agents and the full Spark execution model.
 
 - [x] Adapter registry — dynamic resolution of adapters by name (`resolveAdapter`)
-- [x] Codex adapter (`@fleet/adapter-codex`) — spawns `codex --full-auto --quiet`
-- [x] Aider adapter (`@fleet/adapter-aider`) — spawns `aider --yes-always --no-git --message`
+- [x] Codex adapter (`@fleetspark/adapter-codex`) — spawns `codex --full-auto --quiet`
+- [x] Aider adapter (`@fleetspark/adapter-aider`) — spawns `aider --yes-always --no-git --message`
 - [x] Ship command uses adapter registry + Fleet brief injection (`FLEET_CONTEXT.md`)
 - [x] GitOps: `diffNameOnly` method for cross-branch file comparison
 - [x] Conflict detection before merge (cross-branch file overlap via `ConflictDetector`)
@@ -71,8 +71,8 @@ Support for additional coding agents and the full Spark execution model.
 
 Full multi-agent support, production hardening, and documentation.
 
-- [x] OpenCode adapter (`@fleet/adapter-opencode`) — spawns `opencode --non-interactive`
-- [x] A2A protocol adapter (`@fleet/adapter-a2a`) — JSON-RPC A2A protocol client
+- [x] OpenCode adapter (`@fleetspark/adapter-opencode`) — spawns `opencode --non-interactive`
+- [x] A2A protocol adapter (`@fleetspark/adapter-a2a`) — JSON-RPC A2A protocol client
 - [x] Slack/webhook notifications — Notifier with JSON + Slack formatting, event filtering
 - [x] Commander election protocol — optimistic locking via git push races, heartbeat, graceful release
 - [x] Ship resource limits and concurrency caps — per-ship + global limits, mission timeout detection

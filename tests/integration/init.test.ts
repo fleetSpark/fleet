@@ -4,7 +4,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { writeFile } from 'node:fs/promises';
 import { mkdirSync } from 'node:fs';
-import { RealGitOps, parseFleetManifest } from '@fleet/core';
+import { RealGitOps, parseFleetManifest } from '@fleetspark/core';
 
 describe('fleet init (integration)', () => {
   const cleanups: Array<() => Promise<void>> = [];

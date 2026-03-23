@@ -1,10 +1,10 @@
 {
-  "name": "@fleet/adapter-a2a",
+  "name": "@fleetspark/adapter-a2a",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": { "build": "tsc" },
-  "dependencies": { "@fleet/core": "*" },
+  "dependencies": { "@fleetspark/core": "*" },
   "files": ["dist"]
 }

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseMissionLog } from '@fleet/core';
+import { parseMissionLog } from '@fleetspark/core';
 
 describe('heartbeat default to epoch when missing', () => {
   it('returns epoch for lastPush when no heartbeat section exists', () => {

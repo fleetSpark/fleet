@@ -1,6 +1,6 @@
 import type { Command } from 'commander';
-import { RealGitOps, parseFleetManifest } from '@fleet/core';
-import type { FleetManifest } from '@fleet/core';
+import { RealGitOps, parseFleetManifest } from '@fleetspark/core';
+import type { FleetManifest } from '@fleetspark/core';
 
 export function formatManifestJson(manifest: FleetManifest): string {
   return JSON.stringify({

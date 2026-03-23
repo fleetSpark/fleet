@@ -7,8 +7,8 @@ import {
   CommanderElection,
   parseFleetManifest,
   writeFleetManifest,
-} from '@fleet/core';
-import type { FleetManifest } from '@fleet/core';
+} from '@fleetspark/core';
+import type { FleetManifest } from '@fleetspark/core';
 
 describe('CommanderElection (integration)', { timeout: 15_000 }, () => {
   let repoDir: string;

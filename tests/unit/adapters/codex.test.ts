@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { codexAdapter } from '@fleet/adapter-codex';
+import { codexAdapter } from '@fleetspark/adapter-codex';
 
 vi.mock('node:child_process', () => ({
   spawn: vi.fn().mockReturnValue({

@@ -13,14 +13,14 @@ Fleet ships with eight adapters out of the box:
 
 | Adapter | npm package | Agent | How it works |
 |---------|------------|-------|-------------|
-| `claude-code` | `@fleet/adapter-claude` | [Claude Code](https://claude.ai) | Spawns `claude --dangerously-skip-permissions` |
-| `codex` | `@fleet/adapter-codex` | [Codex CLI](https://github.com/openai/codex) | Spawns `codex --full-auto --quiet` |
-| `aider` | `@fleet/adapter-aider` | [Aider](https://aider.chat) | Spawns `aider --yes-always --no-git --message` |
-| `opencode` | `@fleet/adapter-opencode` | [OpenCode](https://opencode.ai) | Spawns `opencode --non-interactive --message` |
-| `gemini` | `@fleet/adapter-gemini` | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Spawns `gemini --noinput --prompt` |
-| `cursor` | `@fleet/adapter-cursor` | [Cursor](https://cursor.com) | Spawns `cursor --cli --prompt` |
-| `amp` | `@fleet/adapter-amp` | [Amp](https://ampcode.com) | Spawns `amp --non-interactive --message` |
-| `a2a` | `@fleet/adapter-a2a` | Any A2A agent | JSON-RPC over HTTP (Google A2A protocol) |
+| `claude-code` | `@fleetspark/adapter-claude` | [Claude Code](https://claude.ai) | Spawns `claude --dangerously-skip-permissions` |
+| `codex` | `@fleetspark/adapter-codex` | [Codex CLI](https://github.com/openai/codex) | Spawns `codex --full-auto --quiet` |
+| `aider` | `@fleetspark/adapter-aider` | [Aider](https://aider.chat) | Spawns `aider --yes-always --no-git --message` |
+| `opencode` | `@fleetspark/adapter-opencode` | [OpenCode](https://opencode.ai) | Spawns `opencode --non-interactive --message` |
+| `gemini` | `@fleetspark/adapter-gemini` | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Spawns `gemini --noinput --prompt` |
+| `cursor` | `@fleetspark/adapter-cursor` | [Cursor](https://cursor.com) | Spawns `cursor --cli --prompt` |
+| `amp` | `@fleetspark/adapter-amp` | [Amp](https://ampcode.com) | Spawns `amp --non-interactive --message` |
+| `a2a` | `@fleetspark/adapter-a2a` | Any A2A agent | JSON-RPC over HTTP (Google A2A protocol) |
 
 ### Using an adapter
 
@@ -85,7 +85,7 @@ For agents with a CLI, spawn a child process:
 
 ```typescript
 import { spawn, ChildProcess } from 'child_process';
-import type { FleetAdapter, MissionBrief, AgentSession } from '@fleet/core';
+import type { FleetAdapter, MissionBrief, AgentSession } from '@fleetspark/core';
 
 const processes = new Map<number, ChildProcess>();
 
@@ -137,7 +137,7 @@ export const myAdapter: FleetAdapter = {
 For agents with an HTTP API, use the A2A protocol pattern:
 
 ```typescript
-import type { FleetAdapter, MissionBrief, AgentSession } from '@fleet/core';
+import type { FleetAdapter, MissionBrief, AgentSession } from '@fleetspark/core';
 
 export function createMyAPIAdapter(config: { apiUrl: string }): FleetAdapter {
   const tasks = new Map<string, string>();

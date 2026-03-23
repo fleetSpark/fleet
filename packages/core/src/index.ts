@@ -1,4 +1,4 @@
-// @fleet/core — public API
+// @fleetspark/core — public API
 export * from './protocol/types.js';
 export { parseFleetManifest, writeFleetManifest } from './protocol/fleet-manifest.js';
 export { parseMissionLog, writeMissionLog } from './protocol/mission-log.js';

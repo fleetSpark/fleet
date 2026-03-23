@@ -3,8 +3,8 @@ import {
   RealGitOps,
   parseFleetManifest,
   parseMissionLog,
-} from '@fleet/core';
-import type { MissionStep } from '@fleet/core';
+} from '@fleetspark/core';
+import type { MissionStep } from '@fleetspark/core';
 
 export interface LogDisplayData {
   missionId: string;

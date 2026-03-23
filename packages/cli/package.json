@@ -1,6 +1,6 @@
 {
   "name": "fleetspark",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "bin": {
     "fleetspark": "dist/index.js",
@@ -14,9 +14,9 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@fleet/adapter-claude": "*",
-    "@fleet/core": "*",
-    "@fleet/web-dashboard": "*",
+    "@fleetspark/adapter-claude": "*",
+    "@fleetspark/core": "*",
+    "@fleetspark/web-dashboard": "*",
     "@types/react": "^18.3.28",
     "commander": "^13.1.0",
     "ink": "^5.2.1",

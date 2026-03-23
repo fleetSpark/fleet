@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseConfig, DEFAULT_CONFIG, type FleetConfig } from '@fleet/core';
+import { parseConfig, DEFAULT_CONFIG, type FleetConfig } from '@fleetspark/core';
 
 describe('parseConfig', () => {
   it('returns defaults for empty config', () => {

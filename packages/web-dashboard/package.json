@@ -1,5 +1,5 @@
 {
-  "name": "@fleet/web-dashboard",
+  "name": "@fleetspark/web-dashboard",
   "version": "1.0.0",
   "type": "module",
   "files": [
@@ -12,7 +12,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@fleet/core": "*",
+    "@fleetspark/core": "*",
     "fastify": "^5.2.0"
   }
 }

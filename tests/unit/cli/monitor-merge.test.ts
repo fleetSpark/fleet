@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { MergeCommander } from '@fleet/core';
-import type { GitOps, FleetManifest } from '@fleet/core';
+import { MergeCommander } from '@fleetspark/core';
+import type { GitOps, FleetManifest } from '@fleetspark/core';
 
 describe('monitor loop merge integration', () => {
   it('MergeCommander accepts config from fleet config schema', () => {

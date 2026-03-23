@@ -2,8 +2,8 @@ import { describe, it, expect, afterEach } from 'vitest';
 import { createTempRepo, git } from './helpers.js';
 import { join } from 'node:path';
 import { writeFile } from 'node:fs/promises';
-import { RealGitOps, writeMissionLog, parseMissionLog } from '@fleet/core';
-import type { MissionLog } from '@fleet/core';
+import { RealGitOps, writeMissionLog, parseMissionLog } from '@fleetspark/core';
+import type { MissionLog } from '@fleetspark/core';
 
 describe('heartbeat (integration)', () => {
   const cleanups: Array<() => Promise<void>> = [];

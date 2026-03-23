@@ -11,8 +11,8 @@ import {
   transition,
   getReadyMissions,
   MergeCommander,
-} from '@fleet/core';
-import type { FleetManifest, Mission, MissionLog } from '@fleet/core';
+} from '@fleetspark/core';
+import type { FleetManifest, Mission, MissionLog } from '@fleetspark/core';
 
 describe('E2E flow: full mission lifecycle', () => {
   let repoDir: string;

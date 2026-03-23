@@ -2,8 +2,8 @@ import { describe, it, expect, vi } from 'vitest';
 import {
   parseFleetManifest,
   writeFleetManifest,
-} from '@fleet/core';
-import type { FleetManifest } from '@fleet/core';
+} from '@fleetspark/core';
+import type { FleetManifest } from '@fleetspark/core';
 
 describe('handoff logic', () => {
   it('setting commander status to transferred is a valid state', () => {

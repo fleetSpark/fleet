@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { ShipHeartbeat } from '@fleet/core';
-import type { GitOps, MissionLog } from '@fleet/core';
+import { ShipHeartbeat } from '@fleetspark/core';
+import type { GitOps, MissionLog } from '@fleetspark/core';
 
 function mockGitOps(): GitOps {
   return {

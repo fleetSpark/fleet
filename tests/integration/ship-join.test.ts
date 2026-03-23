@@ -7,8 +7,8 @@ import {
   RealGitOps,
   parseFleetManifest,
   writeFleetManifest,
-} from '@fleet/core';
-import type { FleetManifest } from '@fleet/core';
+} from '@fleetspark/core';
+import type { FleetManifest } from '@fleetspark/core';
 
 describe('fleet ship --join (integration)', () => {
   const cleanups: Array<() => Promise<void>> = [];

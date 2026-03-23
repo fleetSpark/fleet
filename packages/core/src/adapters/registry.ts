@@ -1,14 +1,14 @@
 import type { FleetAdapter } from '../protocol/types.js';
 
 const builtinAdapters: Record<string, string> = {
-  'claude-code': '@fleet/adapter-claude',
-  'codex': '@fleet/adapter-codex',
-  'aider': '@fleet/adapter-aider',
-  'opencode': '@fleet/adapter-opencode',
-  'a2a': '@fleet/adapter-a2a',
-  'gemini': '@fleet/adapter-gemini',
-  'cursor': '@fleet/adapter-cursor',
-  'amp': '@fleet/adapter-amp',
+  'claude-code': '@fleetspark/adapter-claude',
+  'codex': '@fleetspark/adapter-codex',
+  'aider': '@fleetspark/adapter-aider',
+  'opencode': '@fleetspark/adapter-opencode',
+  'a2a': '@fleetspark/adapter-a2a',
+  'gemini': '@fleetspark/adapter-gemini',
+  'cursor': '@fleetspark/adapter-cursor',
+  'amp': '@fleetspark/adapter-amp',
 };
 
 export async function resolveAdapter(name: string): Promise<FleetAdapter> {

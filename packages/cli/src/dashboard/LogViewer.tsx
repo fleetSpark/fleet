@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Text } from 'ink';
-import type { Mission, MissionLog } from '@fleet/core';
+import type { Mission, MissionLog } from '@fleetspark/core';
 
 export function LogViewer({
   mission,

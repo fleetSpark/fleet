@@ -1,5 +1,5 @@
 import { spawn, type ChildProcess } from 'node:child_process';
-import type { FleetAdapter, MissionBrief, AgentSession } from '@fleet/core';
+import type { FleetAdapter, MissionBrief, AgentSession } from '@fleetspark/core';
 
 const processes = new Map<number, ChildProcess>();
 

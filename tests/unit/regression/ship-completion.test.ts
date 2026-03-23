@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { transition, type StateEvent } from '@fleet/core';
+import { transition, type StateEvent } from '@fleetspark/core';
 
 describe('ship completion state transition', () => {
   it('transition from in-progress with complete event yields completed', () => {

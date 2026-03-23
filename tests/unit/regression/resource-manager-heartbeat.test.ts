@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { ResourceManager } from '@fleet/core';
-import type { FleetManifest } from '@fleet/core';
+import { ResourceManager } from '@fleetspark/core';
+import type { FleetManifest } from '@fleetspark/core';
 
 function makeManifest(updatedDate: Date): FleetManifest {
   return {

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { MergeCommander } from '@fleet/core';
-import type { GitOps, FleetManifest, Mission, PRStatus } from '@fleet/core';
+import { MergeCommander } from '@fleetspark/core';
+import type { GitOps, FleetManifest, Mission, PRStatus } from '@fleetspark/core';
 
 function createMockGitOps(overrides: Partial<GitOps> = {}): GitOps {
   return {

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { BriefGenerator } from '@fleet/core';
-import type { GitOps } from '@fleet/core';
+import { BriefGenerator } from '@fleetspark/core';
+import type { GitOps } from '@fleetspark/core';
 
 function createMockGitOps(overrides: Partial<GitOps> = {}): GitOps {
   return {

@@ -3,13 +3,13 @@ import type {
   FleetManifest,
   MissionLog,
   TelemetrySnapshot,
-} from '@fleet/core';
+} from '@fleetspark/core';
 import {
   RealGitOps,
   parseFleetManifest,
   parseMissionLog,
   TelemetryCollector,
-} from '@fleet/core';
+} from '@fleetspark/core';
 
 export interface StateSnapshot {
   manifest: FleetManifest;

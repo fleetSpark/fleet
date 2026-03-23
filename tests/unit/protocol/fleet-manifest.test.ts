@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { parseFleetManifest, writeFleetManifest } from '@fleet/core';
-import type { FleetManifest } from '@fleet/core';
+import { parseFleetManifest, writeFleetManifest } from '@fleetspark/core';
+import type { FleetManifest } from '@fleetspark/core';
 
 const SAMPLE_FLEET_MD = `# Fleet manifest
 Updated: 2026-03-22T14:30:00.000Z

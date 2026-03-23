@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { RealGitOps } from '@fleet/core';
+import { RealGitOps } from '@fleetspark/core';
 import { execFile as execFileCb } from 'node:child_process';
 import { promisify } from 'node:util';
 import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Text } from 'ink';
-import type { MergeEntry, CompletedEntry } from '@fleet/core';
+import type { MergeEntry, CompletedEntry } from '@fleetspark/core';
 
 export function MergeQueue({
   mergeQueue,

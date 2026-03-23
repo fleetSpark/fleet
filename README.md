@@ -142,11 +142,11 @@ Any coding agent works. Adapters handle the translation between Fleet's mission 
 
 | Adapter | Package | Status |
 |---------|---------|--------|
-| Claude Code | `@fleet/claude` | v0.1 — shipping |
-| OpenAI Codex | `@fleet/codex` | v0.5 — planned |
-| Aider | `@fleet/aider` | v1.0 — planned |
-| OpenCode | `@fleet/opencode` | v1.1 — planned |
-| Custom / A2A | `@fleet/a2a` | v1.1 — planned |
+| Claude Code | `@fleetspark/claude` | v0.1 — shipping |
+| OpenAI Codex | `@fleetspark/codex` | v0.5 — planned |
+| Aider | `@fleetspark/aider` | v1.0 — planned |
+| OpenCode | `@fleetspark/opencode` | v1.1 — planned |
+| Custom / A2A | `@fleetspark/a2a` | v1.1 — planned |
 
 Writing an adapter takes ~30 lines. See [adapters.md](adapters.md).
 

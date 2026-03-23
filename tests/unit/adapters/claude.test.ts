@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { claudeAdapter } from '@fleet/adapter-claude';
+import { claudeAdapter } from '@fleetspark/adapter-claude';
 
 vi.mock('node:child_process', () => ({
   spawn: vi.fn().mockReturnValue({

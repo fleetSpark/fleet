@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { createTempRepo, createBareRemote, git } from './helpers.js';
 import { join } from 'node:path';
 import { writeFile, readFile } from 'node:fs/promises';
-import { RealGitOps } from '@fleet/core';
+import { RealGitOps } from '@fleetspark/core';
 
 describe('writeAndPush branch restoration (integration)', { timeout: 15_000 }, () => {
   let repoDir: string;

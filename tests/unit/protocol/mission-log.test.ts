@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseMissionLog, writeMissionLog } from '@fleet/core';
+import { parseMissionLog, writeMissionLog } from '@fleetspark/core';
 
 const SAMPLE_MISSION_MD = `# Mission log — feature/oauth
 Ship: ship-a  |  Agent: claude-code  |  Status: in-progress

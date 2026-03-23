@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { getReadyMissions, validateDAG } from '@fleet/core';
-import type { Mission } from '@fleet/core';
+import { getReadyMissions, validateDAG } from '@fleetspark/core';
+import type { Mission } from '@fleetspark/core';
 
 function makeMission(overrides: Partial<Mission>): Mission {
   return {

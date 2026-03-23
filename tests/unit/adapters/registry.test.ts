@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { resolveAdapter } from '@fleet/core';
+import { resolveAdapter } from '@fleetspark/core';
 
 describe('resolveAdapter', () => {
   it('throws helpful error for missing adapter', async () => {

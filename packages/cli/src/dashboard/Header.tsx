@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Text } from 'ink';
-import type { FleetManifest } from '@fleet/core';
+import type { FleetManifest } from '@fleetspark/core';
 import type { View } from './App.js';
 
 function formatTimeAgo(date: Date): string {

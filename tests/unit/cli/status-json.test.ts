@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { formatManifestJson } from '../../../packages/cli/src/commands/status.js';
-import type { FleetManifest } from '@fleet/core';
+import type { FleetManifest } from '@fleetspark/core';
 
 describe('fleet status --json', () => {
   it('outputs valid JSON with all manifest fields', () => {

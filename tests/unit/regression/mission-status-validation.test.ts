@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseFleetManifest } from '@fleet/core';
+import { parseFleetManifest } from '@fleetspark/core';
 
 function makeManifest(status: string): string {
   return [

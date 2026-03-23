@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { TelemetryCollector } from '@fleet/core';
-import type { FleetManifest } from '@fleet/core';
+import { TelemetryCollector } from '@fleetspark/core';
+import type { FleetManifest } from '@fleetspark/core';
 
 function makeManifest(mergedDates: Date[]): FleetManifest {
   const now = new Date();

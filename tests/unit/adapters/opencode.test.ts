@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { opencodeAdapter } from '@fleet/adapter-opencode';
+import { opencodeAdapter } from '@fleetspark/adapter-opencode';
 
 vi.mock('node:child_process', () => ({
   spawn: vi.fn().mockReturnValue({

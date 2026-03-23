@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { cursorAdapter } from '@fleet/adapter-cursor';
+import { cursorAdapter } from '@fleetspark/adapter-cursor';
 
 vi.mock('node:child_process', () => ({
   spawn: vi.fn().mockReturnValue({

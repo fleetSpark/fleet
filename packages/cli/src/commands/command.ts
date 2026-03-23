@@ -14,8 +14,8 @@ import {
   transition,
   MergeCommander,
   parseMissionLog,
-} from '@fleet/core';
-import type { FleetManifest, Mission, MissionLog, TaskBrief, MergeResult } from '@fleet/core';
+} from '@fleetspark/core';
+import type { FleetManifest, Mission, MissionLog, TaskBrief, MergeResult } from '@fleetspark/core';
 
 export function registerCommandCommand(program: Cmd): void {
   program

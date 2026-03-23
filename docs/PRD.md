@@ -41,7 +41,7 @@ Every existing AI coding tool requires an active human session. Close the laptop
 | FLEET.md | Fleet manifest — active missions, ships, merge queue | Git file on main branch |
 | MISSION.md | Per-ship mission log — task, steps, blockers, heartbeat | Git file on each ship's branch |
 | Commander | Plans, dispatches, monitors, merges — global view only | `fleet command` |
-| Ship adapters | Thin wrappers making Claude Code, Codex, Aider A2A-compatible | `@fleet/claude` · `@fleet/codex` · `@fleet/aider` |
+| Ship adapters | Thin wrappers making Claude Code, Codex, Aider A2A-compatible | `@fleetspark/claude` · `@fleetspark/codex` · `@fleetspark/aider` |
 
 ### 3.1 How a Fleet run works
 
@@ -201,11 +201,11 @@ export interface FleetAdapter {
 
 | Adapter | Package | v1 status |
 |---------|---------|-----------|
-| Claude Code | `@fleet/claude` | v1.0 |
-| OpenAI Codex | `@fleet/codex` | v1.0 |
-| Aider | `@fleet/aider` | v1.0 |
-| OpenCode | `@fleet/opencode` | v1.1 |
-| Custom / A2A | `@fleet/a2a` | v1.1 |
+| Claude Code | `@fleetspark/claude` | v1.0 |
+| OpenAI Codex | `@fleetspark/codex` | v1.0 |
+| Aider | `@fleetspark/aider` | v1.0 |
+| OpenCode | `@fleetspark/opencode` | v1.1 |
+| Custom / A2A | `@fleetspark/a2a` | v1.1 |
 
 ---
 

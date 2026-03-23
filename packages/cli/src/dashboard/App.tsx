@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Text, useApp, useInput } from 'ink';
-import type { FleetManifest, MissionLog } from '@fleet/core';
+import type { FleetManifest, MissionLog } from '@fleetspark/core';
 import {
   RealGitOps,
   parseFleetManifest,
   parseMissionLog,
-} from '@fleet/core';
+} from '@fleetspark/core';
 import { MissionBoard } from './MissionBoard.js';
 import { ShipHealth } from './ShipHealth.js';
 import { MergeQueue } from './MergeQueue.js';

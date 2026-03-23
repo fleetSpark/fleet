@@ -6,8 +6,8 @@ import {
   RealGitOps,
   writeMissionLog,
   CommanderMonitor,
-} from '@fleet/core';
-import type { Mission, MissionLog } from '@fleet/core';
+} from '@fleetspark/core';
+import type { Mission, MissionLog } from '@fleetspark/core';
 
 describe('commander monitor (integration)', () => {
   const cleanups: Array<() => Promise<void>> = [];

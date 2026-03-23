@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { geminiAdapter } from '@fleet/adapter-gemini';
+import { geminiAdapter } from '@fleetspark/adapter-gemini';
 
 vi.mock('node:child_process', () => ({
   spawn: vi.fn().mockReturnValue({

@@ -2,8 +2,8 @@ import { describe, it, expect, afterEach } from 'vitest';
 import { createTempRepo, git } from './helpers.js';
 import { join } from 'node:path';
 import { writeFile } from 'node:fs/promises';
-import { RealGitOps, ConflictDetector, transition } from '@fleet/core';
-import type { Mission } from '@fleet/core';
+import { RealGitOps, ConflictDetector, transition } from '@fleetspark/core';
+import type { Mission } from '@fleetspark/core';
 
 describe('MergeCommander: conflict detection (integration)', { timeout: 15_000 }, () => {
   const cleanups: Array<() => Promise<void>> = [];

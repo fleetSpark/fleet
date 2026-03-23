@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { CommanderMonitor, writeMissionLog } from '@fleet/core';
-import type { GitOps, Mission } from '@fleet/core';
+import { CommanderMonitor, writeMissionLog } from '@fleetspark/core';
+import type { GitOps, Mission } from '@fleetspark/core';
 
 function mockGitOps(): GitOps {
   return {

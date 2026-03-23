@@ -1,5 +1,5 @@
 import type { Command } from 'commander';
-import { RealGitOps, BriefGenerator, loadConfig } from '@fleet/core';
+import { RealGitOps, BriefGenerator, loadConfig } from '@fleetspark/core';
 
 export function registerBriefCommand(program: Command): void {
   program
