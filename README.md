@@ -1,5 +1,7 @@
 # fleet ⚡
 
+[![npm](https://img.shields.io/npm/v/fleetspark?color=orange&label=npm)](https://www.npmjs.com/package/fleetspark) [![GitHub](https://img.shields.io/github/stars/fleetSpark/fleet?style=social)](https://github.com/fleetSpark/fleet) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 **Steroids for AI coding.**
 
 Your laptop is running Claude Code. Your desktop is idle. Your EC2 from last sprint is still running.
