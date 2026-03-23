@@ -15,3 +15,5 @@ export { BriefGenerator } from './brief/brief-generator.js';
 export { resolveAdapter } from './adapters/registry.js';
 export { Notifier, type FleetEvent, type NotificationConfig, type WebhookConfig } from './notifications/notifier.js';
 export { ResourceManager, type ResourceConfig } from './resources/resource-manager.js';
+export { TelemetryCollector, type TelemetrySnapshot } from './telemetry/telemetry.js';
+export { CommanderElection, type ClaimResult } from './election/commander-election.js';
