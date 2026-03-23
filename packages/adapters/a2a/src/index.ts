@@ -41,7 +41,14 @@ export function createA2AAdapter(config: A2AConfig): FleetAdapter {
         }),
       });
 
+      if (!response.ok) {
+        throw new Error(`A2A tasks/send failed: HTTP ${response.status}`);
+      }
+
       const data = await response.json() as { result: A2ATaskResponse };
+      if (!data.result?.id) {
+        throw new Error('A2A tasks/send returned no task ID');
+      }
       const pid = ++pidCounter;
       tasks.set(String(pid), { taskId: data.result.id, agentUrl: config.agentUrl });
 

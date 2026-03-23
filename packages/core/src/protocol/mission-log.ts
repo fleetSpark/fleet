@@ -99,7 +99,7 @@ function parseBlockers(section: string): string[] {
 
 function parseHeartbeat(section: string): HeartbeatInfo {
   const lines = section.trim().split('\n');
-  let lastPush = new Date();
+  let lastPush = new Date(0); // epoch — missing heartbeat should report as very old, not current
   let pushInterval = 60;
 
   for (const line of lines) {

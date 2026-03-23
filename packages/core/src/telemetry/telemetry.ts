@@ -75,17 +75,17 @@ export class TelemetryCollector {
       }
     }
 
-    // Average mission duration from completed entries
-    if (manifest.completed.length > 0) {
-      const manifestCreated = manifest.updated;
-      // Use completed entries' mergedDate to estimate durations
-      const durations = manifest.completed.map((c) => {
-        const mergedTime = new Date(c.mergedDate).getTime();
-        const createdTime = new Date(manifestCreated).getTime();
-        return Math.abs(mergedTime - createdTime) / (1000 * 60);
-      });
-      avgMissionDurationMin =
-        durations.reduce((sum, d) => sum + d, 0) / durations.length;
+    // Average mission duration estimate from completed entries
+    // Since we don't track individual start times, estimate using the spread
+    // of merge dates relative to the earliest completed entry
+    if (manifest.completed.length >= 2) {
+      const mergeTimes = manifest.completed
+        .map((c) => new Date(c.mergedDate).getTime())
+        .sort((a, b) => a - b);
+      const earliest = mergeTimes[0];
+      const latest = mergeTimes[mergeTimes.length - 1];
+      const spanMin = (latest - earliest) / (1000 * 60);
+      avgMissionDurationMin = spanMin / manifest.completed.length;
     }
 
     const snap: TelemetrySnapshot = {

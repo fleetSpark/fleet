@@ -35,6 +35,26 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Publish @fleet/adapter-codex
+        run: npm publish --workspace packages/adapters/codex --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @fleet/adapter-aider
+        run: npm publish --workspace packages/adapters/aider --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @fleet/adapter-opencode
+        run: npm publish --workspace packages/adapters/opencode --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @fleet/adapter-a2a
+        run: npm publish --workspace packages/adapters/a2a --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Publish fleet-cli
         run: npm publish --workspace packages/cli --access public
         env:

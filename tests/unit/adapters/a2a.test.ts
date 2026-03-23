@@ -23,6 +23,8 @@ describe('A2A adapter', () => {
 
   it('start sends tasks/send JSON-RPC request', async () => {
     mockFetch.mockResolvedValueOnce({
+      ok: true,
+      status: 200,
       json: async () => ({ result: { id: 'task-1', status: { state: 'submitted' } } }),
     });
 
@@ -42,6 +44,8 @@ describe('A2A adapter', () => {
 
   it('isAlive returns true for working task', async () => {
     mockFetch.mockResolvedValueOnce({
+      ok: true,
+      status: 200,
       json: async () => ({ result: { id: 'task-1', status: { state: 'submitted' } } }),
     });
 
@@ -51,6 +55,8 @@ describe('A2A adapter', () => {
     });
 
     mockFetch.mockResolvedValueOnce({
+      ok: true,
+      status: 200,
       json: async () => ({ result: { id: 'task-1', status: { state: 'working' } } }),
     });
 
@@ -60,6 +66,8 @@ describe('A2A adapter', () => {
 
   it('isAlive returns false after stop', async () => {
     mockFetch.mockResolvedValueOnce({
+      ok: true,
+      status: 200,
       json: async () => ({ result: { id: 'task-1', status: { state: 'submitted' } } }),
     });
 
@@ -68,7 +76,7 @@ describe('A2A adapter', () => {
       id: 'M3', branch: 'feature/test3', brief: 'Test', agent: 'a2a', depends: [],
     });
 
-    mockFetch.mockResolvedValueOnce({ json: async () => ({ result: {} }) }); // cancel response
+    mockFetch.mockResolvedValueOnce({ ok: true, status: 200, json: async () => ({ result: {} }) }); // cancel response
     await adapter.stop(session);
 
     const alive = await adapter.isAlive(session);

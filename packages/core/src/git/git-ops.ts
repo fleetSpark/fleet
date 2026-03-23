@@ -80,6 +80,8 @@ export class RealGitOps implements GitOps {
     const { join } = await import('node:path');
     const { mkdirSync } = await import('node:fs');
 
+    const { dirname } = await import('node:path');
+
     const currentBranch = await this.getCurrentBranch();
     const needsSwitch = currentBranch !== branch;
 
@@ -87,34 +89,36 @@ export class RealGitOps implements GitOps {
       await this.checkout(branch);
     }
 
-    // Ensure parent directory exists
-    const filePath = join(this.cwd, path);
-    const dir = filePath.substring(0, filePath.lastIndexOf('/'));
-    if (dir && dir !== this.cwd) {
-      mkdirSync(dir, { recursive: true });
-    }
-
-    await writeFile(filePath, content, 'utf-8');
-    await this.exec('add', path);
-    await this.exec('commit', '-m', message);
-
-    // Retry on conflict: pull --rebase then push (max 3 attempts)
-    let pushed = false;
-    for (let attempt = 0; attempt < 3; attempt++) {
-      try {
-        await this.exec('push', 'origin', branch);
-        pushed = true;
-        break;
-      } catch {
-        await this.exec('pull', '--rebase', 'origin', branch);
+    try {
+      // Ensure parent directory exists (use path.dirname for cross-platform)
+      const filePath = join(this.cwd, path);
+      const dir = dirname(filePath);
+      if (dir && dir !== this.cwd) {
+        mkdirSync(dir, { recursive: true });
       }
-    }
-    if (!pushed) {
-      throw new Error(`Failed to push to ${branch} after 3 attempts`);
-    }
 
-    if (needsSwitch) {
-      await this.checkout(currentBranch);
+      await writeFile(filePath, content, 'utf-8');
+      await this.exec('add', path);
+      await this.exec('commit', '-m', message);
+
+      // Retry on conflict: pull --rebase then push (max 3 attempts)
+      let pushed = false;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          await this.exec('push', 'origin', branch);
+          pushed = true;
+          break;
+        } catch {
+          await this.exec('pull', '--rebase', 'origin', branch);
+        }
+      }
+      if (!pushed) {
+        throw new Error(`Failed to push to ${branch} after 3 attempts`);
+      }
+    } finally {
+      if (needsSwitch) {
+        await this.checkout(currentBranch);
+      }
     }
   }
 
@@ -188,7 +192,12 @@ export class RealGitOps implements GitOps {
         hasConflicts: data.mergeable === 'CONFLICTING',
         url: data.url,
       };
-    } catch {
+    } catch (err) {
+      // Only return null for "no PR found" — log other errors
+      const msg = err instanceof Error ? err.message : String(err);
+      if (!msg.includes('no pull requests found') && !msg.includes('Could not resolve')) {
+        console.error(`getPRStatus error for ${branch}: ${msg}`);
+      }
       return null;
     }
   }

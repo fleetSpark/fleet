@@ -31,15 +31,24 @@ export class ResourceManager {
     return { allowed: true };
   }
 
-  getTimedOutMissions(manifest: FleetManifest, now: Date = new Date()): Mission[] {
+  /**
+   * Check for timed-out missions using per-mission heartbeat timestamps.
+   * Falls back to manifest.updated only when individual timestamps are unavailable.
+   * @param heartbeatTimestamps - Map of missionId → last heartbeat push time
+   */
+  getTimedOutMissions(
+    manifest: FleetManifest,
+    now: Date = new Date(),
+    heartbeatTimestamps?: Map<string, Date>
+  ): Mission[] {
     if (!this.config.missionTimeoutMin || this.config.missionTimeoutMin <= 0) return [];
 
     const timeoutMs = this.config.missionTimeoutMin * 60 * 1000;
     return manifest.missions.filter((m) => {
       if (m.status !== 'in-progress') return false;
-      // Use manifest.updated as proxy for when mission was last known active
-      // In real usage, the monitor loop checks heartbeat timestamps
-      const elapsed = now.getTime() - manifest.updated.getTime();
+      // Use per-mission heartbeat timestamp if available, otherwise manifest.updated
+      const lastActive = heartbeatTimestamps?.get(m.id) ?? manifest.updated;
+      const elapsed = now.getTime() - lastActive.getTime();
       return elapsed > timeoutMs;
     });
   }

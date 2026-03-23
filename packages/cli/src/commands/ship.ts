@@ -129,7 +129,32 @@ export function registerShipCommand(program: Command): void {
           if (!alive) {
             clearInterval(checkInterval);
             heartbeat.stop();
-            console.log(`Mission ${mission!.id} agent has exited.`);
+            console.log(`Mission ${mission!.id} agent has exited. Marking completed.`);
+
+            try {
+              // Update MISSION.md status
+              missionLog.status = 'completed';
+              const { writeMissionLog } = await import('@fleet/core');
+              await git.writeAndPush(
+                mission!.branch,
+                'MISSION.md',
+                writeMissionLog(missionLog),
+                `fleet: ${mission!.id} completed`
+              );
+
+              // Update FLEET.md
+              mission!.status = transition(mission!.status, 'complete');
+              manifest.updated = new Date();
+              await git.writeAndPush(
+                'fleet/state',
+                'FLEET.md',
+                writeFleetManifest(manifest),
+                `fleet: ${mission!.id} completed`
+              );
+              console.log(`Mission ${mission!.id} marked as completed.`);
+            } catch (err) {
+              console.error(`Failed to update mission status:`, err);
+            }
           }
         }, 10_000);
       } catch (err) {

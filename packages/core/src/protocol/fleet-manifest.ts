@@ -178,6 +178,14 @@ function parseMissions(section: string): Mission[] {
 
     const [id, branch, ship, agent, status, depends, blocker] = cells;
 
+    const validStatuses: MissionStatus[] = [
+      'pending', 'ready', 'assigned', 'in-progress', 'completed',
+      'blocked', 'stalled', 'failed', 'merge-queued', 'merged',
+    ];
+    if (!validStatuses.includes(status as MissionStatus)) {
+      throw new Error(`Invalid mission status "${status}" for mission ${id}`);
+    }
+
     return {
       id,
       branch,
