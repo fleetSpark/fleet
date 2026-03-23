@@ -9,3 +9,4 @@ export { loadConfig } from './config/loader.js';
 export { type GitOps, RealGitOps, type PRStatus } from './git/git-ops.js';
 export { ShipHeartbeat } from './heartbeat/ship-heartbeat.js';
 export { CommanderMonitor, type MonitorConfig, type ShipHealth } from './heartbeat/commander-monitor.js';
+export { MergeCommander, type MergeConfig, type MergeResult } from './merge/merge-commander.js';
