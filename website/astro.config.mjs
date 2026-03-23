@@ -21,6 +21,7 @@ export default defineConfig({
         {
           label: 'Concepts',
           items: [
+            { label: 'Architecture', link: '/architecture/' },
             { label: 'Protocol', link: '/protocol/' },
             { label: 'Adapters', link: '/adapters/' },
           ],
