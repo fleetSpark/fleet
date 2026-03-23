@@ -13,14 +13,14 @@ One command makes any machine a commander. One command on any other machine join
 Works with Claude Code, Codex, Aider, or any A2A agent. GitHub is the bus. No SSH. No shared filesystem. No infrastructure.
 
 ```bash
-npx fleet init
-npx fleet command --plan "your goal here"
+npx fleetspark init
+npx fleetspark command --plan "your goal here"
 ```
 
 On any other machine:
 
 ```bash
-npx fleet ship --join git@github.com:you/your-repo.git
+npx fleetspark ship --join git@github.com:you/your-repo.git
 ```
 
 ---
@@ -156,7 +156,7 @@ Writing an adapter takes ~30 lines. See [adapters.md](adapters.md).
 
 ```bash
 # Install
-npm install -g fleet
+npm install -g fleetspark
 
 # Initialise any git repo
 cd your-project

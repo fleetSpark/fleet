@@ -10,7 +10,7 @@ The protocol, core library, Claude adapter, and essential CLI commands.
 
 - [x] Protocol spec v1.0 (FLEET.md, MISSION.md, task_brief.json)
 - [x] Protocol amendment: FLEET.md on `fleet/state` branch (not main)
-- [x] Monorepo scaffold (npm workspaces: @fleet/core, fleet-cli, @fleet/adapter-claude)
+- [x] Monorepo scaffold (npm workspaces: @fleet/core, fleetspark, @fleet/adapter-claude)
 - [x] Protocol types and interfaces
 - [x] FLEET.md parser/writer with round-trip fidelity
 - [x] MISSION.md parser/writer

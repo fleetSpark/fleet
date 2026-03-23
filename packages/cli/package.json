@@ -1,8 +1,9 @@
 {
-  "name": "fleet-cli",
+  "name": "fleetspark",
   "version": "1.0.0",
   "type": "module",
   "bin": {
+    "fleetspark": "dist/index.js",
     "fleet": "dist/index.js"
   },
   "files": [

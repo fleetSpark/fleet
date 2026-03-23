@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Fleet v0.2 Smoke Test
 # Runs a real end-to-end test with Claude Code adapter.
-# Prerequisites: gh CLI authenticated, ANTHROPIC_API_KEY set, fleet-cli built
+# Prerequisites: gh CLI authenticated, ANTHROPIC_API_KEY set, fleetspark built
 #
 # Usage: npm run test:smoke
 
@@ -46,7 +46,7 @@ git push
 
 # Init fleet
 echo "2. Initializing fleet..."
-npx fleet init
+npx fleetspark init
 
 # Create plan file
 cat > plan.yml << 'PLAN'
@@ -59,7 +59,7 @@ PLAN
 
 # Start commander
 echo "3. Starting commander with plan..."
-npx fleet command --plan-file plan.yml &
+npx fleetspark command --plan-file plan.yml &
 COMMANDER_PID=$!
 
 # Wait for FLEET.md to be created
@@ -68,7 +68,7 @@ sleep 5
 # Start ship
 echo "4. Starting ship..."
 REPO_URL=$(gh repo view --json url -q .url)
-npx fleet ship --join "$REPO_URL" &
+npx fleetspark ship --join "$REPO_URL" &
 SHIP_PID=$!
 
 # Wait for completion (timeout: 5 minutes)

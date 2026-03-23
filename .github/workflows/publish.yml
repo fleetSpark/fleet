@@ -55,7 +55,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish fleet-cli
+      - name: Publish fleetspark
         run: npm publish --workspace packages/cli --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

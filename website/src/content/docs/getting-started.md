@@ -17,7 +17,7 @@ On the machine that will be your commander:
 
 ```bash
 cd your-project
-npx fleet init
+npx fleetspark init
 ```
 
 This creates `.fleet/config.yml` and the `fleet/state` branch with an empty `FLEET.md`.
@@ -25,7 +25,7 @@ This creates `.fleet/config.yml` and the `fleet/state` branch with an empty `FLE
 ## Plan your work
 
 ```bash
-npx fleet command --plan "Add OAuth login, fix the rate limiter, update API docs"
+npx fleetspark command --plan "Add OAuth login, fix the rate limiter, update API docs"
 ```
 
 The commander uses an LLM to decompose your goal into independent missions with dependencies, creates branches, and writes the plan to `FLEET.md`.
@@ -33,7 +33,7 @@ The commander uses an LLM to decompose your goal into independent missions with 
 You can also load a pre-defined plan from a YAML file:
 
 ```bash
-npx fleet command --plan-file missions.yml
+npx fleetspark command --plan-file missions.yml
 ```
 
 ## Join the fleet
@@ -41,7 +41,7 @@ npx fleet command --plan-file missions.yml
 On any other machine:
 
 ```bash
-npx fleet ship --join git@github.com:you/your-project.git
+npx fleetspark ship --join git@github.com:you/your-project.git
 ```
 
 The ship clones the repo, reads its assigned mission from `FLEET.md`, starts the coding agent, and begins pushing heartbeats every 60 seconds.
@@ -50,13 +50,13 @@ The ship clones the repo, reads its assigned mission from `FLEET.md`, starts the
 
 ```bash
 # Interactive terminal dashboard
-npx fleet dashboard
+npx fleetspark dashboard
 
 # Simple text output
-npx fleet status --watch
+npx fleetspark status --watch
 
 # Machine-readable JSON
-npx fleet status --json
+npx fleetspark status --json
 ```
 
 The dashboard shows every ship's status, health, progress, merge queue, and blockers — updated in real time.

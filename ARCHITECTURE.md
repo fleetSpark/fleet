@@ -45,7 +45,7 @@ fleet/
 │   │       ├── merge/     MergeCommander (v0.2)
 │   │       └── brief/     BriefGenerator (v0.2)
 │   │
-│   ├── cli/               fleet-cli — the CLI tool users install
+│   ├── cli/               fleetspark — the CLI tool users install
 │   │   └── src/
 │   │       ├── index.ts   Entry point, registers all commands
 │   │       └── commands/  init, status, command, ship, assign, brief (v0.2), logs (v0.2)

@@ -40,7 +40,7 @@ Fleet is an npm workspaces monorepo:
 | Package | npm name | Purpose |
 |---------|----------|---------|
 | `packages/core` | `@fleet/core` | Protocol library — types, parsers, state machine, scheduler, git ops, heartbeat, merge, notifications, telemetry, election |
-| `packages/cli` | `fleet-cli` | The CLI tool users install — all `fleet` commands |
+| `packages/cli` | `fleetspark` | The CLI tool users install — all `fleet` commands |
 | `packages/adapters/claude` | `@fleet/adapter-claude` | Claude Code adapter |
 | `packages/adapters/codex` | `@fleet/adapter-codex` | Codex CLI adapter |
 | `packages/adapters/aider` | `@fleet/adapter-aider` | Aider adapter |
