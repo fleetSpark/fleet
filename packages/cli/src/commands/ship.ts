@@ -9,6 +9,7 @@ import {
   loadConfig,
   transition,
   ShipHeartbeat,
+  resolveAdapter,
 } from '@fleet/core';
 import type { Mission } from '@fleet/core';
 
@@ -98,24 +99,33 @@ export function registerShipCommand(program: Command): void {
       );
       heartbeat.start(missionLog);
 
+      // Read FLEET_CONTEXT.md from main branch if available
+      let briefContext: string | undefined;
+      try {
+        briefContext = await git.readFile('main', 'FLEET_CONTEXT.md');
+      } catch {
+        // No brief available
+      }
+
       // Load and start the adapter
       try {
-        const { claudeAdapter } = await import('@fleet/adapter-claude');
-        const session = await claudeAdapter.start(
+        const adapter = await resolveAdapter(mission.agent);
+        const session = await adapter.start(
           {
             id: mission.id,
             branch: mission.branch,
             brief: missionLog.brief,
             agent: mission.agent,
             depends: mission.depends,
-          }
+          },
+          briefContext
         );
 
         console.log(`Agent started (PID: ${session.pid}). Heartbeat active.`);
 
         // Monitor adapter until it exits
         const checkInterval = setInterval(async () => {
-          const alive = await claudeAdapter.isAlive(session);
+          const alive = await adapter.isAlive(session);
           if (!alive) {
             clearInterval(checkInterval);
             heartbeat.stop();
