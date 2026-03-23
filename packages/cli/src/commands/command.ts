@@ -24,6 +24,7 @@ export function registerCommandCommand(program: Cmd): void {
     .option('--plan <goal>', 'Decompose a goal into missions using LLM')
     .option('--plan-file <path>', 'Load missions from a YAML file')
     .option('--resume', 'Resume commander from existing FLEET.md state')
+    .option('--handoff', 'Transfer commander role to another machine')
     .action(async (options) => {
       const cwd = process.cwd();
       const git = new RealGitOps(cwd);
@@ -35,9 +36,11 @@ export function registerCommandCommand(program: Cmd): void {
         await handlePlan(git, cwd, config, options.plan);
       } else if (options.resume) {
         await handleResume(git, config);
+      } else if (options.handoff) {
+        await handleHandoff(git);
       } else {
         console.error(
-          'Specify --plan <goal>, --plan-file <path>, or --resume'
+          'Specify --plan <goal>, --plan-file <path>, --resume, or --handoff'
         );
         process.exit(1);
       }
@@ -241,6 +244,34 @@ async function handleResume(git: RealGitOps, config: any): Promise<void> {
   console.log(`Resumed commander role. ${active.length} active missions.`);
 
   await startMonitorLoop(git, config);
+}
+
+async function handleHandoff(git: RealGitOps): Promise<void> {
+  const content = await git.readFile('fleet/state', 'FLEET.md');
+  const manifest = parseFleetManifest(content);
+
+  const currentHost = hostname();
+  if (manifest.commander.host !== currentHost) {
+    console.error(
+      `This machine is not the active commander. Current commander: ${manifest.commander.host}`
+    );
+    process.exit(1);
+  }
+
+  manifest.commander.status = 'transferred';
+  manifest.commander.lastCheckin = new Date();
+  manifest.updated = new Date();
+
+  await git.writeAndPush(
+    'fleet/state',
+    'FLEET.md',
+    writeFleetManifest(manifest),
+    'fleet: commander handoff'
+  );
+
+  console.log(
+    "Commander role released. Run 'fleet command --resume' on any machine to take over."
+  );
 }
 
 async function startMonitorLoop(git: RealGitOps, config: any): Promise<void> {
