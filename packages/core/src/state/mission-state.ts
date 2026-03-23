@@ -11,7 +11,8 @@ export type StateEvent =
   | 'unstall'
   | 'fail'
   | 'queue_merge'
-  | 'merge';
+  | 'merge'
+  | 'reject';
 
 const TRANSITIONS: Record<string, Record<string, MissionStatus>> = {
   pending: { dependencies_met: 'ready' },
@@ -26,7 +27,7 @@ const TRANSITIONS: Record<string, Record<string, MissionStatus>> = {
   blocked: { unblock: 'in-progress', fail: 'failed' },
   stalled: { unstall: 'in-progress', fail: 'failed' },
   completed: { queue_merge: 'merge-queued' },
-  'merge-queued': { merge: 'merged' },
+  'merge-queued': { merge: 'merged', reject: 'in-progress' },
 };
 
 export function transition(current: MissionStatus, event: StateEvent): MissionStatus {

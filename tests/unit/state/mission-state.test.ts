@@ -16,6 +16,7 @@ describe('mission state machine', () => {
     ['stalled', 'fail', 'failed'],
     ['completed', 'queue_merge', 'merge-queued'],
     ['merge-queued', 'merge', 'merged'],
+    ['merge-queued', 'reject', 'in-progress'],
   ];
 
   for (const [from, event, to] of validTransitions) {
