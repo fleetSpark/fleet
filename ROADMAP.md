@@ -67,15 +67,18 @@ Support for additional coding agents and the full Spark execution model.
 
 ---
 
-## v1.0 — Production-ready
+## v1.0 — Production-ready (shipped)
 
-- [ ] OpenCode adapter (`@fleet/opencode`)
-- [ ] A2A protocol adapter (`@fleet/a2a`)
-- [ ] Slack/webhook notifications for merge events
-- [ ] Commander election protocol (multi-commander failover)
-- [ ] Ship resource limits and concurrency caps
-- [ ] Telemetry dashboard (mission throughput, ship utilization)
-- [ ] Documentation site live
+Full multi-agent support, production hardening, and documentation.
+
+- [x] OpenCode adapter (`@fleet/adapter-opencode`) — spawns `opencode --non-interactive`
+- [x] A2A protocol adapter (`@fleet/adapter-a2a`) — JSON-RPC A2A protocol client
+- [x] Slack/webhook notifications — Notifier with JSON + Slack formatting, event filtering
+- [x] Commander election protocol — optimistic locking via git push races, heartbeat, graceful release
+- [x] Ship resource limits and concurrency caps — per-ship + global limits, mission timeout detection
+- [x] Telemetry dashboard — TelemetryCollector with mission counts, ship utilization, throughput metrics
+- [x] Documentation site — Astro Starlight with architecture, adapters, CLI reference, configuration docs
+- [x] 154 tests across 30 test files (19 new: 13 election + 6 telemetry + 5 notifier + 6 resources + 4 A2A + 4 OpenCode)
 
 ---
 
