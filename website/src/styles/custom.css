@@ -244,6 +244,19 @@
   color: #38bdf8;
 }
 
+/* Sponsors */
+.sponsors-section {
+  text-align: center;
+  border-top: 1px solid #1a2035;
+}
+
+.sponsors-card {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  overflow: hidden;
+}
+
 /* Footer */
 .landing-footer {
   text-align: center;

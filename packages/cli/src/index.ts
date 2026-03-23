@@ -8,6 +8,7 @@ import { registerAssignCommand } from './commands/assign.js';
 import { registerBriefCommand } from './commands/brief.js';
 import { registerLogsCommand } from './commands/logs.js';
 import { registerDashboardCommand } from './commands/dashboard.js';
+import { registerWebCommand } from './commands/web.js';
 
 const program = new Command();
 
@@ -24,5 +25,6 @@ registerAssignCommand(program);
 registerBriefCommand(program);
 registerLogsCommand(program);
 registerDashboardCommand(program);
+registerWebCommand(program);
 
 program.parse();

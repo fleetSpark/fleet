@@ -4,11 +4,12 @@
   "type": "module",
   "workspaces": [
     "packages/core",
+    "packages/web-dashboard",
     "packages/cli",
     "packages/adapters/*"
   ],
   "scripts": {
-    "build": "tsc -b packages/core packages/adapters/claude packages/adapters/codex packages/adapters/aider packages/adapters/opencode packages/adapters/a2a packages/cli",
+    "build": "tsc -b packages/core packages/adapters/claude packages/adapters/codex packages/adapters/aider packages/adapters/opencode packages/adapters/a2a packages/web-dashboard packages/cli",
     "test": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
     "test:all": "vitest run",

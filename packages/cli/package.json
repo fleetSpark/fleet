@@ -15,6 +15,7 @@
   "dependencies": {
     "@fleet/adapter-claude": "*",
     "@fleet/core": "*",
+    "@fleet/web-dashboard": "*",
     "@types/react": "^18.3.28",
     "commander": "^13.1.0",
     "ink": "^5.2.1",
