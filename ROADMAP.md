@@ -73,23 +73,49 @@ Full multi-agent support, production hardening, and documentation.
 
 - [x] OpenCode adapter (`@fleetspark/adapter-opencode`) — spawns `opencode --non-interactive`
 - [x] A2A protocol adapter (`@fleetspark/adapter-a2a`) — JSON-RPC A2A protocol client
+- [x] Gemini CLI adapter (`@fleetspark/adapter-gemini`)
+- [x] Cursor CLI adapter (`@fleetspark/adapter-cursor`)
+- [x] Amp CLI adapter (`@fleetspark/adapter-amp`)
 - [x] Slack/webhook notifications — Notifier with JSON + Slack formatting, event filtering
 - [x] Commander election protocol — optimistic locking via git push races, heartbeat, graceful release
 - [x] Ship resource limits and concurrency caps — per-ship + global limits, mission timeout detection
 - [x] Telemetry dashboard — TelemetryCollector with mission counts, ship utilization, throughput metrics
 - [x] Documentation site — Astro Starlight with architecture, adapters, CLI reference, configuration docs
-- [x] 154 tests across 30 test files (19 new: 13 election + 6 telemetry + 5 notifier + 6 resources + 4 A2A + 4 OpenCode)
+- [x] Interactive TUI dashboard (`fleet dashboard` — Ink/React)
+- [x] Web dashboard — browser-based fleet monitoring with mobile support
+- [x] npm publish — `npx fleetspark` available on npm registry
+- [x] 230+ tests across 44 test files
 
 ---
 
-## Backlog (unscheduled)
+## v1.1 — Growth & Onboarding (in progress)
 
-Features mentioned in docs or design discussions, not yet assigned to a milestone.
+Remove friction at every stage of the user journey.
 
-- [x] Interactive mission board (`fleet dashboard` — Ink/React TUI)
-- [ ] Web dashboard — browser-based fleet monitoring with mobile support (check progress from your phone while on the road)
+- [ ] `fleet demo` — zero-friction simulated fleet run (no repo, no agents, no network)
+- [ ] Mission templates — 5 built-in reusable plans (`--template test-coverage|security-audit|api-docs|dependency-update|refactor`)
+- [ ] `fleet report` — post-run markdown summary with timing, merge status, time-saved estimate
+- [ ] GitHub Action (`fleetspark/fleet-action`) — run fleet operations in CI workflows
+
+---
+
+## v1.5 — Ecosystem (planned)
+
+Expand FleetSpark beyond the CLI into developer workflows and cloud infrastructure.
+
+- [ ] VS Code extension — sidebar mission board, ship health, command palette integration
+- [ ] Agent performance benchmarks — per-agent success rate, avg duration, best-fit tracking
+- [ ] Cloud ship provisioning — `fleet ship --spawn aws|fly` auto-provisions VMs
+- [ ] Discord/Linear/Telegram webhook integrations
+
+---
+
+## v2.0 — Platform (planned)
+
+Transform FleetSpark from a CLI tool into a collaborative development platform.
+
+- [ ] Fleet for Teams — shared mission board with invite links, multi-developer coordination
+- [ ] Fleet Cloud SaaS — hosted commander + cloud ships, usage-based pricing
 - [ ] `fleet replay <mission-id>` — re-run a failed mission
-- [ ] Ship health scoring (success rate, avg completion time)
-- [ ] Mission templates (reusable task patterns)
 - [ ] Git provider abstraction (GitLab, Bitbucket support)
-- [ ] Remote ship mode (EC2/cloud VM auto-provisioning)
+- [ ] Mission marketplace — community-contributed templates
