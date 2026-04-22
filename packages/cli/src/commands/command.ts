@@ -1,7 +1,7 @@
 import type { Command as Cmd } from 'commander';
 import { readFile } from 'node:fs/promises';
 import { hostname } from 'node:os';
-import { parse as parseYaml } from 'yaml';
+import { parse as parseYaml, stringify as yamlStringify } from 'yaml';
 import {
   RealGitOps,
   loadConfig,
@@ -14,6 +14,8 @@ import {
   transition,
   MergeCommander,
   parseMissionLog,
+  getTemplate,
+  listTemplates,
 } from '@fleetspark/core';
 import type { FleetManifest, Mission, MissionLog, TaskBrief, MergeResult } from '@fleetspark/core';
 
@@ -25,6 +27,7 @@ export function registerCommandCommand(program: Cmd): void {
     .option('--plan-file <path>', 'Load missions from a YAML file')
     .option('--resume', 'Resume commander from existing FLEET.md state')
     .option('--handoff', 'Transfer commander role to another machine')
+    .option('--template <name>', 'Use a built-in mission template')
     .action(async (options) => {
       const cwd = process.cwd();
       const git = new RealGitOps(cwd);
@@ -38,9 +41,11 @@ export function registerCommandCommand(program: Cmd): void {
         await handleResume(git, config);
       } else if (options.handoff) {
         await handleHandoff(git);
+      } else if (options.template) {
+        await handleTemplate(git, cwd, config, options.template);
       } else {
         console.error(
-          'Specify --plan <goal>, --plan-file <path>, --resume, or --handoff'
+          'Specify --plan <goal>, --plan-file <path>, --resume, --handoff, or --template <name>'
         );
         process.exit(1);
       }
@@ -160,6 +165,35 @@ async function handlePlanFile(
 
   // Start monitoring loop
   await startMonitorLoop(git, config);
+}
+
+async function handleTemplate(
+  git: RealGitOps,
+  cwd: string,
+  config: any,
+  templateName: string
+): Promise<void> {
+  if (templateName === 'list') {
+    const templates = listTemplates();
+    console.log('Available templates:\n');
+    for (const t of templates) {
+      console.log(`  ${t.name} - ${t.description} (${t.missions.length} missions)`);
+    }
+    return;
+  }
+
+  const template = getTemplate(templateName);
+  if (!template) {
+    console.error(`Unknown template: "${templateName}". Run --template list to see available templates.`);
+    process.exit(1);
+  }
+
+  const { writeFile: wf } = await import('node:fs/promises');
+  const { join } = await import('node:path');
+  const planPath = join(cwd, '.fleet', 'last-plan.yml');
+  await wf(planPath, yamlStringify({ missions: template.missions }), 'utf-8');
+
+  await handlePlanFile(git, cwd, config, planPath);
 }
 
 async function handlePlan(
