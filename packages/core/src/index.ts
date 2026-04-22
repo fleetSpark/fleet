@@ -17,3 +17,5 @@ export { Notifier, type FleetEvent, type NotificationConfig, type WebhookConfig 
 export { ResourceManager, type ResourceConfig } from './resources/resource-manager.js';
 export { TelemetryCollector, type TelemetrySnapshot } from './telemetry/telemetry.js';
 export { CommanderElection, type ClaimResult } from './election/commander-election.js';
+export { listTemplates, getTemplate, type MissionTemplate } from './templates/index.js';
+export { generateReport, generateReportJson } from './report/report-generator.js';
