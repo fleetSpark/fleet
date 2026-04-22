@@ -1,0 +1,28 @@
+name: 'FleetSpark'
+description: 'Run FleetSpark fleet operations in GitHub Actions'
+author: 'fleetSpark'
+branding:
+  icon: 'zap'
+  color: 'yellow'
+
+inputs:
+  command:
+    description: 'FleetSpark command to run (init, plan, ship, status, report)'
+    required: true
+  plan:
+    description: 'Goal to decompose into missions (used with command: plan)'
+    required: false
+  template:
+    description: 'Mission template name (used with command: plan)'
+    required: false
+  agent:
+    description: 'AI agent to use for ship mode (default: claude-code)'
+    required: false
+    default: 'claude-code'
+  repo:
+    description: 'Repository URL for ship --join (defaults to current repo)'
+    required: false
+
+runs:
+  using: 'node20'
+  main: 'index.js'
