@@ -201,7 +201,7 @@ ships:
 
 ---
 
-## Why Fleet
+## Competitive landscape
 
 Every AI coding tool today assumes one developer, one machine, one session.
 

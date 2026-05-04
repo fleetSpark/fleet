@@ -15,9 +15,10 @@ npm run test:all   # 218+ tests must pass
 ## What we need most
 
 1. **Adapters** — wrappers for new coding agents (Gemini CLI, Cursor CLI, Amp, etc.). See [Adapters docs](https://fleetspark.dev/adapters/). Highest-impact contribution.
-2. **Real-world testing** — try Fleet on your actual projects and file issues for anything that breaks.
-3. **Bug fixes** — check open issues labeled `bug`.
-4. **Documentation** — improvements to website content, examples, or inline docs.
+2. **Protocol feedback** — read [protocol.md](protocol.md) and open an issue if anything is unclear, broken, or missing.
+3. **Real-world testing** — try Fleet on your actual projects and file issues for anything that breaks.
+4. **Bug fixes** — check open issues labeled `bug`.
+5. **Documentation** — improvements to website content, examples, or inline docs.
 
 ## Project structure
 

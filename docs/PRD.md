@@ -4,6 +4,8 @@
 > One developer. Every machine they own. All running agents in parallel.  
 > A commander coordinates, recovers failures, merges work — while you sleep.
 
+Roadmap extension: see [docs/ROADMAP.md](ROADMAP.md) for post-v1 product evolution priorities.
+
 ---
 
 ## 1. What Fleet Is
