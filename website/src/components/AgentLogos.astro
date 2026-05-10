@@ -1,140 +1,70 @@
 ---
 const agents = [
-  'Claude Code',
-  'Codex',
-  'Aider',
-  'OpenCode',
-  'Gemini CLI',
-  'Cursor',
-  'Amp',
-  'A2A Protocol',
-];
-
-const stats = [
-  { value: '8', label: 'Adapters' },
-  { value: '230+', label: 'Tests' },
-  { value: '44', label: 'Test Files' },
-  { value: '11', label: 'CLI Commands' },
+  { glyph: '🅒', name: 'Claude Code',    pkg: '@fleetspark/adapter-claude',   status: 'shipped', desc: "Anthropic's CLI agent. The default for most fleet runs — battle-tested across hundreds of missions." },
+  { glyph: '○',  name: 'OpenAI Codex',   pkg: '@fleetspark/adapter-codex',    status: 'shipped', desc: 'OpenAI\'s terminal agent. Reasoning-heavy missions; runs alongside Claude Code on the same plan.' },
+  { glyph: '◇',  name: 'Aider',          pkg: '@fleetspark/adapter-aider',    status: 'shipped', desc: 'The original local AI pair-programmer. Ideal for surgical edits and quick refactors on spot instances.' },
+  { glyph: '◆',  name: 'OpenCode',       pkg: '@fleetspark/adapter-opencode', status: 'shipped', desc: 'Open-source CLI agent. Run completely offline on your own hardware — no API keys required.' },
+  { glyph: '✦',  name: 'Gemini CLI',     pkg: '@fleetspark/adapter-gemini',   status: 'shipped', desc: "Google's Gemini CLI. Pair with Claude Code for multi-model redundancy across long-running runs." },
+  { glyph: '⌥',  name: 'Cursor',         pkg: '@fleetspark/adapter-cursor',   status: 'shipped', desc: 'Cursor in headless mode. Leverage its codebase-aware context engine inside fleet missions.' },
+  { glyph: '⚡',  name: 'Amp',            pkg: '@fleetspark/adapter-amp',      status: 'shipped', desc: 'Sourcegraph Amp. Deep symbol navigation across large codebases — strong on refactor missions.' },
+  { glyph: '⌬',  name: 'A2A / Custom',   pkg: '@fleetspark/adapter-a2a',      status: 'shipped', desc: 'Any A2A-compatible agent. Write a 50-line adapter and ship your own agent into the fleet.' },
 ];
 ---
 
-<div class="landing-section agent-logos-section">
-  <h2>Works with every major AI coding agent</h2>
-  <p class="subtitle">8 built-in adapters. Bring your own via the plugin API.</p>
+<section class="fs-section">
+  <div class="fs-eyebrow">Agent ecosystem</div>
+  <h2 class="fs-title">Bring your own agent. Fleet doesn't care.</h2>
+  <p class="fs-sub">8 adapters ship out of the box. Mix Claude Code on your laptop with Codex on a desktop and Aider on a spot instance — all on the same plan, coordinated through GitHub.</p>
 
-  <div class="agent-row">
-    {agents.map((name) => (
-      <span class="agent-badge">{name}</span>
-    ))}
-  </div>
-
-  <div class="stats-row">
-    {stats.map((stat) => (
-      <div class="stat-item">
-        <span class="stat-value">{stat.value}</span>
-        <span class="stat-label">{stat.label}</span>
+  <div class="ag-grid">
+    {agents.map((a, i) => (
+      <div class={`ag-card${i === 0 ? ' ag-shipping' : ''}`}>
+        <div class="ag-head">
+          <span class="ag-glyph">{a.glyph}</span>
+          <div>
+            <div class="ag-name">{a.name}</div>
+            <div class="ag-pkg">{a.pkg}</div>
+          </div>
+          <span class={`ag-status${i === 0 ? ' ag-status-on' : ' ag-status-done'}`}>shipped</span>
+        </div>
+        <p>{a.desc}</p>
       </div>
     ))}
+    <div class="ag-card ag-blank">
+      <div class="ag-blank-content">
+        <div class="ag-blank-glyph">+</div>
+        <div class="ag-blank-title">Your adapter here</div>
+        <div class="ag-blank-sub">≈50 lines — see <span class="mono">/adapters/</span></div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
 <style>
-  .agent-logos-section {
-    text-align: center;
-    background: #0d1120;
-    border-top: 1px solid #1a2035;
-    border-bottom: 1px solid #1a2035;
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+  .ag-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 900px) { .ag-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .ag-grid { grid-template-columns: 1fr; } }
+  .ag-card {
+    padding: 20px;
+    border: 1px solid var(--fs-line);
+    background: var(--fs-panel);
+    border-radius: 14px;
+    transition: border-color 0.2s ease;
   }
-
-  .agent-logos-section h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #f1f5f9;
-    margin-bottom: 0.75rem;
-  }
-
-  .agent-logos-section .subtitle {
-    color: #94a3b8;
-    font-size: 1.125rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .agent-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem;
-    max-width: 48rem;
-    margin: 0 auto 3rem;
-  }
-
-  .agent-badge {
-    display: inline-block;
-    padding: 0.5rem 1.25rem;
-    border-radius: 999px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #e2e8f0;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid #334155;
-    transition: all 0.25s ease;
-    cursor: default;
-  }
-
-  .agent-badge:hover {
-    border-color: #facc15;
-    color: #facc15;
-    background: rgba(250, 204, 21, 0.06);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(250, 204, 21, 0.1);
-  }
-
-  .stats-row {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    flex-wrap: wrap;
-    padding-top: 2rem;
-    border-top: 1px solid #1a2035;
-    max-width: 40rem;
-    margin: 0 auto;
-  }
-
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-  }
-
-  .stat-value {
-    font-size: 2.25rem;
-    font-weight: 800;
-    color: #facc15;
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-size: 0.85rem;
-    color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 500;
-  }
-
-  @media (max-width: 768px) {
-    .agent-logos-section h2 {
-      font-size: 1.5rem;
-    }
-
-    .stats-row {
-      gap: 2rem;
-    }
-
-    .stat-value {
-      font-size: 1.75rem;
-    }
-  }
+  .ag-card:hover { border-color: var(--fs-line-2); }
+  .ag-shipping { border-color: rgba(250, 204, 21, 0.4); background: linear-gradient(180deg, rgba(250,204,21,0.04), var(--fs-panel)); }
+  .ag-head { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .ag-glyph { font-size: 22px; line-height: 1; color: var(--fs-spark); width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--fs-line-2); border-radius: 8px; background: rgba(255,255,255,0.02); }
+  .ag-name { font-family: var(--fs-display); font-size: 15px; font-weight: 700; color: var(--fs-text); letter-spacing: -0.01em; }
+  .ag-pkg { font-family: var(--fs-mono); font-size: 10px; color: var(--fs-muted-2); }
+  .ag-status { font-family: var(--fs-mono); font-size: 10px; padding: 3px 8px; border: 1px solid var(--fs-line); border-radius: 999px; white-space: nowrap; color: var(--fs-muted-2); }
+  .ag-status-on  { color: var(--fs-spark);  border-color: rgba(250,204,21,0.4);  background: rgba(250,204,21,0.06); }
+  .ag-status-done{ color: var(--fs-ok);     border-color: rgba(52,211,153,0.3);  background: rgba(52,211,153,0.05); }
+  .ag-card p { font-size: 13px; color: var(--fs-muted); line-height: 1.55; margin: 0; }
+  .ag-blank { display: grid; place-items: center; border-style: dashed; }
+  .ag-blank-content { text-align: center; }
+  .ag-blank-glyph { font-size: 32px; color: var(--fs-muted-2); }
+  .ag-blank-title { font-family: var(--fs-display); font-weight: 600; color: var(--fs-text); margin: 4px 0 2px; }
+  .ag-blank-sub { font-size: 11px; color: var(--fs-muted-2); }
+  .mono { font-family: var(--fs-mono); color: var(--fs-spark); }
 </style>

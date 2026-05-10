@@ -1,95 +1,67 @@
 ---
 ---
-<section class="cta-banner">
-  <div class="cta-content">
-    <h2>Ready to put your idle machines to work?</h2>
-    <p class="cta-subtitle">Get started in under 5 minutes. No servers, no accounts, no infrastructure.</p>
-    <div class="cta-buttons">
-      <a href="/getting-started/" class="btn-primary">Get Started</a>
-      <a href="https://github.com/fleetSpark/fleet" class="btn-secondary">View on GitHub</a>
-    </div>
-    <div class="cta-install">
-      <code>npx fleetspark init</code>
+<section class="fs-section cta-section">
+  <div class="cta-card">
+    <div class="cta-bg" aria-hidden="true"></div>
+    <div class="cta-grid">
+      <div>
+        <div class="fs-eyebrow" style="color: rgba(10,14,23,0.7);">v1.1.1 · MIT · open source</div>
+        <h2 class="cta-title">Three machines.<br />Three missions.<br />Twenty-three&nbsp;minutes.</h2>
+        <p class="cta-sub">While you slept. While you were in a meeting. While you were doing literally anything else.</p>
+        <div class="cta-row">
+          <a class="fs-btn fs-btn-primary cta-btn-primary" href="/getting-started/">Start the fleet →</a>
+          <a class="fs-btn cta-btn-ghost" href="https://github.com/fleetSpark/fleet">View on GitHub</a>
+        </div>
+      </div>
+      <div class="cta-terminal">
+        <div class="cta-term-bar">
+          <span></span><span></span><span></span>
+          <span class="cta-term-title">~/your-repo</span>
+        </div>
+        <div class="cta-term-body fs-mono">
+          <div><span class="cta-prompt">$</span> npx fleetspark init</div>
+          <div><span class="cta-prompt">$</span> npx fleetspark command --plan \</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;"the thing you've been putting off"</div>
+          <div class="cta-dim">↳ 7 missions planned. Open your laptop tomorrow.</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .cta-banner {
-    background: #111;
-    width: 100%;
-    padding: 5rem 2rem;
-    text-align: center;
+  .cta-section { padding-top: 40px; padding-bottom: 100px; }
+  .cta-card {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    padding: 56px;
+    color: #0a0e17;
+    background: linear-gradient(135deg, #fde047 0%, #facc15 35%, #fb923c 80%, #f87171 100%);
+    isolation: isolate;
   }
-
-  .cta-content {
-    max-width: 640px;
-    margin: 0 auto;
+  .cta-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 100%, rgba(56,189,248,0.4), transparent 60%),
+      radial-gradient(ellipse 40% 30% at 100% 0%, rgba(255,255,255,0.3), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
   }
-
-  .cta-content h2 {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: #fff;
-    margin: 0 0 1rem;
-    line-height: 1.2;
-  }
-
-  .cta-subtitle {
-    font-size: 1.125rem;
-    color: #94a3b8;
-    margin: 0 0 2rem;
-    line-height: 1.6;
-  }
-
-  .cta-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
-
-  .btn-primary {
-    display: inline-block;
-    padding: 0.75rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #000;
-    background: linear-gradient(135deg, #facc15, #f59e0b);
-    border-radius: 8px;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-
-  .btn-primary:hover {
-    opacity: 0.9;
-  }
-
-  .btn-secondary {
-    display: inline-block;
-    padding: 0.75rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e2e8f0;
-    background: transparent;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: border-color 0.2s;
-  }
-
-  .btn-secondary:hover {
-    border-color: #94a3b8;
-  }
-
-  .cta-install code {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    font-size: 0.875rem;
-    color: #64748b;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.5rem 1.25rem;
-    border-radius: 6px;
-    display: inline-block;
-  }
+  .cta-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; }
+  @media (max-width: 920px) { .cta-grid { grid-template-columns: 1fr; } .cta-card { padding: 36px 28px; } }
+  .cta-title { font-family: var(--fs-display); font-size: clamp(34px, 5vw, 56px); line-height: 0.98; letter-spacing: -0.03em; font-weight: 700; margin: 12px 0 14px; color: #0a0e17; }
+  .cta-sub { font-size: 17px; color: rgba(10,14,23,0.75); margin: 0 0 28px; max-width: 480px; line-height: 1.5; }
+  .cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .cta-btn-primary { background: #0a0e17; color: #facc15 !important; box-shadow: 0 12px 30px -10px rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,0.1); }
+  .cta-btn-primary:hover { background: #1a2035; }
+  .cta-btn-ghost { background: rgba(10,14,23,0.08); border: 1px solid rgba(10,14,23,0.2); color: #0a0e17 !important; }
+  .cta-btn-ghost:hover { background: rgba(10,14,23,0.15); }
+  .cta-terminal { border-radius: 14px; overflow: hidden; background: #0a0e17; box-shadow: 0 24px 60px -20px rgba(0,0,0,.5); }
+  .cta-term-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: #06070d; border-bottom: 1px solid #1a2035; }
+  .cta-term-bar > span:nth-child(-n+3) { width: 9px; height: 9px; border-radius: 50%; background: #232a44; }
+  .cta-term-title { margin-left: 8px; font-family: var(--fs-mono); font-size: 11px; color: var(--fs-muted-2); }
+  .cta-term-body { padding: 18px 20px; font-size: 13px; color: var(--fs-text); line-height: 1.8; }
+  .cta-prompt { color: var(--fs-spark); }
+  .cta-dim { color: var(--fs-muted-2); margin-top: 4px; }
 </style>

@@ -1,61 +1,70 @@
 ---
 ---
-<div class="landing-section">
-  <h2>Why Fleet</h2>
-  <p class="subtitle">Every AI coding tool today assumes one developer, one machine, one session.</p>
+<section class="fs-section">
+  <div class="fs-eyebrow">Why fleet</div>
+  <h2 class="fs-title">Every AI coding tool assumes one developer, one machine, one session.</h2>
+  <p class="fs-sub">Fleet is the only thing that turns the agents you already use into a coordinated swarm. The same Claude Code, Codex, and Aider — just multiplied.</p>
 
-  <table class="comparison-table">
-    <thead>
-      <tr>
-        <th>Tool</th>
-        <th>Multi-machine</th>
-        <th>Multi-agent</th>
-        <th>Auto-planning</th>
-        <th>Auto-merge</th>
-        <th>Failover</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Claude Code</td>
-        <td>✗</td>
-        <td>✗</td>
-        <td>✗</td>
-        <td>✗</td>
-        <td>✗</td>
-      </tr>
-      <tr>
-        <td>Codex CLI</td>
-        <td>✗</td>
-        <td>✗</td>
-        <td>✗</td>
-        <td>✗</td>
-        <td>✗</td>
-      </tr>
-      <tr>
-        <td>Aider</td>
-        <td>✗</td>
-        <td>✗</td>
-        <td>✗</td>
-        <td>✗</td>
-        <td>✗</td>
-      </tr>
-      <tr>
-        <td>GitHub Copilot</td>
-        <td>✗</td>
-        <td>✗</td>
-        <td>✗</td>
-        <td>✗</td>
-        <td>✗</td>
-      </tr>
-      <tr class="highlight">
-        <td><strong>Fleet</strong></td>
-        <td>✓</td>
-        <td>✓ (8 agents)</td>
-        <td>✓</td>
-        <td>✓</td>
-        <td>✓</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <div class="ct-wrap">
+    <div class="ct-rowhead">
+      <div class="ct-c1">Tool</div>
+      <div>Multi-machine</div>
+      <div>Multi-agent</div>
+      <div>Auto-planning</div>
+      <div>Auto-merge</div>
+      <div>Failover</div>
+    </div>
+    <div class="ct-row"><div class="ct-c1">Claude Code</div><div>·</div><div>·</div><div>·</div><div>·</div><div>·</div></div>
+    <div class="ct-row"><div class="ct-c1">Codex CLI</div><div>·</div><div>·</div><div>·</div><div>·</div><div>·</div></div>
+    <div class="ct-row"><div class="ct-c1">Aider</div><div>·</div><div>·</div><div>·</div><div>·</div><div>·</div></div>
+    <div class="ct-row"><div class="ct-c1">GitHub Copilot</div><div>·</div><div>·</div><div>·</div><div>·</div><div>·</div></div>
+    <div class="ct-row ct-fleet">
+      <div class="ct-c1"><span class="ct-spark">⚡</span> <strong>fleetSpark</strong></div>
+      <div class="ct-y">✓</div>
+      <div class="ct-y">✓ <span class="ct-note">8 agents</span></div>
+      <div class="ct-y">✓</div>
+      <div class="ct-y">✓</div>
+      <div class="ct-y">✓</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ct-wrap {
+    border: 1px solid var(--fs-line);
+    background: linear-gradient(180deg, var(--fs-panel), var(--fs-panel-2));
+    border-radius: 16px;
+    overflow: hidden;
+    font-family: var(--fs-mono);
+  }
+  .ct-rowhead, .ct-row {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(5, 1fr);
+    align-items: center;
+    padding: 14px 22px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--fs-line);
+  }
+  .ct-rowhead { color: var(--fs-muted-2); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(255,255,255,0.01); }
+  .ct-row { color: var(--fs-dim); }
+  .ct-row:last-child { border-bottom: none; }
+  .ct-c1 { color: var(--fs-text); font-weight: 600; text-transform: none; letter-spacing: 0; font-family: var(--fs-display); font-size: 15px; }
+  .ct-row.ct-fleet {
+    position: relative;
+    background: linear-gradient(90deg, rgba(250,204,21,0.05), rgba(56,189,248,0.04));
+    color: var(--fs-text);
+  }
+  .ct-row.ct-fleet::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: linear-gradient(180deg, var(--fs-spark), var(--fs-signal));
+  }
+  .ct-row.ct-fleet .ct-c1 { font-size: 17px; }
+  .ct-spark { color: var(--fs-spark); font-size: 1.1em; }
+  .ct-y { color: var(--fs-ok); font-weight: 700; }
+  .ct-note { color: var(--fs-muted-2); font-weight: 400; font-size: 11px; margin-left: 4px; }
+
+  @media (max-width: 760px) {
+    .ct-rowhead, .ct-row { grid-template-columns: 1.4fr repeat(5, 0.6fr); padding: 12px 14px; font-size: 11px; }
+    .ct-c1 { font-size: 13px !important; }
+  }
+</style>

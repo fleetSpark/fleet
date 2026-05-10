@@ -1,21 +1,193 @@
 ---
 ---
-<div class="landing-section">
-  <h2>Spark execution</h2>
-  <p class="subtitle">Three speed optimizations borrowed from Apache Spark.</p>
+<section class="fs-section">
+  <div class="fs-eyebrow">Spark execution</div>
+  <h2 class="fs-title">The bits that turn three machines into one fleet.</h2>
+  <p class="fs-sub">Parallel dispatch, shadow re-runs when a ship goes dark, and fleet-wide context shared in seconds — not at the speed of "let me catch you up on Slack."</p>
 
-  <div class="spark-cards">
-    <div class="spark-card">
-      <h3>⚡ Parallel DAG Dispatch</h3>
-      <p>Every mission with no dependencies starts immediately. Independent branches never wait for each other.</p>
-    </div>
-    <div class="spark-card">
-      <h3>👥 Shadow Dispatch</h3>
-      <p>Stalled ship? Commander clones the mission to a spare machine. First to finish wins.</p>
-    </div>
-    <div class="spark-card">
-      <h3>📋 Fleet Brief</h3>
-      <p>One codebase analysis pass before missions start. Every ship skips the 15–30 turn exploration phase and executes immediately.</p>
-    </div>
+  <div class="se-grid">
+    <article class="se-card">
+      <header>
+        <div class="se-pill">DISPATCH</div>
+        <h3>DAG dispatch</h3>
+        <p>The commander plans your goal as a dependency graph and pushes branches in topological order. Independent missions ship in parallel — automatically.</p>
+      </header>
+      <div class="se-viz">
+        <svg id="se-dag" viewBox="0 0 320 200">
+          <line id="dag-l1" x1="50" y1="40" x2="120" y2="100" stroke="#232a44" stroke-width="1.4"></line>
+          <line id="dag-l2" x1="50" y1="40" x2="120" y2="40" stroke="#232a44" stroke-width="1.4"></line>
+          <line id="dag-l3" x1="50" y1="40" x2="120" y2="160" stroke="#232a44" stroke-width="1.4"></line>
+          <line id="dag-l4" x1="120" y1="40" x2="240" y2="100" stroke="#232a44" stroke-width="1.4"></line>
+          <line id="dag-l5" x1="120" y1="100" x2="240" y2="100" stroke="#232a44" stroke-width="1.4"></line>
+          <line id="dag-l6" x1="120" y1="160" x2="240" y2="100" stroke="#232a44" stroke-width="1.4"></line>
+          <g id="dag-n0" transform="translate(50 40)"><circle r="14" fill="#0a0e17" stroke="#facc15" stroke-width="1.4"></circle><text text-anchor="middle" dy="4" fill="#facc15" font-size="10" font-family="JetBrains Mono,monospace" font-weight="700">P</text></g>
+          <g id="dag-n1" transform="translate(120 40)"><circle r="14" fill="#0a0e17" stroke="#1a2035" stroke-width="1.4"></circle><text text-anchor="middle" dy="4" fill="#475569" font-size="10" font-family="JetBrains Mono,monospace" font-weight="700">M1</text></g>
+          <g id="dag-n2" transform="translate(120 100)"><circle r="14" fill="#0a0e17" stroke="#1a2035" stroke-width="1.4"></circle><text text-anchor="middle" dy="4" fill="#475569" font-size="10" font-family="JetBrains Mono,monospace" font-weight="700">M2</text></g>
+          <g id="dag-n3" transform="translate(120 160)"><circle r="14" fill="#0a0e17" stroke="#1a2035" stroke-width="1.4"></circle><text text-anchor="middle" dy="4" fill="#475569" font-size="10" font-family="JetBrains Mono,monospace" font-weight="700">M3</text></g>
+          <g id="dag-n4" transform="translate(240 100)"><circle r="14" fill="#0a0e17" stroke="#1a2035" stroke-width="1.4"></circle><text text-anchor="middle" dy="4" fill="#475569" font-size="10" font-family="JetBrains Mono,monospace" font-weight="700">⤳</text></g>
+        </svg>
+      </div>
+      <footer class="se-foot fs-mono">
+        <span class="se-tag">parallel: 3×</span>
+        <span class="se-tag">topo-sort</span>
+      </footer>
+    </article>
+
+    <article class="se-card">
+      <header>
+        <div class="se-pill" style="color:var(--fs-warn); border-color:rgba(251,146,60,0.4); background:rgba(251,146,60,0.06);">SHADOW</div>
+        <h3>Shadow dispatch</h3>
+        <p>A ship missed three heartbeats. Without waking you up, the commander reassigns the same mission to a healthy ship — first one to PR wins. No babysitting.</p>
+      </header>
+      <div class="se-viz">
+        <svg id="se-shadow" viewBox="0 0 320 200">
+          <line x1="40" y1="100" x2="280" y2="100" stroke="#161b30" stroke-width="2"></line>
+          <text x="40" y="90" fill="#64748b" font-size="9" font-family="JetBrains Mono,monospace">ship-a · ec2</text>
+          <line id="sh-a" x1="40" y1="100" x2="40" y2="100" stroke="#f87171" stroke-width="3" stroke-linecap="round"></line>
+          <text id="sh-a-label" x="0" y="0" fill="#f87171" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">×</text>
+
+          <line x1="40" y1="160" x2="280" y2="160" stroke="#161b30" stroke-width="2"></line>
+          <text x="40" y="150" fill="#64748b" font-size="9" font-family="JetBrains Mono,monospace">ship-b · desktop</text>
+          <line id="sh-b" x1="40" y1="160" x2="40" y2="160" stroke="#34d399" stroke-width="3" stroke-linecap="round"></line>
+          <circle id="sh-b-tip" cx="40" cy="160" r="3.5" fill="#34d399" opacity="0"></circle>
+
+          <g id="sh-flag" opacity="0" transform="translate(280 160)">
+            <rect x="-22" y="-10" width="44" height="20" rx="4" fill="rgba(52,211,153,0.12)" stroke="#34d399" stroke-width="0.8"></rect>
+            <text text-anchor="middle" dy="4" fill="#34d399" font-size="10" font-family="JetBrains Mono,monospace" font-weight="700">WIN</text>
+          </g>
+
+          <text x="160" y="40" text-anchor="middle" fill="#475569" font-size="10" font-family="JetBrains Mono,monospace">M-002 · 2 ships racing</text>
+        </svg>
+      </div>
+      <footer class="se-foot fs-mono">
+        <span class="se-tag">timeout: 3 beats</span>
+        <span class="se-tag">first-PR-wins</span>
+      </footer>
+    </article>
+
+    <article class="se-card">
+      <header>
+        <div class="se-pill" style="color:var(--fs-signal); border-color:rgba(56,189,248,0.4); background:rgba(56,189,248,0.06);">CONTEXT</div>
+        <h3>Fleet brief</h3>
+        <p>One mission generates context (an API schema, a migration plan). The brief is pushed once and every other ship picks it up before its next step. Map-reduce, but for context.</p>
+      </header>
+      <div class="se-viz">
+        <svg id="se-brief" viewBox="0 0 320 200">
+          <g transform="translate(60 100)">
+            <rect x="-30" y="-16" width="60" height="32" rx="6" fill="#0a0e17" stroke="#38bdf8" stroke-width="1.4"></rect>
+            <text text-anchor="middle" dy="-2" fill="#38bdf8" font-size="10" font-family="JetBrains Mono,monospace" font-weight="700">BRIEF</text>
+            <text text-anchor="middle" dy="10" fill="#475569" font-size="8" font-family="JetBrains Mono,monospace">api/schema</text>
+          </g>
+          <g id="brief-targets">
+            <g transform="translate(250 40)"><circle id="bt-1" r="14" fill="#0a0e17" stroke="#1a2035" stroke-width="1.4"></circle><text text-anchor="middle" dy="4" fill="#475569" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">M1</text></g>
+            <g transform="translate(250 100)"><circle id="bt-2" r="14" fill="#0a0e17" stroke="#1a2035" stroke-width="1.4"></circle><text text-anchor="middle" dy="4" fill="#475569" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">M2</text></g>
+            <g transform="translate(250 160)"><circle id="bt-3" r="14" fill="#0a0e17" stroke="#1a2035" stroke-width="1.4"></circle><text text-anchor="middle" dy="4" fill="#475569" font-size="9" font-family="JetBrains Mono,monospace" font-weight="700">M3</text></g>
+          </g>
+          <line x1="90" y1="100" x2="236" y2="40" stroke="#13182a" stroke-width="1" stroke-dasharray="3 4"></line>
+          <line x1="90" y1="100" x2="236" y2="100" stroke="#13182a" stroke-width="1" stroke-dasharray="3 4"></line>
+          <line x1="90" y1="100" x2="236" y2="160" stroke="#13182a" stroke-width="1" stroke-dasharray="3 4"></line>
+          <circle id="brief-p1" r="4" fill="#38bdf8" cx="90" cy="100" opacity="0"></circle>
+          <circle id="brief-p2" r="4" fill="#38bdf8" cx="90" cy="100" opacity="0"></circle>
+          <circle id="brief-p3" r="4" fill="#38bdf8" cx="90" cy="100" opacity="0"></circle>
+        </svg>
+      </div>
+      <footer class="se-foot fs-mono">
+        <span class="se-tag">fan-out: ∞</span>
+        <span class="se-tag">push once</span>
+      </footer>
+    </article>
   </div>
-</div>
+</section>
+
+<style>
+  .se-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 920px) { .se-grid { grid-template-columns: 1fr; } }
+  .se-card {
+    border: 1px solid var(--fs-line);
+    background: linear-gradient(180deg, var(--fs-panel), var(--fs-panel-2));
+    border-radius: 16px;
+    padding: 22px;
+    display: flex; flex-direction: column;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .se-card:hover { border-color: var(--fs-line-2); transform: translateY(-2px); }
+  .se-card header h3 { font-family: var(--fs-display); font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin: 10px 0 8px; color: var(--fs-text); }
+  .se-card header p { font-size: 14px; color: var(--fs-muted); line-height: 1.55; margin: 0; }
+  .se-pill { display: inline-block; padding: 3px 8px; border-radius: 999px; font-family: var(--fs-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: var(--fs-spark); background: rgba(250,204,21,0.06); border: 1px solid rgba(250,204,21,0.4); }
+  .se-viz { margin: 18px 0 14px; border: 1px dashed var(--fs-line); border-radius: 10px; padding: 8px; background: rgba(255,255,255,0.01); }
+  .se-viz svg { display: block; width: 100%; height: auto; }
+  .se-foot { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+  .se-tag { padding: 3px 8px; border-radius: 6px; font-size: 10px; color: var(--fs-muted-2); background: rgba(255,255,255,0.03); border: 1px solid var(--fs-line); }
+</style>
+
+<script is:inline>
+(() => {
+  const $ = id => document.getElementById(id);
+  const start = performance.now();
+  function tick(now) {
+    const t = ((now - start) / 1000) % 4;
+    const p = t / 4;
+    // DAG
+    const order = [
+      { id:'dag-n0', start:0 },
+      { id:'dag-n1', start:0.18 },
+      { id:'dag-n2', start:0.22 },
+      { id:'dag-n3', start:0.26 },
+      { id:'dag-n4', start:0.55 }
+    ];
+    order.forEach(n => {
+      const node = $(n.id);
+      if (!node) return;
+      const c = node.querySelector('circle'), txt = node.querySelector('text');
+      const on = p >= n.start && p < n.start + 0.6;
+      const colors = ['#facc15','#38bdf8','#c084fc','#34d399','#facc15'];
+      const col = colors[order.indexOf(n)];
+      c.setAttribute('stroke', on ? col : '#1a2035');
+      txt.setAttribute('fill', on ? col : '#475569');
+      c.setAttribute('r', on ? 16 : 14);
+    });
+    ['dag-l1','dag-l2','dag-l3','dag-l4','dag-l5','dag-l6'].forEach((id, i) => {
+      const l = $(id); if (!l) return;
+      l.setAttribute('stroke', p > 0.14 + i*0.04 ? '#38bdf8' : '#232a44');
+      l.setAttribute('opacity', p > 0.14 + i*0.04 ? 0.6 : 1);
+    });
+
+    // SHADOW
+    const shAEnd = 80 + 60 * Math.min(p * 2, 1);
+    const shA = $('sh-a'); if (shA) shA.setAttribute('x2', Math.min(shAEnd, 140));
+    const shALabel = $('sh-a-label');
+    if (shALabel) {
+      if (p > 0.3) { shALabel.setAttribute('x', Math.min(shAEnd, 140) + 10); shALabel.setAttribute('y', 103); shALabel.setAttribute('opacity', 1); }
+      else shALabel.setAttribute('opacity', 0);
+    }
+    const shBp = Math.max(0, (p - 0.3) / 0.7);
+    const shBEnd = 40 + 240 * shBp;
+    const shB = $('sh-b'); if (shB) shB.setAttribute('x2', shBEnd);
+    const shBTip = $('sh-b-tip'); if (shBTip) { shBTip.setAttribute('cx', shBEnd); shBTip.setAttribute('opacity', shBp > 0.05 ? 1 : 0); }
+    const shFlag = $('sh-flag'); if (shFlag) shFlag.setAttribute('opacity', shBp > 0.95 ? 1 : 0);
+
+    // BRIEF
+    const phases = [0, 0.12, 0.24];
+    [1,2,3].forEach((i, idx) => {
+      const ph = (p - phases[idx]) / 0.5;
+      const pkt = $(`brief-p${i}`); if (!pkt) return;
+      if (ph > 0 && ph < 1) {
+        const x = 90 + (236 - 90) * ph;
+        const targetY = idx === 0 ? 40 : idx === 1 ? 100 : 160;
+        const y = 100 + (targetY - 100) * ph;
+        pkt.setAttribute('cx', x); pkt.setAttribute('cy', y); pkt.setAttribute('opacity', 1);
+      } else {
+        pkt.setAttribute('opacity', 0);
+      }
+      const dot = $(`bt-${i}`); if (!dot) return;
+      const arrived = ph >= 1;
+      dot.setAttribute('stroke', arrived ? '#38bdf8' : '#1a2035');
+      const t = dot.parentElement.querySelector('text');
+      if (t) t.setAttribute('fill', arrived ? '#38bdf8' : '#475569');
+    });
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>

@@ -1,325 +1,218 @@
 ---
 ---
-<section class="hero">
-  <div class="hero-glow" aria-hidden="true"></div>
-  <div class="hero-content">
-    <div class="brand-mark">⚡ Fleet</div>
-
-    <h1>
-      Multi-machine. Multi-LLM.<br/>
-      <span class="gradient-text">One fleet.</span>
-    </h1>
-
-    <p class="subtitle">
-      Fleet runs Claude Code, Gemini, Codex, Aider, and 4 more AI agents
-      in parallel — across your laptop, desktop, and servers simultaneously.
-      One command to plan. Every machine working. All results merged automatically.
-    </p>
-
-    <div class="dimensions">
-      <div class="dimension">
-        <span class="dim-icon">🖥️</span>
-        <div>
-          <span class="dim-label">Multi-machine</span>
-          <span class="dim-desc">Laptop · Desktop · Servers · CI runners</span>
-        </div>
+<section class="fs-hero">
+  <div class="fs-hero-grid">
+    <div class="fs-hero-left">
+      <div class="fs-eyebrow-pill">
+        <span class="fs-dot"></span>
+        v1.1.1 · MIT · works with any A2A agent
       </div>
-      <div class="dim-separator">×</div>
-      <div class="dimension">
-        <span class="dim-icon">🤖</span>
-        <div>
-          <span class="dim-label">Multi-LLM</span>
-          <span class="dim-desc">Claude · Gemini · Codex · Aider · 4 more</span>
-        </div>
+      <h1 class="fs-h1">
+        Steroids<br />
+        for <span class="fs-h1-accent">AI&nbsp;coding</span>.
+      </h1>
+      <p class="fs-hero-sub">
+        Your laptop, desktop, and EC2 — <strong>all running Claude&nbsp;Code, Codex, and Aider in parallel on the same repo.</strong> One command plans the work. Every machine takes a mission. GitHub is the only message bus.
+      </p>
+      <div class="fs-cta-row">
+        <a class="fs-btn fs-btn-primary" href="/getting-started/">
+          Get started
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+        <a class="fs-btn fs-btn-ghost" href="#how-it-works">▶ Watch how it works</a>
+      </div>
+      <div class="fs-install">
+        <span class="fs-install-prompt">$</span>
+        <span class="fs-install-cmd">npx fleetspark init</span>
+        <span class="fs-install-copy" id="fs-hero-copy">copy</span>
       </div>
     </div>
-
-    <div class="audience-pills">
-      <span class="pill">Solo developers</span>
-      <span class="pill">Small teams</span>
-      <span class="pill">Any Git repo</span>
-      <span class="pill">8 AI adapters</span>
+    <div class="fs-hero-right">
+      <svg viewBox="0 0 440 320" class="fs-orbit" id="fs-orbit">
+        <defs>
+          <radialGradient id="fs-orbit-glow" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="rgba(250,204,21,0.25)"></stop>
+            <stop offset="1" stop-color="rgba(250,204,21,0)"></stop>
+          </radialGradient>
+        </defs>
+        <circle cx="220" cy="150" r="120" fill="url(#fs-orbit-glow)"></circle>
+        <g id="fs-orbit-links" stroke="#1f2840" stroke-width="1" stroke-dasharray="3 5" fill="none"></g>
+        <g id="fs-orbit-packets"></g>
+        <g id="fs-orbit-nodes"></g>
+        <circle cx="220" cy="150" r="22" fill="#0a0e17" stroke="var(--fs-signal)" stroke-width="1.4"></circle>
+        <text x="220" y="154" text-anchor="middle" fill="var(--fs-signal)" font-size="10" font-family="var(--fs-mono)" font-weight="700">GH</text>
+      </svg>
+      <div class="fs-hero-stats">
+        <div class="fs-hero-stat"><span class="fs-mono">missions</span><b>3</b></div>
+        <div class="fs-hero-stat"><span class="fs-mono">ships</span><b>3</b></div>
+        <div class="fs-hero-stat"><span class="fs-mono">agents</span><b>3</b></div>
+        <div class="fs-hero-stat"><span class="fs-mono">wall time</span><b style="color: var(--fs-spark)">23 min</b></div>
+      </div>
     </div>
-
-    <div class="value-metric">
-      <span class="metric-highlight">3 machines. 6 missions. 23 minutes.</span>
-      <span class="metric-follow">What used to take a full day.</span>
-    </div>
-
-    <div class="hero-ctas">
-      <a href="/getting-started/" class="cta-solid">
-        Get Started
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-      <a href="/getting-started/#demo" class="cta-outline-demo">
-        ▶ Try the 30s demo
-      </a>
-      <a href="https://github.com/fleetSpark/fleet" class="cta-outline" target="_blank" rel="noopener">
-        <img
-          src="https://img.shields.io/github/stars/fleetSpark/fleet?style=social"
-          alt="GitHub stars"
-          width="84"
-          height="20"
-          loading="eager"
-        />
-        Star on GitHub
-      </a>
-    </div>
-
-    <p class="install-hint"><code>npx fleetspark demo</code> — no setup, no account, 30 seconds</p>
   </div>
 </section>
 
 <style>
-  .hero {
-    position: relative;
-    text-align: center;
-    padding: 6rem 1.5rem 5rem;
-    max-width: 56rem;
+  .fs-hero {
+    max-width: 1200px;
     margin: 0 auto;
-    overflow: hidden;
-  }
-
-  .hero-glow {
-    position: absolute;
-    top: -20%;
-    left: 50%;
-    translate: -50% 0;
-    width: 140%;
-    height: 100%;
-    background:
-      radial-gradient(ellipse 60% 50% at 40% 40%, rgba(250, 204, 21, 0.09) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 50% at 60% 60%, rgba(56, 189, 248, 0.07) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .hero-content {
+    padding: 56px 24px 40px;
     position: relative;
-    z-index: 1;
   }
-
-  .brand-mark {
-    font-size: 1rem;
+  .fs-hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 960px) {
+    .fs-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+  .fs-eyebrow-pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 6px 12px;
+    border: 1px solid var(--fs-line-2);
+    border-radius: 999px;
+    background: rgba(56, 189, 248, 0.04);
+    font-family: var(--fs-mono);
+    font-size: 12px;
+    color: var(--fs-signal);
+    margin-bottom: 22px;
+  }
+  .fs-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--fs-signal);
+    box-shadow: 0 0 10px var(--fs-signal);
+    animation: fs-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes fs-pulse {
+    0%, 100% { opacity: 0.4; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+  .fs-h1 {
+    font-family: var(--fs-display);
+    font-size: clamp(40px, 6.2vw, 76px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
     font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #64748b;
-    margin-bottom: 1.5rem;
+    margin: 0 0 24px;
+    color: var(--fs-text);
   }
-
-  .hero h1 {
-    font-size: clamp(2.5rem, 6vw, 4.25rem);
-    font-weight: 800;
-    line-height: 1.08;
-    letter-spacing: -0.03em;
-    color: #f1f5f9;
-    margin: 0 0 1.5rem;
-  }
-
-  .gradient-text {
-    display: inline;
-    background: linear-gradient(135deg, #facc15 0%, #38bdf8 100%);
+  .fs-h1-accent {
+    background: linear-gradient(135deg, var(--fs-spark) 0%, #fde047 35%, var(--fs-signal) 100%);
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
-
-  .subtitle {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    line-height: 1.75;
-    color: #94a3b8;
-    max-width: 42rem;
-    margin: 0 auto 2rem;
+  .fs-hero-sub {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--fs-muted);
+    max-width: 540px;
+    margin: 0 0 28px;
   }
-
-  /* Dimensions row */
-  .dimensions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    margin: 0 auto 2rem;
-    flex-wrap: wrap;
-  }
-
-  .dimension {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid #1e2d45;
+  .fs-hero-sub strong { color: var(--fs-text); font-weight: 600; }
+  .fs-cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+  .fs-install {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--fs-mono);
+    font-size: 13px;
+    color: var(--fs-muted);
+    padding: 10px 14px;
+    border: 1px dashed var(--fs-line-2);
     border-radius: 10px;
-    padding: 0.75rem 1.25rem;
+    background: rgba(255,255,255,0.02);
   }
-
-  .dim-icon {
-    font-size: 1.4rem;
-    line-height: 1;
+  .fs-install-prompt { color: var(--fs-spark); }
+  .fs-install-cmd { color: var(--fs-text); }
+  .fs-install-copy { margin-left: 8px; font-size: 11px; color: var(--fs-muted-2); border-left: 1px solid var(--fs-line); padding-left: 10px; cursor: pointer; }
+  .fs-install-copy:hover { color: var(--fs-signal); }
+  .fs-hero-right { display: grid; gap: 18px; }
+  .fs-orbit {
+    width: 100%; height: auto; aspect-ratio: 440/320;
+    border: 1px solid var(--fs-line);
+    border-radius: 18px;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(250,204,21,0.05), transparent 70%), linear-gradient(180deg, var(--fs-panel), var(--fs-panel-2));
   }
-
-  .dim-label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #f1f5f9;
-    line-height: 1.2;
+  .fs-hero-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--fs-line);
+    border-radius: 14px;
+    background: var(--fs-panel);
+    overflow: hidden;
   }
-
-  .dim-desc {
-    display: block;
-    font-size: 0.75rem;
-    color: #64748b;
-    line-height: 1.4;
-    margin-top: 0.1rem;
+  .fs-hero-stat {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 14px 16px;
+    border-right: 1px solid var(--fs-line);
+    border-bottom: 1px solid var(--fs-line);
+    font-size: 12px;
+    color: var(--fs-muted-2);
   }
-
-  .dim-separator {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: #facc15;
-    line-height: 1;
-  }
-
-  /* Audience pills */
-  .audience-pills {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .pill {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: #94a3b8;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid #1e2d45;
-    border-radius: 999px;
-    padding: 0.3rem 0.9rem;
-    letter-spacing: 0.01em;
-  }
-
-  /* Value metric */
-  .value-metric {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-    margin: 0 auto 2.75rem;
-    padding: 1rem 1.75rem;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(250, 204, 21, 0.14);
-    background: rgba(250, 204, 21, 0.04);
-    max-width: 26rem;
-  }
-
-  .metric-highlight {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #facc15;
-    letter-spacing: -0.01em;
-  }
-
-  .metric-follow {
-    font-size: 0.9rem;
-    color: #64748b;
-  }
-
-  /* CTAs */
-  .hero-ctas {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.875rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
-  }
-
-  .hero-ctas a {
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.2s ease;
-  }
-
-  .cta-solid {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1.75rem;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    background: linear-gradient(135deg, #facc15, #f59e0b);
-    color: #0a0e17;
-    box-shadow: 0 0 20px rgba(250, 204, 21, 0.2);
-  }
-
-  .cta-solid:hover {
-    background: linear-gradient(135deg, #fde047, #facc15);
-    box-shadow: 0 0 30px rgba(250, 204, 21, 0.35);
-    translate: 0 -1px;
-  }
-
-  .cta-outline-demo {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1.5rem;
-    border-radius: 0.5rem;
-    font-size: 0.95rem;
-    border: 1px solid rgba(56, 189, 248, 0.3);
-    color: #38bdf8;
-    background: rgba(56, 189, 248, 0.05);
-  }
-
-  .cta-outline-demo:hover {
-    border-color: #38bdf8;
-    background: rgba(56, 189, 248, 0.1);
-    translate: 0 -1px;
-  }
-
-  .cta-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1.25rem;
-    border-radius: 0.5rem;
-    font-size: 0.9rem;
-    border: 1px solid #334155;
-    color: #94a3b8;
-  }
-
-  .cta-outline img { display: block; }
-
-  .cta-outline:hover {
-    border-color: #475569;
-    color: #f1f5f9;
-    translate: 0 -1px;
-  }
-
-  .install-hint {
-    font-size: 0.82rem;
-    color: #475569;
-    margin: 0;
-  }
-
-  .install-hint code {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    color: #64748b;
-    background: rgba(255,255,255,0.04);
-    padding: 0.15rem 0.5rem;
-    border-radius: 4px;
-  }
-
-  @media (max-width: 768px) {
-    .hero { padding: 4rem 1rem 3rem; }
-    .hero-ctas { flex-direction: column; gap: 0.625rem; }
-    .value-metric { max-width: 100%; }
-    .audience-pills { gap: 0.375rem; }
-    .dimensions { flex-direction: column; gap: 0.75rem; }
-    .dim-separator { transform: rotate(90deg); }
+  .fs-hero-stat:nth-child(2n) { border-right: none; }
+  .fs-hero-stat:nth-last-child(-n+2) { border-bottom: none; }
+  .fs-hero-stat b {
+    font-family: var(--fs-display);
+    font-size: 22px; font-weight: 700;
+    color: var(--fs-text);
+    letter-spacing: -0.02em;
   }
 </style>
+
+<script is:inline>
+(() => {
+  const svg = document.getElementById('fs-orbit');
+  if (!svg) return;
+  const nodes = [
+    { x: 60,  y: 70,  label: 'laptop',  color: '#facc15' },
+    { x: 320, y: 50,  label: 'desktop', color: '#c084fc' },
+    { x: 380, y: 220, label: 'EC2',     color: '#38bdf8' },
+    { x: 80,  y: 240, label: 'CI',      color: '#34d399' }
+  ];
+  const hub = { x: 220, y: 150 };
+  const linksG = svg.querySelector('#fs-orbit-links');
+  const nodesG = svg.querySelector('#fs-orbit-nodes');
+  const packetsG = svg.querySelector('#fs-orbit-packets');
+  nodes.forEach((n, i) => {
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', n.x); line.setAttribute('y1', n.y);
+    line.setAttribute('x2', hub.x); line.setAttribute('y2', hub.y);
+    linksG.appendChild(line);
+    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('cx', n.x); c.setAttribute('cy', n.y); c.setAttribute('r', '14');
+    c.setAttribute('fill', '#0a0e17'); c.setAttribute('stroke', n.color); c.setAttribute('stroke-width', '1.2');
+    nodesG.appendChild(c);
+    const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    t.setAttribute('x', n.x); t.setAttribute('y', n.y + 4);
+    t.setAttribute('text-anchor', 'middle'); t.setAttribute('fill', n.color);
+    t.setAttribute('font-size', '9'); t.setAttribute('font-family', 'JetBrains Mono, monospace');
+    t.setAttribute('font-weight', '700'); t.textContent = n.label;
+    nodesG.appendChild(t);
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    p.setAttribute('r', '3'); p.setAttribute('fill', n.color);
+    packetsG.appendChild(p);
+    n._packet = p;
+  });
+  let start = null;
+  function tick(now) {
+    if (!start) start = now;
+    const t = (now - start) / 1000;
+    nodes.forEach((n, i) => {
+      const phase = (t * 0.6 + i * 0.25) % 1;
+      const dx = hub.x - n.x, dy = hub.y - n.y;
+      n._packet.setAttribute('cx', n.x + dx * phase);
+      n._packet.setAttribute('cy', n.y + dy * phase);
+      n._packet.setAttribute('opacity', 1 - phase);
+    });
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  // Copy
+  const copy = document.getElementById('fs-hero-copy');
+  if (copy) copy.addEventListener('click', () => {
+    navigator.clipboard?.writeText('npx fleetspark init');
+    copy.textContent = 'copied'; setTimeout(() => copy.textContent = 'copy', 1200);
+  });
+})();
+</script>

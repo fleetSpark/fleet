@@ -1,0 +1,70 @@
+---
+---
+<section class="fs-section">
+  <div class="fs-eyebrow">Live mission board</div>
+  <h2 class="fs-title">Watch the fleet from a single terminal.</h2>
+  <p class="fs-sub"><span class="mono">fleet status</span> — three ships, three branches, real-time heartbeats. Color-coded so a glance tells you who's working, who's stalled, who's ready to merge.</p>
+
+  <div class="mb-grid">
+    <div class="mb-pane">
+      <div class="mb-bar"><span class="mb-d mb-r"></span><span class="mb-d mb-y"></span><span class="mb-d mb-g"></span><span class="mb-title">ship-laptop · M-001 · feature/auth · claude-code</span><span class="mb-chip mb-ok">●  HEALTHY</span></div>
+      <div class="mb-body">
+        <div class="mb-line"><span class="mb-prompt">~/repo $</span> <span class="mb-cmd">fleetspark ship --join</span> <span class="mb-arg">git@github.com:you/repo.git</span></div>
+        <div class="mb-line mb-dim">[claude-code] step 4/7 — adding session middleware…</div>
+        <div class="mb-line mb-ok">  ✓ src/auth/oauth.ts (created)</div>
+        <div class="mb-line mb-ok">  ✓ src/auth/session.ts (created)</div>
+        <div class="mb-line mb-dim">[heartbeat]  pushed fleet/state · +60s</div>
+        <div class="mb-line mb-yellow"><span class="mb-cursor">▍</span> writing tests · 3 of 8…</div>
+      </div>
+    </div>
+    <div class="mb-pane">
+      <div class="mb-bar"><span class="mb-d mb-r"></span><span class="mb-d mb-y"></span><span class="mb-d mb-g"></span><span class="mb-title">ship-desktop · M-002 · feature/ratelimiter · codex</span><span class="mb-chip mb-ready">●  READY · PR #243</span></div>
+      <div class="mb-body">
+        <div class="mb-line"><span class="mb-prompt">~/repo $</span> <span class="mb-cmd">fleetspark ship --join</span> <span class="mb-arg">git@github.com:you/repo.git</span></div>
+        <div class="mb-line mb-dim">[codex] step 7/7 — opening PR…</div>
+        <div class="mb-line mb-ok">  ✓ src/middleware/ratelimit.ts</div>
+        <div class="mb-line mb-ok">  ✓ tests/ratelimit.test.ts (12 passed)</div>
+        <div class="mb-line mb-ok">  ✓ CI green · all checks passed</div>
+        <div class="mb-line mb-ready">  → PR #243 open, awaiting merge ✓</div>
+      </div>
+    </div>
+    <div class="mb-pane">
+      <div class="mb-bar"><span class="mb-d mb-r"></span><span class="mb-d mb-y"></span><span class="mb-d mb-g"></span><span class="mb-title">ship-ec2 · M-003 · feature/docs · aider</span><span class="mb-chip mb-warn">●  STALLED · 3 beats</span></div>
+      <div class="mb-body">
+        <div class="mb-line"><span class="mb-prompt">~ $</span> <span class="mb-cmd">fleetspark ship --join</span> <span class="mb-arg">git@github.com:you/repo.git</span></div>
+        <div class="mb-line mb-dim">[aider] step 2/5 — regenerating openapi.yaml…</div>
+        <div class="mb-line mb-ok">  ✓ docs/api/auth.md (updated)</div>
+        <div class="mb-line mb-warn">  ⚠ no heartbeat for 180s</div>
+        <div class="mb-line mb-warn">[commander] shadow dispatch: re-queueing M-003 → ship-laptop</div>
+        <div class="mb-line mb-dim"><span class="mb-cursor">▍</span> waiting for next ship to claim…</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 1000px) { .mb-grid { grid-template-columns: 1fr; } }
+  .mb-pane { border: 1px solid var(--fs-line); border-radius: 14px; background: #06070d; overflow: hidden; font-family: var(--fs-mono); box-shadow: 0 10px 30px -12px rgba(0,0,0,0.5); }
+  .mb-bar { display: flex; align-items: center; gap: 7px; padding: 10px 12px; background: #0a0e17; border-bottom: 1px solid var(--fs-line); }
+  .mb-d { width: 9px; height: 9px; border-radius: 50%; background: #232a44; }
+  .mb-r { background: #2a1417; } .mb-y { background: #2a2114; } .mb-g { background: #142a17; }
+  .mb-title { font-size: 11px; color: var(--fs-muted-2); margin-left: 6px; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mb-chip { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; letter-spacing: 0.06em; white-space: nowrap; }
+  .mb-ok { color: var(--fs-ok); background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.4); }
+  .mb-ready { color: var(--fs-spark); background: rgba(250,204,21,0.08); border: 1px solid rgba(250,204,21,0.4); }
+  .mb-warn { color: var(--fs-warn); background: rgba(251,146,60,0.08); border: 1px solid rgba(251,146,60,0.4); }
+  .mb-body { padding: 14px 16px; font-size: 12px; line-height: 1.65; color: var(--fs-text); min-height: 200px; }
+  .mb-line { white-space: pre-wrap; word-break: break-word; }
+  .mb-prompt { color: var(--fs-signal); }
+  .mb-cmd { color: var(--fs-text); }
+  .mb-arg { color: var(--fs-muted); }
+  .mb-dim { color: var(--fs-muted-2); }
+  .mb-line.mb-ok { color: var(--fs-ok); background: transparent; border: none; padding: 0; font-weight: 400; }
+  .mb-line.mb-ready { color: var(--fs-spark); background: transparent; border: none; padding: 0; font-weight: 400; }
+  .mb-line.mb-warn { color: var(--fs-warn); background: transparent; border: none; padding: 0; font-weight: 400; }
+  .mb-yellow { color: var(--fs-spark); }
+  .mb-cursor { display: inline-block; width: 7px; background: currentColor; color: currentColor; margin-right: 4px; animation: mb-blink 1.1s steps(2,end) infinite; }
+  @keyframes mb-blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+  .mono { font-family: var(--fs-mono); color: var(--fs-spark); }
+</style>

@@ -1,8 +1,8 @@
 /* Fleet brand colors — dark + electric theme */
 :root[data-theme='dark'] {
-  --sl-color-bg: #0a0e17;
-  --sl-color-bg-nav: #0d1120;
-  --sl-color-bg-sidebar: #0d1120;
+  --sl-color-bg: #06070d;
+  --sl-color-bg-nav: #0a0e17;
+  --sl-color-bg-sidebar: #0a0e17;
   --sl-color-hairline: #1a2035;
   --sl-color-hairline-light: #1a2035;
   --sl-color-accent-low: #422006;
@@ -17,314 +17,136 @@
   --sl-color-gray-4: #64748b;
   --sl-color-gray-5: #334155;
   --sl-color-gray-6: #1a2035;
-  --sl-color-gray-7: #0d1120;
-  --sl-color-black: #0a0e17;
+  --sl-color-gray-7: #0a0e17;
+  --sl-color-black: #06070d;
 }
 
-/* Force dark mode only */
 :root {
   color-scheme: dark;
+  --fs-bg: #06070d;
+  --fs-panel: #0a0e17;
+  --fs-panel-2: #0d1322;
+  --fs-line: #1a2035;
+  --fs-line-2: #232a44;
+  --fs-text: #f1f5f9;
+  --fs-muted: #94a3b8;
+  --fs-muted-2: #64748b;
+  --fs-dim: #475569;
+  --fs-spark: #facc15;
+  --fs-spark-deep: #f59e0b;
+  --fs-signal: #38bdf8;
+  --fs-ship: #c084fc;
+  --fs-ok: #34d399;
+  --fs-warn: #fb923c;
+  --fs-err: #f87171;
+  --fs-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --fs-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
 }
 
-/* Code blocks — terminal glow effect */
-.expressive-code pre {
-  border: 1px solid #1a2035 !important;
-  box-shadow: 0 0 15px rgba(250, 204, 21, 0.05);
+/* Load brand fonts (used inside our custom components only — Starlight's own type unchanged) */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* Link color */
+:root[data-theme='dark'] a:not([class]) { color: var(--fs-signal); }
+:root[data-theme='dark'] a:not([class]):hover { color: #7dd3fc; }
+
+/* Hide default starlight hero (we render our own) */
+[data-has-hero] .content-panel .hero:has([data-page-title]) { display: none !important; }
+[data-has-hero] .content-panel > .sl-container > .hero:first-child { display: none !important; }
+
+/* Page background */
+body {
+  background: var(--fs-bg);
+}
+[data-has-hero] body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(250, 204, 21, 0.10), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(56, 189, 248, 0.08), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(192, 132, 252, 0.06), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* Links — electric blue */
-:root[data-theme='dark'] a:not([class]) {
-  color: #38bdf8;
-}
-
-:root[data-theme='dark'] a:not([class]):hover {
-  color: #7dd3fc;
-}
-
-/* Hide Starlight's default hero on the landing page — we use our own custom Hero component */
-[data-has-hero] .content-panel .hero:has([data-page-title]) {
-  display: none !important;
-}
-/* Fallback for browsers without :has() support */
-[data-has-hero] .content-panel > .sl-container > .hero:first-child {
-  display: none !important;
-}
-
-/* Landing page styles */
-.landing-hero {
-  text-align: center;
-  padding: 4rem 1rem 3rem;
-  max-width: 48rem;
+/* Section shell */
+.fs-section {
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 80px 24px;
+  position: relative;
 }
-
-.landing-hero h1 {
-  font-size: 3.5rem;
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-  color: #f1f5f9;
-}
-
-.landing-hero .tagline {
-  font-size: 1.5rem;
-  color: #94a3b8;
-  margin-bottom: 2rem;
-  line-height: 1.6;
-}
-
-.landing-hero .tagline strong {
-  color: #facc15;
-}
-
-.landing-ctas {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-}
-
-.landing-ctas a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.cta-primary {
-  background: #facc15;
-  color: #0a0e17;
-}
-
-.cta-primary:hover {
-  background: #fde047;
-}
-
-.cta-secondary {
-  border: 1px solid #334155;
-  color: #f1f5f9;
-}
-
-.cta-secondary:hover {
-  border-color: #38bdf8;
-  color: #38bdf8;
-}
-
-.landing-section {
-  max-width: 64rem;
-  margin: 0 auto;
-  padding: 4rem 1.5rem;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.landing-section h2 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #f1f5f9;
-}
-
-.landing-section .subtitle {
-  color: #94a3b8;
-  font-size: 1.125rem;
-  margin-bottom: 2rem;
-}
-
-/* Terminal code block on landing page */
-.terminal {
-  background: #111827;
-  border: 1px solid #1a2035;
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 0.9rem;
-  line-height: 1.7;
-  color: #e2e8f0;
-  text-align: left;
-  max-width: 36rem;
-  margin: 0 auto;
-  box-shadow: 0 0 20px rgba(250, 204, 21, 0.05);
-  overflow-x: auto;
-}
-
-.terminal .comment {
-  color: #64748b;
-}
-
-.terminal .prompt {
-  color: #facc15;
-}
-
-.terminal .cmd {
-  color: #38bdf8;
-}
-
-/* Spark execution cards */
-.spark-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-.spark-card {
-  background: #111827;
-  border: 1px solid #1a2035;
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-}
-
-.spark-card h3 {
-  color: #facc15;
-  margin-bottom: 0.5rem;
-  font-size: 1.125rem;
-}
-
-.spark-card p {
-  color: #94a3b8;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-/* Comparison table */
-.comparison-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 2rem;
-  font-size: 0.9rem;
-}
-
-.comparison-table th,
-.comparison-table td {
-  padding: 0.75rem 1rem;
-  text-align: left;
-  border-bottom: 1px solid #1a2035;
-}
-
-.comparison-table th {
-  color: #94a3b8;
-  font-weight: 600;
-  font-size: 0.8rem;
+.fs-eyebrow {
+  font-family: var(--fs-mono);
+  font-size: 12px;
+  color: var(--fs-spark);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  margin-bottom: 14px;
 }
-
-.comparison-table td {
-  color: #e2e8f0;
+.fs-title {
+  font-family: var(--fs-display);
+  font-size: clamp(30px, 4.2vw, 50px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: var(--fs-text);
 }
-
-.comparison-table tr:last-child {
-  background: rgba(250, 204, 21, 0.05);
+.fs-sub {
+  font-size: 17px;
+  color: var(--fs-muted);
+  line-height: 1.6;
+  max-width: 660px;
+  margin: 0 0 40px;
 }
+.fs-sub strong { color: var(--fs-text); font-weight: 600; }
+.fs-sub .mono { font-family: var(--fs-mono); color: var(--fs-spark); font-size: 0.92em; }
 
-.comparison-table tr:last-child td {
-  color: #facc15;
+/* Buttons */
+.fs-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 18px;
+  border-radius: 10px;
   font-weight: 600;
+  font-size: 15px;
+  text-decoration: none !important;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  cursor: pointer;
+}
+.fs-btn-primary {
+  background: linear-gradient(135deg, var(--fs-spark), var(--fs-spark-deep));
+  color: #0a0e17 !important;
+  box-shadow: 0 0 0 1px rgba(250, 204, 21, 0.4), 0 12px 36px -8px rgba(250, 204, 21, 0.4);
+}
+.fs-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px rgba(250, 204, 21, 0.6), 0 16px 44px -8px rgba(250, 204, 21, 0.55); }
+.fs-btn-ghost {
+  background: rgba(255,255,255,0.03);
+  border-color: var(--fs-line-2);
+  color: var(--fs-text) !important;
+}
+.fs-btn-ghost:hover { border-color: var(--fs-signal); color: var(--fs-signal) !important; }
+
+/* Chip */
+.fs-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--fs-line-2);
+  color: var(--fs-muted);
+  font-size: 12px;
+  font-family: var(--fs-mono);
+}
+.fs-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--fs-ok); }
+
+.fs-divider {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--fs-line-2), transparent);
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Architecture diagram */
-.diagram {
-  background: #111827;
-  border: 1px solid #1a2035;
-  border-radius: 0.75rem;
-  padding: 2rem;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 0.85rem;
-  color: #e2e8f0;
-  line-height: 1.8;
-  max-width: 36rem;
-  margin: 2rem auto 0;
-  overflow-x: auto;
-}
-
-.diagram .label {
-  color: #facc15;
-  font-weight: 600;
-}
-
-.diagram .muted {
-  color: #64748b;
-}
-
-.diagram .accent {
-  color: #38bdf8;
-}
-
-/* Sponsors */
-.sponsors-section {
-  text-align: center;
-  border-top: 1px solid #1a2035;
-}
-
-.sponsors-card {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-  overflow: hidden;
-}
-
-/* Footer */
-.landing-footer {
-  text-align: center;
-  padding: 3rem 1rem;
-  border-top: 1px solid #1a2035;
-  color: #64748b;
-  font-size: 0.875rem;
-}
-
-.landing-footer a {
-  color: #94a3b8;
-  text-decoration: none;
-}
-
-.landing-footer a:hover {
-  color: #38bdf8;
-}
-
-/* Scroll-triggered fade-in animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.landing-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-  animation: fadeInUp 0.6s ease forwards;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .landing-hero h1 {
-    font-size: 2.25rem;
-  }
-
-  .landing-hero .tagline {
-    font-size: 1.125rem;
-  }
-
-  .terminal {
-    font-size: 0.8rem;
-  }
-
-  .spark-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .comparison-table {
-    display: block;
-    overflow-x: auto;
-  }
-}
+.fs-mono { font-family: var(--fs-mono); }

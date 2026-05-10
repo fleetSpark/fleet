@@ -1,29 +1,395 @@
 ---
 ---
-<div class="landing-section">
-  <h2>Simple architecture, no servers</h2>
-  <p class="subtitle">Fleet uses Git as its only message bus. No infrastructure to deploy. No accounts to create.</p>
+<section id="how-it-works" class="fs-section">
+  <div class="fs-eyebrow">How it works</div>
+  <h2 class="fs-title">Map-Reduce for software development.</h2>
+  <p class="fs-sub">Watch the full flow: your laptop becomes the commander, missions fan out through GitHub, ships work in parallel, branches converge. Scrub or step through to inspect any phase.</p>
 
-  <div class="diagram">
-    <div><span class="label">Your laptop (commander)</span></div>
-    <div><span class="muted">    │</span></div>
-    <div><span class="muted">    ├──</span> reads/writes FLEET.md on <code>fleet/state</code> branch</div>
-    <div><span class="muted">    │</span></div>
-    <div><span class="label">GitHub (message bus)</span> — the only infrastructure</div>
-    <div><span class="muted">    │</span></div>
-    <div><span class="muted">    ├──</span> Machine B <span class="accent">→ feature/auth</span> (Claude Code)</div>
-    <div><span class="muted">    ├──</span> Machine C <span class="accent">→ feature/ratelimiter</span> (Codex)</div>
-    <div><span class="muted">    └──</span> Server &nbsp;&nbsp;&nbsp;<span class="accent">→ feature/docs</span> (Aider)</div>
-  </div>
+  <div class="fa-wrap">
+    <div class="fa-head">
+      <div class="fa-eyebrow">
+        <span class="fa-label-num" id="fa-scene-num">01</span>
+        <span id="fa-scene-name">Idle</span>
+        <span class="fa-clock fs-mono" id="fa-clock">00:00 / 36s</span>
+      </div>
+      <div class="fa-title" id="fa-scene-title">Three machines. Zero coordination.</div>
+      <div class="fa-sub" id="fa-scene-sub">Your laptop is on Claude Code. Your desktop is idle. Your EC2 is still running from last sprint.</div>
+    </div>
 
-  <div style="margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1rem;">
-    <div>
-      <h3 style="color: #facc15;">Distribute</h3>
-      <p style="color: #94a3b8;">Each machine picks up a mission and works independently on its own branch. Mix any AI agent — Claude Code, Codex, Gemini, Aider, and more.</p>
+    <div class="fa-stage">
+      <svg id="fa-svg" viewBox="0 0 1200 680" preserveAspectRatio="xMidYMid meet" class="fa-svg">
+        <defs>
+          <filter id="fa-blur-16"><feGaussianBlur stdDeviation="16"></feGaussianBlur></filter>
+          <filter id="fa-blur-32"><feGaussianBlur stdDeviation="32"></feGaussianBlur></filter>
+          <linearGradient id="fa-grad-M1" x1="0" x2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity="0.2"></stop><stop offset="1" stop-color="#38bdf8" stop-opacity="1"></stop></linearGradient>
+          <linearGradient id="fa-grad-M2" x1="0" x2="1"><stop offset="0" stop-color="#facc15" stop-opacity="0.2"></stop><stop offset="1" stop-color="#facc15" stop-opacity="1"></stop></linearGradient>
+          <linearGradient id="fa-grad-M3" x1="0" x2="1"><stop offset="0" stop-color="#c084fc" stop-opacity="0.2"></stop><stop offset="1" stop-color="#c084fc" stop-opacity="1"></stop></linearGradient>
+        </defs>
+        <g id="fa-grid" opacity="0.3"></g>
+        <text x="200" y="80" text-anchor="middle" fill="#475569" font-size="11" font-family="JetBrains Mono, monospace" letter-spacing="0.1em">YOUR MACHINES</text>
+        <text x="600" y="80" text-anchor="middle" fill="#475569" font-size="11" font-family="JetBrains Mono, monospace" letter-spacing="0.1em">MESSAGE BUS</text>
+        <text x="930" y="80" text-anchor="middle" fill="#475569" font-size="11" font-family="JetBrains Mono, monospace" letter-spacing="0.1em">BRANCHES · GIT TIMELINE</text>
+        <g id="fa-machine-links"></g>
+        <g id="fa-branches"></g>
+        <g id="fa-hub"></g>
+        <g id="fa-machines"></g>
+        <g id="fa-packets"></g>
+      </svg>
     </div>
-    <div>
-      <h3 style="color: #facc15;">Converge</h3>
-      <p style="color: #94a3b8;">The commander watches for completed branches, detects conflicts, runs your CI pipeline, and auto-merges clean code.</p>
+
+    <div class="fa-controls">
+      <button class="fa-btn" id="fa-play" aria-label="play">
+        <svg id="fa-play-icon" width="14" height="14" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" fill="currentColor"></rect><rect x="14" y="5" width="4" height="14" fill="currentColor"></rect></svg>
+      </button>
+      <div class="fa-steps" id="fa-steps"></div>
+      <input type="range" class="fa-scrub" id="fa-scrub" min="0" max="36" step="0.05" value="0" />
     </div>
   </div>
-</div>
+</section>
+
+<style>
+  .fa-wrap {
+    border: 1px solid var(--fs-line);
+    border-radius: 20px;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(250,204,21,0.06), transparent 60%),
+      linear-gradient(180deg, #0a0e17, #07090f);
+    padding: 32px 32px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .fa-head { position: relative; margin-bottom: 18px; max-width: 720px; min-height: 110px; }
+  .fa-eyebrow { display: flex; align-items: center; gap: 14px; font-family: var(--fs-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--fs-muted-2); margin-bottom: 10px; text-transform: uppercase; }
+  .fa-label-num { color: var(--fs-spark); font-weight: 700; }
+  .fa-title { font-family: var(--fs-display); font-size: 28px; font-weight: 700; letter-spacing: -0.02em; color: var(--fs-text); margin-bottom: 8px; }
+  .fa-sub { color: var(--fs-muted); font-size: 15px; line-height: 1.55; max-width: 640px; }
+  .fa-stage { position: relative; border-radius: 14px; overflow: hidden; margin: 0 -8px; }
+  .fa-svg { display: block; width: 100%; height: auto; }
+  .fa-controls { margin-top: 18px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; }
+  .fa-btn { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--fs-line-2); background: rgba(255,255,255,0.03); color: var(--fs-text); display: inline-grid; place-items: center; cursor: pointer; }
+  .fa-btn:hover { border-color: var(--fs-spark); color: var(--fs-spark); }
+  .fa-steps { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: thin; }
+  .fa-step { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 6px 10px; border-radius: 7px; border: 1px solid var(--fs-line); background: transparent; color: var(--fs-muted); cursor: pointer; white-space: nowrap; font-family: var(--fs-mono); font-size: 11px; line-height: 1.2; }
+  .fa-step:hover { border-color: var(--fs-line-2); color: var(--fs-text); }
+  .fa-step.active { border-color: var(--fs-spark); background: rgba(250,204,21,0.06); color: var(--fs-text); }
+  .fa-step-num { color: var(--fs-muted-2); font-size: 10px; }
+  .fa-step.active .fa-step-num { color: var(--fs-spark); }
+  .fa-scrub { -webkit-appearance: none; appearance: none; width: 180px; height: 4px; background: var(--fs-line); border-radius: 2px; outline: none; }
+  .fa-scrub::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--fs-spark); cursor: pointer; border: 2px solid #0a0e17; box-shadow: 0 0 0 1px var(--fs-spark); }
+  @media (max-width: 720px) {
+    .fa-wrap { padding: 20px 16px 14px; }
+    .fa-title { font-size: 22px; }
+    .fa-controls { grid-template-columns: 1fr; gap: 10px; }
+    .fa-step-label { display: none; }
+  }
+</style>
+
+<script is:inline>
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (tag, attrs, parent) => {
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  };
+  const SCENES = [
+    { label: 'Idle',       title: 'Three machines. Zero coordination.', sub: 'Your laptop is on Claude Code. Your desktop is idle. Your EC2 is still running from last sprint.' },
+    { label: 'Commander',  title: 'fleet command --plan "your goal"',    sub: 'Your laptop becomes the commander. It decomposes your goal into independent missions.' },
+    { label: 'GitHub bus', title: 'Missions are pushed to GitHub.',      sub: 'Each mission lives on its own branch with a MISSION.md. No SSH. No shared filesystem. No infra.' },
+    { label: 'Map',        title: 'fleet ship --join — every machine picks a mission.', sub: 'Claude Code on your laptop. Codex on the desktop. Aider on EC2. Map step of the map-reduce.' },
+    { label: 'Parallel',   title: 'Ships work in parallel. Heartbeats every 60 s.', sub: 'Each ship pushes progress to its branch. The commander watches, retries stalled ships, kicks off shadow dispatch.' },
+    { label: 'Merge',      title: 'Reduce: CI passes, branches merge into main.',   sub: 'Three missions. Twenty-three minutes. While you slept.' }
+  ];
+  const SCENE_LEN = 6, TOTAL = SCENES.length * SCENE_LEN;
+  const W = 1200, H = 680;
+  const MACHINES = [
+    { id:'laptop',  x:200, y:360, label:'laptop',          meta:'macbook · prabu',     icon:'laptop' },
+    { id:'desktop', x:200, y:540, label:'desktop',         meta:'workstation · linux', icon:'desktop' },
+    { id:'ec2',     x:200, y:180, label:'EC2 · us-east-1', meta:'aws · spot',          icon:'server' }
+  ];
+  const HUB = { x:600, y:340 };
+  const BRANCHES = [
+    { id:'M1', y:220, color:'#38bdf8', label:'feature/auth',        ship:'laptop',  agent:'claude-code' },
+    { id:'M2', y:340, color:'#facc15', label:'feature/ratelimiter', ship:'desktop', agent:'codex' },
+    { id:'M3', y:460, color:'#c084fc', label:'feature/docs',        ship:'ec2',     agent:'aider' }
+  ];
+  const TRACK_X1 = 760, TRACK_X2 = 1100, MAIN_Y = 340;
+  const ease = t => t<0.5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2;
+  const lerp = (a,b,t) => a + (b-a)*t;
+  const clamp = (n,a,b) => Math.max(a, Math.min(b,n));
+
+  // Static elements
+  const svg = document.getElementById('fa-svg');
+  const gridG = svg.querySelector('#fa-grid');
+  for (let i = 0; i <= 10; i++) el('line', { x1:i*120, x2:i*120, y1:0, y2:H, stroke:'#1a2035', 'stroke-width':0.5 }, gridG);
+  for (let i = 0; i <= 6; i++) el('line', { x1:0, x2:W, y1:i*120, y2:i*120, stroke:'#1a2035', 'stroke-width':0.5 }, gridG);
+
+  // Branch panel — static parts
+  const branchG = svg.querySelector('#fa-branches');
+  el('line', { x1:TRACK_X1-20, x2:TRACK_X2+30, y1:MAIN_Y, y2:MAIN_Y, stroke:'#1f2840', 'stroke-width':2 }, branchG);
+  const mainLabel = el('text', { x:TRACK_X1-30, y:MAIN_Y+4, 'text-anchor':'end', fill:'#64748b', 'font-size':11, 'font-family':'JetBrains Mono, monospace' }, branchG); mainLabel.textContent = 'main';
+  el('circle', { cx:TRACK_X2+30, cy:MAIN_Y, r:4, fill:'#1f2840', stroke:'#334155' }, branchG);
+
+  const branchEls = BRANCHES.map((b, i) => {
+    const g = el('g', {}, branchG);
+    const fork = el('path', { d:`M ${TRACK_X1-20} ${MAIN_Y} C ${TRACK_X1-5} ${MAIN_Y}, ${TRACK_X1-5} ${b.y}, ${TRACK_X1+8} ${b.y}`, stroke:'#1f2840', 'stroke-width':1.5, fill:'none', opacity:0.3 }, g);
+    el('line', { x1:TRACK_X1, x2:TRACK_X2, y1:b.y, y2:b.y, stroke:'#161b30', 'stroke-width':2, 'stroke-linecap':'round' }, g);
+    const prog = el('line', { x1:TRACK_X1, x2:TRACK_X1, y1:b.y, y2:b.y, stroke:`url(#fa-grad-${b.id})`, 'stroke-width':3, 'stroke-linecap':'round', opacity:0 }, g);
+    const commits = [];
+    for (let ci = 0; ci < 5; ci++) {
+      const c = el('circle', { cx:TRACK_X1+(ci+1)*(TRACK_X2-TRACK_X1)/6, cy:b.y, r:3, fill:'#0a0e17', stroke:b.color, 'stroke-width':1.4, opacity:0 }, g);
+      commits.push(c);
+    }
+    const tipGlow = el('circle', { cx:TRACK_X1, cy:b.y, r:6, fill:b.color, opacity:0 }, g);
+    const tip = el('circle', { cx:TRACK_X1, cy:b.y, r:3.5, fill:b.color, opacity:0 }, g);
+    const mergePath = el('path', { d:`M ${TRACK_X2} ${b.y} C ${TRACK_X2+12} ${b.y}, ${TRACK_X2+12} ${MAIN_Y}, ${TRACK_X2+26} ${MAIN_Y}`, stroke:b.color, 'stroke-width':1.6, fill:'none', opacity:0 }, g);
+    const labelT = el('text', { x:TRACK_X1+14, y:b.y-10, fill:'#f1f5f9', 'font-size':12, 'font-family':'JetBrains Mono, monospace', 'font-weight':600 }, g); labelT.textContent = b.label;
+    const metaT = el('text', { x:TRACK_X1+14, y:b.y+18, fill:'#64748b', 'font-size':10, 'font-family':'JetBrains Mono, monospace' }, g); metaT.textContent = `${b.id} · ${b.agent}`;
+
+    // CI chip
+    const ciG = el('g', { transform:`translate(${TRACK_X2+36} ${b.y-22})`, opacity:0 }, g);
+    el('rect', { x:0, y:-8, width:34, height:16, rx:3, fill:'rgba(52,211,153,0.12)', stroke:'#34d399', 'stroke-width':0.8 }, ciG);
+    const ciT = el('text', { x:17, y:4, 'text-anchor':'middle', fill:'#34d399', 'font-size':9, 'font-family':'JetBrains Mono, monospace', 'font-weight':700 }, ciG); ciT.textContent = 'CI ✓';
+
+    // Stalled chip (M3 only)
+    let stallG = null;
+    if (b.id === 'M3') {
+      stallG = el('g', { opacity:0 }, g);
+      el('rect', { x:0, y:-10, width:62, height:20, rx:4, fill:'rgba(248,113,113,0.12)', stroke:'#f87171', 'stroke-width':0.8 }, stallG);
+      const stT = el('text', { x:31, y:4, 'text-anchor':'middle', fill:'#f87171', 'font-size':10, 'font-family':'JetBrains Mono, monospace', 'font-weight':700 }, stallG); stT.textContent = 'STALLED';
+    }
+    return { b, fork, prog, commits, tip, tipGlow, mergePath, ciG, stallG };
+  });
+
+  // Hub
+  const hubG = svg.querySelector('#fa-hub');
+  const hubRing1 = el('circle', { cx:HUB.x, cy:HUB.y, r:80, fill:'#38bdf8', opacity:0, filter:'url(#fa-blur-32)' }, hubG);
+  const hubRing2 = el('circle', { cx:HUB.x, cy:HUB.y, r:56, fill:'none', stroke:'#38bdf8', 'stroke-width':1, opacity:0 }, hubG);
+  el('circle', { cx:HUB.x, cy:HUB.y, r:64, fill:'none', stroke:'#38bdf8', 'stroke-width':0.6, opacity:0.3, 'stroke-dasharray':'2 6' }, hubG);
+  const hubCircle = el('circle', { cx:HUB.x, cy:HUB.y, r:44, fill:'#0a0e17', stroke:'#1a2035', 'stroke-width':1.4 }, hubG);
+  const hubInner = el('circle', { cx:HUB.x, cy:HUB.y, r:22, fill:'none', stroke:'#64748b', 'stroke-width':1.2 }, hubG);
+  const hubLabel = el('text', { x:HUB.x, y:HUB.y+60, 'text-anchor':'middle', fill:'#64748b', 'font-size':11, 'font-family':'JetBrains Mono, monospace', 'font-weight':600, 'letter-spacing':'0.1em' }, hubG); hubLabel.textContent = 'GITHUB · BUS';
+  const hubLabel2 = el('text', { x:HUB.x, y:HUB.y+76, 'text-anchor':'middle', fill:'#475569', 'font-size':9, 'font-family':'JetBrains Mono, monospace' }, hubG); hubLabel2.textContent = 'fleet/state · MISSION.md';
+
+  // Machine links
+  const linksG = svg.querySelector('#fa-machine-links');
+  const machineLinks = MACHINES.map(m => el('path', { d:`M ${m.x} ${m.y} L ${HUB.x} ${HUB.y}`, stroke:'#13182a', 'stroke-width':0.8, 'stroke-dasharray':'2 8', fill:'none', opacity:0.4 }, linksG));
+
+  // Machines
+  const machinesG = svg.querySelector('#fa-machines');
+  const machineEls = MACHINES.map(m => {
+    const g = el('g', { transform:`translate(${m.x} ${m.y})` }, machinesG);
+    const glow = el('circle', { r:60, fill:'#facc15', opacity:0, filter:'url(#fa-blur-16)' }, g);
+    const rect = el('rect', { x:-72, y:-34, width:144, height:68, rx:12, fill:'#0a0e17', stroke:'#232a44', 'stroke-width':1, opacity:0.95 }, g);
+    const dashRect = el('rect', { x:-72, y:-34, width:144, height:68, rx:12, fill:'none', stroke:'#facc15', 'stroke-width':1, 'stroke-dasharray':'4 4', opacity:0 }, g);
+    const iconBox = el('g', { transform:'translate(-58 -12)' }, g);
+    const iconColor = '#64748b';
+    if (m.icon === 'laptop') {
+      el('rect', { x:0, y:0, width:18, height:11, rx:1.5, stroke:iconColor, 'stroke-width':1.4, fill:'none' }, iconBox);
+      el('line', { x1:-1, y1:14, x2:19, y2:14, stroke:iconColor, 'stroke-width':1.4, 'stroke-linecap':'round' }, iconBox);
+    } else if (m.icon === 'desktop') {
+      el('rect', { x:0, y:0, width:19, height:13, rx:1.5, stroke:iconColor, 'stroke-width':1.4, fill:'none' }, iconBox);
+      el('line', { x1:6, y1:17, x2:13, y2:17, stroke:iconColor, 'stroke-width':1.4, 'stroke-linecap':'round' }, iconBox);
+    } else {
+      el('rect', { x:0, y:0, width:18, height:5, rx:1.2, stroke:iconColor, 'stroke-width':1.4, fill:'none' }, iconBox);
+      el('rect', { x:0, y:9, width:18, height:5, rx:1.2, stroke:iconColor, 'stroke-width':1.4, fill:'none' }, iconBox);
+      el('circle', { cx:3, cy:2.5, r:0.9, fill:iconColor }, iconBox);
+      el('circle', { cx:3, cy:11.5, r:0.9, fill:iconColor }, iconBox);
+    }
+    const labelT = el('text', { x:-30, y:-6, fill:'#f1f5f9', 'font-size':14, 'font-weight':600, 'font-family':'Space Grotesk, sans-serif' }, g); labelT.textContent = m.label;
+    const metaT = el('text', { x:-30, y:12, fill:'#64748b', 'font-size':11, 'font-family':'JetBrains Mono, monospace' }, g); metaT.textContent = m.meta;
+    const cmdrG = el('g', { transform:'translate(56 -22)', opacity:0 }, g);
+    el('rect', { x:-32, y:-10, width:38, height:16, rx:4, fill:'rgba(250,204,21,0.12)', stroke:'#facc15', 'stroke-width':0.8 }, cmdrG);
+    const cmdrT = el('text', { x:-13, y:2, 'text-anchor':'middle', fill:'#facc15', 'font-size':9, 'font-family':'JetBrains Mono, monospace', 'font-weight':700 }, cmdrG); cmdrT.textContent = 'CMDR';
+    const shipG = el('g', { transform:'translate(56 -22)', opacity:0 }, g);
+    el('rect', { x:-32, y:-10, width:38, height:16, rx:4, fill:'rgba(192,132,252,0.12)', stroke:'#c084fc', 'stroke-width':0.8 }, shipG);
+    const shipT = el('text', { x:-13, y:2, 'text-anchor':'middle', fill:'#c084fc', 'font-size':9, 'font-family':'JetBrains Mono, monospace', 'font-weight':700 }, shipG); shipT.textContent = 'SHIP';
+    return { m, glow, rect, dashRect, iconBox, cmdrG, shipG };
+  });
+
+  const packetsG = svg.querySelector('#fa-packets');
+
+  // Animation state
+  let t = 0, playing = true, last = null;
+  const $clock = document.getElementById('fa-clock');
+  const $title = document.getElementById('fa-scene-title');
+  const $sub = document.getElementById('fa-scene-sub');
+  const $num = document.getElementById('fa-scene-num');
+  const $name = document.getElementById('fa-scene-name');
+  const $steps = document.getElementById('fa-steps');
+  const $scrub = document.getElementById('fa-scrub');
+  const $play = document.getElementById('fa-play');
+  const $playIcon = document.getElementById('fa-play-icon');
+
+  // Build steps
+  SCENES.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'fa-step';
+    btn.innerHTML = `<span class="fa-step-num">${String(i+1).padStart(2,'0')}</span><span class="fa-step-label">${s.label}</span>`;
+    btn.addEventListener('click', () => { t = i * SCENE_LEN + 0.001; });
+    $steps.appendChild(btn);
+  });
+
+  function render() {
+    const sceneIdx = Math.floor(t / SCENE_LEN);
+    const localT = (t - sceneIdx * SCENE_LEN) / SCENE_LEN;
+    const scene = SCENES[sceneIdx];
+
+    $clock.textContent = `${String(Math.floor(t)).padStart(2,'0')}:${String(Math.floor((t%1)*100)).padStart(2,'0')} / 36s`;
+    $title.textContent = scene.title;
+    $sub.textContent = scene.sub;
+    $num.textContent = String(sceneIdx+1).padStart(2,'0');
+    $name.textContent = scene.label;
+    $scrub.value = t;
+    [...$steps.children].forEach((c, i) => c.classList.toggle('active', i === sceneIdx));
+
+    // Roles
+    const role = id => {
+      if (sceneIdx === 0) return 'idle';
+      if (sceneIdx === 1) return id === 'laptop' ? 'commander' : 'idle';
+      return id === 'laptop' ? 'commander' : 'ship';
+    };
+
+    machineEls.forEach(({ m, glow, rect, dashRect, cmdrG, shipG }) => {
+      const r = role(m.id);
+      const color = r === 'commander' ? '#facc15' : r === 'ship' ? '#c084fc' : '#232a44';
+      rect.setAttribute('stroke', color);
+      rect.setAttribute('stroke-width', r === 'idle' ? 1 : 1.5);
+      glow.setAttribute('fill', color);
+      glow.setAttribute('opacity', r === 'idle' ? 0 : (0.3 + 0.15 * Math.sin(t*3)));
+      dashRect.setAttribute('opacity', r === 'commander' ? (0.3 + 0.3 * Math.sin(t*4)) : 0);
+      cmdrG.setAttribute('opacity', r === 'commander' ? 1 : 0);
+      shipG.setAttribute('opacity', r === 'ship' ? 1 : 0);
+    });
+
+    // Hub
+    const hubActive = sceneIdx >= 2;
+    const pulse = 0.7 + 0.3 * Math.sin(t*2.5);
+    hubRing1.setAttribute('opacity', hubActive ? 0.08 * pulse : 0);
+    hubRing2.setAttribute('opacity', hubActive ? 0.5 * pulse : 0);
+    hubCircle.setAttribute('stroke', hubActive ? '#38bdf8' : '#1a2035');
+    hubInner.setAttribute('stroke', hubActive ? '#38bdf8' : '#64748b');
+    hubLabel.setAttribute('fill', hubActive ? '#38bdf8' : '#64748b');
+
+    // Machine links
+    machineLinks.forEach((ln, i) => {
+      const m = MACHINES[i];
+      const active = sceneIdx >= 2 || (sceneIdx === 1 && m.id === 'laptop');
+      ln.setAttribute('stroke', active ? '#232a44' : '#13182a');
+      ln.setAttribute('stroke-width', active ? 1.2 : 0.8);
+      ln.setAttribute('stroke-dasharray', active ? '4 6' : '2 8');
+      ln.setAttribute('opacity', active ? 0.7 : 0.4);
+    });
+
+    // Branches
+    branchEls.forEach((be, i) => {
+      const b = be.b;
+      // Progress
+      let prog = 0;
+      if (sceneIdx < 4) prog = 0;
+      else if (sceneIdx > 4) prog = 1;
+      else {
+        const start = i * 0.08;
+        let p = clamp((localT - start) / (1 - start), 0, 1);
+        if (i === 2) { // M3 stalls
+          if (p < 0.5) p = p * 0.9;
+          else p = clamp(0.45 + (p - 0.5) * 1.1, 0, 1);
+        }
+        prog = p;
+      }
+      const tipX = TRACK_X1 + prog * (TRACK_X2 - TRACK_X1);
+      be.fork.setAttribute('stroke', sceneIdx >= 1 ? b.color : '#1f2840');
+      be.fork.setAttribute('opacity', sceneIdx >= 1 ? 0.6 : 0.3);
+      be.prog.setAttribute('x2', tipX);
+      be.prog.setAttribute('opacity', sceneIdx >= 3 ? 1 : 0);
+      be.commits.forEach((c, ci) => {
+        const cx = TRACK_X1 + (ci+1)*(TRACK_X2 - TRACK_X1)/6;
+        c.setAttribute('opacity', sceneIdx >= 4 && cx <= tipX + 2 ? 1 : 0);
+      });
+      be.tip.setAttribute('cx', tipX);
+      be.tipGlow.setAttribute('cx', tipX);
+      be.tip.setAttribute('opacity', sceneIdx >= 3 ? 1 : 0);
+      be.tipGlow.setAttribute('opacity', sceneIdx >= 3 ? 0.2 : 0);
+
+      const merged = sceneIdx >= 5 && prog > 0.9 && localT > 0.5;
+      be.mergePath.setAttribute('opacity', merged ? 1 : 0);
+      be.ciG.setAttribute('opacity', merged ? 1 : 0);
+      if (be.stallG) {
+        const showStall = sceneIdx === 4 && localT > 0.35 && localT < 0.7;
+        be.stallG.setAttribute('transform', `translate(${tipX + 12} ${b.y})`);
+        be.stallG.setAttribute('opacity', showStall ? 1 : 0);
+      }
+    });
+
+    // Packets - clear and redraw each frame
+    packetsG.innerHTML = '';
+    const packets = [];
+    if (sceneIdx === 1 && localT > 0.45) {
+      packets.push({ from: MACHINES[0], to: HUB, t:(localT-0.45)/0.55, color:'#facc15', label:'PLAN' });
+    }
+    if (sceneIdx === 2) {
+      BRANCHES.forEach((b, i) => {
+        const ship = MACHINES.find(m => m.id === b.ship);
+        const start = 0.15 + i * 0.12;
+        if (localT > start) {
+          packets.push({ from: HUB, to: ship, t: clamp((localT-start)/0.6, 0, 1), color: b.color, label: b.id });
+        }
+      });
+    }
+    if (sceneIdx === 3) {
+      BRANCHES.forEach((b, i) => {
+        const ship = MACHINES.find(m => m.id === b.ship);
+        const start = 0.1 + i * 0.1;
+        if (localT > start && localT < start + 0.5) {
+          packets.push({ from: ship, to: HUB, t: clamp((localT-start)/0.4, 0, 1), color: b.color, label: 'ACK' });
+        }
+      });
+    }
+    if (sceneIdx === 4) {
+      BRANCHES.forEach((b, i) => {
+        const ship = MACHINES.find(m => m.id === b.ship);
+        const phase = (localT * 2 + i * 0.25) % 1;
+        if (phase < 0.5) packets.push({ from: ship, to: HUB, t: phase * 2, color: b.color, label: '♥' });
+      });
+    }
+    if (sceneIdx === 5 && localT < 0.6) {
+      BRANCHES.forEach((b, i) => {
+        const ship = MACHINES.find(m => m.id === b.ship);
+        const start = i * 0.08;
+        if (localT > start) packets.push({ from: ship, to: HUB, t: clamp((localT-start)/0.4, 0, 1), color: b.color, label: '✓' });
+      });
+    }
+    packets.forEach(p => {
+      const x = lerp(p.from.x, p.to.x, ease(p.t));
+      const y = lerp(p.from.y, p.to.y, ease(p.t));
+      if (p.t < 0.05 || p.t > 0.95) return;
+      const g = el('g', { transform:`translate(${x} ${y})` }, packetsG);
+      el('rect', { x:-22, y:-9, width:44, height:18, rx:4, fill:'#0a0e17', stroke:p.color, 'stroke-width':1 }, g);
+      const txt = el('text', { 'text-anchor':'middle', y:4, fill:p.color, 'font-size':10, 'font-family':'JetBrains Mono, monospace', 'font-weight':700 }, g); txt.textContent = p.label;
+    });
+  }
+
+  function tick(now) {
+    if (playing) {
+      if (!last) last = now;
+      const dt = (now - last) / 1000;
+      last = now;
+      t = (t + dt) % TOTAL;
+    } else {
+      last = null;
+    }
+    render();
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  $play.addEventListener('click', () => {
+    playing = !playing;
+    $playIcon.innerHTML = playing
+      ? '<rect x="6" y="5" width="4" height="14" fill="currentColor"></rect><rect x="14" y="5" width="4" height="14" fill="currentColor"></rect>'
+      : '<path d="M6 4 L20 12 L6 20 Z" fill="currentColor"></path>';
+  });
+  $scrub.addEventListener('input', e => { playing = false; t = parseFloat(e.target.value); });
+})();
+</script>
