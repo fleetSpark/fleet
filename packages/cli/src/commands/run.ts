@@ -251,6 +251,68 @@ export async function runSimulate(
   return output;
 }
 
+// ── Fleet log ─────────────────────────────────────────────────────────────────
+
+/**
+ * Appends one run entry to FLEET_LOG.md in `cwd`.
+ * Creates the file with a header if it doesn't exist yet.
+ */
+async function appendFleetLog(
+  cwd: string,
+  templateName: string,
+  missions: TemplateMission[],
+  elapsed: string,
+  simulated: boolean,
+): Promise<void> {
+  const { appendFile, readFile, writeFile: wf } = await import('node:fs/promises');
+  const { execFile: ef } = await import('node:child_process');
+  const { promisify } = await import('node:util');
+  const { join } = await import('node:path');
+  const execF = promisify(ef);
+
+  const logPath = join(cwd, 'FLEET_LOG.md');
+
+  // Get short SHA (best effort — fresh repos won't have one yet)
+  let sha = 'n/a';
+  try {
+    const { stdout } = await execF('git', ['rev-parse', '--short', 'HEAD'], { cwd });
+    sha = stdout.trim();
+  } catch { /* unborn repo or no git — skip */ }
+
+  const now = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+  const modeLabel = simulated ? 'simulate' : 'real';
+  const branchList = missions.map((m) => `  - \`${m.branch}\``).join('\n');
+
+  // Ensure header exists
+  let existing = '';
+  try { existing = await readFile(logPath, 'utf-8'); } catch { /* new file */ }
+  if (existing.length === 0) {
+    await wf(logPath, '# Fleet Log\n\nRuns recorded by `fleet run --log`.\n', 'utf-8');
+  }
+
+  const entry = [
+    '',
+    `## ${now}`,
+    '',
+    `| field | value |`,
+    `|---|---|`,
+    `| template | \`${templateName}\` |`,
+    `| mode | ${modeLabel} |`,
+    `| missions | ${missions.length} |`,
+    `| wall time | ~${elapsed} |`,
+    `| sha | \`${sha}\` |`,
+    '',
+    'Branches:',
+    branchList,
+    '',
+    '---',
+    '',
+  ].join('\n');
+
+  await appendFile(logPath, entry, 'utf-8');
+  console.log(dim(`  📋 Appended to FLEET_LOG.md`));
+}
+
 // ── Command ───────────────────────────────────────────────────────────────────
 
 export function registerRunCommand(program: Command): void {
@@ -261,7 +323,8 @@ export function registerRunCommand(program: Command): void {
     .option('--cwd <path>', 'Working directory (default: current directory)')
     .option('--agent <adapter>', 'Override the agent adapter for all missions')
     .option('--simulate', 'Simulate the run without spawning real agents (UAT / preview mode)')
-    .action(async (options: { template: string; cwd?: string; agent?: string; simulate?: boolean }) => {
+    .option('--log', 'Append a run summary entry to FLEET_LOG.md')
+    .action(async (options: { template: string; cwd?: string; agent?: string; simulate?: boolean; log?: boolean }) => {
       const workDir = options.cwd ?? process.cwd();
 
       // Load template
@@ -279,6 +342,12 @@ export function registerRunCommand(program: Command): void {
           delayMs: 400,
           emit: console.log,
         });
+        if (options.log) {
+          const template = getTemplate(options.template)!;
+          const missions = topoSort(template.missions as TemplateMission[]);
+          const elapsed = '0s'; // simulated — no real clock
+          await appendFleetLog(workDir, options.template, missions, elapsed, true);
+        }
         return;
       }
 
@@ -383,5 +452,10 @@ export function registerRunCommand(program: Command): void {
         console.log(`  ${green('✓')} ${m.branch}`);
       }
       console.log(`\nRun ${bold('fleet report')} for a full summary, or open PRs to merge.\n`);
+
+      // Append log entry if requested
+      if (options.log) {
+        await appendFleetLog(workDir, options.template, missions!, elapsed, false);
+      }
     });
 }

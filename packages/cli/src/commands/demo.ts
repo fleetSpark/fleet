@@ -68,6 +68,68 @@ function delay(ms: number, multiplier: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, actual));
 }
 
+/** Group missions into parallel waves by topological order. */
+function buildWaves(missions: DemoMission[]): DemoMission[][] {
+  const remaining = [...missions];
+  const done = new Set<string>();
+  const waves: DemoMission[][] = [];
+
+  while (remaining.length > 0) {
+    const wave = remaining.filter((m) => m.depends.every((d) => done.has(d)));
+    if (wave.length === 0) break; // cycle guard
+    waves.push(wave);
+    for (const m of wave) {
+      done.add(m.id);
+      remaining.splice(remaining.indexOf(m), 1);
+    }
+  }
+  return waves;
+}
+
+export function runBenchmark(minutesPerStep = 3, log: LogFn = console.log): void {
+  const waves = buildWaves(DEMO_MISSIONS);
+
+  // Sequential: every mission runs one after another
+  const totalSteps = DEMO_MISSIONS.reduce((s, m) => s + m.steps.length, 0);
+  const sequentialMin = totalSteps * minutesPerStep;
+
+  // Parallel: each wave's duration = longest mission in that wave
+  const parallelMin = waves.reduce((sum, wave) => {
+    const longest = Math.max(...wave.map((m) => m.steps.length));
+    return sum + longest * minutesPerStep;
+  }, 0);
+
+  const speedup = (sequentialMin / parallelMin).toFixed(1);
+  const savedMin = sequentialMin - parallelMin;
+
+  log('');
+  log('=== FleetSpark Benchmark ===');
+  log(`Assumption: ${minutesPerStep} min per agent step  (override: --step-minutes <n>)`);
+  log('');
+  log(`Missions: ${DEMO_MISSIONS.length}  Ships: ${waves.length > 1 ? waves[0].length : 1}  Waves: ${waves.length}`);
+  log('');
+  log('Sequential (single machine):');
+  log(`  ${DEMO_MISSIONS.map((m) => `${m.id}(${m.steps.length})`).join(' → ')} = ${sequentialMin} min`);
+  log('');
+  log('Fleet parallel:');
+  waves.forEach((wave, i) => {
+    const maxSteps = Math.max(...wave.map((m) => m.steps.length));
+    const ids = wave.map((m) => m.id).join(' ‖ ');
+    log(`  Wave ${i + 1}: ${ids}  →  ${maxSteps} steps × ${minutesPerStep} min = ${maxSteps * minutesPerStep} min`);
+  });
+  log(`  Total: ${parallelMin} min`);
+  log('');
+  log(`Speedup: ${speedup}x   Wall time saved: ${savedMin} min`);
+  log('');
+  log('Reproduce this:');
+  log('  npx fleetspark init');
+  log('  npx fleetspark ship register laptop --agent claude-code');
+  log('  npx fleetspark ship register desktop --agent codex');
+  log('  npx fleetspark ship register ec2 --agent aider');
+  log('  npx fleetspark command --template test-coverage');
+  log('');
+}
+
 export async function runDemo(
   log: LogFn = console.log,
   delayMultiplier: number = 1,
@@ -165,7 +227,13 @@ export function registerDemoCommand(program: Command): void {
   program
     .command('demo')
     .description('Run a simulated fleet demo to see FleetSpark in action')
-    .action(async () => {
-      await runDemo(console.log, 1);
+    .option('--benchmark', 'Print parallel vs sequential speedup analysis')
+    .option('--step-minutes <n>', 'Minutes per agent step used in benchmark (default: 3)', '3')
+    .action(async (opts: { benchmark?: boolean; stepMinutes?: string }) => {
+      if (opts.benchmark) {
+        runBenchmark(Number(opts.stepMinutes ?? 3));
+      } else {
+        await runDemo(console.log, 1);
+      }
     });
 }
