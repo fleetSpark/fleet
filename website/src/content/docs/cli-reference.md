@@ -26,6 +26,12 @@ fleet command --plan "Add OAuth login, fix rate limiter, update docs"
 # Load missions from a YAML plan file
 fleet command --plan-file missions.yml
 
+# Use a built-in mission template
+fleet command --template test-coverage
+
+# List available templates
+fleet command --template list
+
 # Resume an existing fleet (re-claim commander)
 fleet command --resume
 
@@ -37,8 +43,11 @@ fleet command --resume --handoff
 |------|-------------|
 | `--plan <goal>` | Natural language goal for LLM decomposition |
 | `--plan-file <path>` | YAML file with pre-defined missions |
+| `--template <name>` | Use a built-in mission template; use `list` to see all |
 | `--resume` | Resume monitoring existing missions |
 | `--handoff` | Enable implicit commander handoff (any machine can resume) |
+
+See [Mission Templates](/templates/) for the full list of built-in templates.
 
 ---
 
@@ -145,6 +154,44 @@ The dashboard shows mission board, ship health, merge queue, and mission logs in
 | `-H, --host <host>` | Bind address (default: 0.0.0.0) |
 | `--poll <ms>` | Poll interval in milliseconds (default: 15000) |
 | `--no-open` | Do not open browser automatically |
+
+---
+
+## fleet demo
+
+Run a zero-friction simulated fleet — no repo, no agents, no network required.
+
+```bash
+fleet demo
+# or
+npx fleetspark demo
+```
+
+Simulates a complete fleet run with 4 missions, showing planning, ship assignment, parallel execution, dependency unblocking, and auto-merge. The ideal way to see Fleet in action before setting up a real fleet.
+
+---
+
+## fleet report
+
+Generate a markdown summary of the current or most recent fleet run.
+
+```bash
+# Print to stdout
+fleet report
+
+# Machine-readable JSON
+fleet report --json
+
+# Write to a file
+fleet report --output run-report.md
+```
+
+The report includes mission outcomes, timing, ships used, merge status, and an estimated time saved vs. sequential execution.
+
+| Flag | Description |
+|------|-------------|
+| `--json` | Output machine-readable JSON instead of markdown |
+| `--output <file>` | Write report to a file |
 
 ---
 

@@ -20,6 +20,14 @@ export default defineConfig({
       sidebar: [
         { label: 'Getting Started', link: '/getting-started/' },
         {
+          label: 'Guides',
+          items: [
+            { label: 'Mission Templates', link: '/templates/' },
+            { label: 'GitHub Action', link: '/github-action/' },
+            { label: 'Ecosystem', link: '/ecosystem/' },
+          ],
+        },
+        {
           label: 'Concepts',
           items: [
             { label: 'Architecture', link: '/architecture/' },

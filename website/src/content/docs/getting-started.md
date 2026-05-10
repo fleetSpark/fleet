@@ -5,6 +5,18 @@ description: Get up and running with Fleet in under 5 minutes.
 
 Fleet turns your idle machines into a coordinated AI coding workforce. Here's how to start.
 
+## See it first (30 seconds)
+
+Before setting anything up, run the demo — no repo, no agents, no network required:
+
+```bash
+npx fleetspark demo
+```
+
+This simulates a complete 4-mission fleet run so you can see exactly how planning, ship assignment, parallel execution, and auto-merge work.
+
+---
+
 ## Prerequisites
 
 - **Node.js 18+** on every machine
@@ -25,16 +37,17 @@ This creates `.fleet/config.yml` and the `fleet/state` branch with an empty `FLE
 ## Plan your work
 
 ```bash
+# Use an LLM to decompose a natural language goal
 npx fleetspark command --plan "Add OAuth login, fix the rate limiter, update API docs"
-```
 
-The commander uses an LLM to decompose your goal into independent missions with dependencies, creates branches, and writes the plan to `FLEET.md`.
+# Use a built-in template (no API key needed)
+npx fleetspark command --template test-coverage
 
-You can also load a pre-defined plan from a YAML file:
-
-```bash
+# Load a pre-defined YAML plan
 npx fleetspark command --plan-file missions.yml
 ```
+
+The commander decomposes your goal into independent missions with dependencies, creates branches, and writes the plan to `FLEET.md`. Templates give you a ready-to-run plan with no LLM required — see [Mission Templates](/templates/) for all five built-in options.
 
 ## Join the fleet
 
@@ -79,8 +92,20 @@ Fleet is configured via `.fleet/config.yml`. See the [Configuration reference](/
 - Webhook notifications (Slack, custom)
 - Resource limits (per-ship concurrency, mission timeouts)
 
+## After a run
+
+Generate a markdown summary of what happened:
+
+```bash
+npx fleetspark report
+```
+
+Includes mission outcomes, timing, ships used, and an estimate of how much time running in parallel saved vs. sequential execution.
+
 ## Next steps
 
+- [Mission Templates](/templates/) — start a fleet without writing a plan
+- [GitHub Action](/github-action/) — run Fleet in CI without extra machines
 - [Architecture](/architecture/) — understand how Fleet works under the hood
 - [Adapters](/adapters/) — which coding agents are supported
 - [CLI Reference](/cli-reference/) — all available commands
