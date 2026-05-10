@@ -24,6 +24,7 @@ export default defineConfig({
           items: [
             { label: 'Mission Templates', link: '/templates/' },
             { label: 'GitHub Action', link: '/github-action/' },
+            { label: 'Agent Benchmarks', link: '/benchmarks/' },
             { label: 'Ecosystem', link: '/ecosystem/' },
           ],
         },

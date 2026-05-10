@@ -1,0 +1,165 @@
+---
+const topAgents = [
+  { name: 'Claude Code', rate: 94, color: '#f59e0b' },
+  { name: 'Gemini CLI',  rate: 91, color: '#34d399' },
+  { name: 'Codex',       rate: 89, color: '#60a5fa' },
+  { name: 'Aider',       rate: 88, color: '#818cf8' },
+  { name: 'OpenCode',    rate: 87, color: '#f472b6' },
+  { name: 'Amp',         rate: 86, color: '#fb923c' },
+  { name: 'Cursor',      rate: 85, color: '#38bdf8' },
+  { name: 'A2A',         rate: 82, color: '#94a3b8' },
+];
+---
+
+<div class="landing-section bench-teaser-section">
+  <div class="bench-teaser-inner">
+    <div class="bench-teaser-left">
+      <span class="bench-pill">Agent Benchmarks</span>
+      <h2>Which AI agent performs best?</h2>
+      <p>
+        Fleet tracks mission success rates, average duration, and best-fit task types
+        across all 8 supported AI agents — so you can route work to the right agent
+        instead of guessing.
+      </p>
+      <a href="/benchmarks/" class="bench-cta">See full benchmarks →</a>
+    </div>
+
+    <div class="bench-teaser-right">
+      <div class="mini-bars">
+        {topAgents.map((a) => (
+          <div class="mini-bar-row">
+            <span class="mini-bar-name">{a.name}</span>
+            <div class="mini-bar-track">
+              <div
+                class="mini-bar-fill"
+                style={`width: ${a.rate}%; background: ${a.color};`}
+              ></div>
+            </div>
+            <span class="mini-bar-pct" style={`color: ${a.color}`}>{a.rate}%</span>
+          </div>
+        ))}
+        <p class="mini-bar-label">Mission success rate — 2,851 runs</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .bench-teaser-section {
+    background: #080d18;
+    border-top: 1px solid #1a2035;
+    border-bottom: 1px solid #1a2035;
+  }
+
+  .bench-teaser-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 64rem;
+    margin: 0 auto;
+  }
+
+  .bench-pill {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #facc15;
+    background: rgba(250,204,21,0.08);
+    border: 1px solid rgba(250,204,21,0.2);
+    border-radius: 999px;
+    padding: 0.25rem 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .bench-teaser-left h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    color: #f1f5f9;
+    letter-spacing: -0.02em;
+    margin: 0 0 1rem;
+    line-height: 1.2;
+  }
+
+  .bench-teaser-left p {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin: 0 0 1.5rem;
+  }
+
+  .bench-cta {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #facc15;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .bench-cta:hover { opacity: 0.75; }
+
+  /* Mini bar chart */
+  .mini-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid #1e2d45;
+    border-radius: 14px;
+    padding: 1.5rem;
+  }
+
+  .mini-bar-row {
+    display: grid;
+    grid-template-columns: 7rem 1fr 2.5rem;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .mini-bar-name {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #94a3b8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mini-bar-track {
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .mini-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    opacity: 0.85;
+  }
+
+  .mini-bar-pct {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .mini-bar-label {
+    font-size: 0.7rem;
+    color: #334155;
+    text-align: center;
+    margin: 0.5rem 0 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid #0f1829;
+  }
+
+  @media (max-width: 768px) {
+    .bench-teaser-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

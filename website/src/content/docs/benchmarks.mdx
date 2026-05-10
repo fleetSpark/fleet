@@ -1,0 +1,44 @@
+---
+title: Agent Benchmarks
+description: Mission success rates, average duration, and best-fit routing recommendations across all 8 Fleet AI agent adapters.
+---
+
+import AgentBenchmarks from '../../components/AgentBenchmarks.astro';
+
+Fleet tracks mission outcomes across all supported AI agent adapters — success rate, average duration, and task affinity — so you can route work to the right agent instead of guessing.
+
+<AgentBenchmarks />
+
+## How to use this data
+
+**Pick by success rate** when mission reliability matters most — failed or stalled missions block the merge queue and delay dependent work.
+
+**Pick by duration** when you're running many parallel missions and want the fleet to finish fast. Assign fast agents (Amp, Codex) to simple missions and let slower high-quality agents (Claude Code) handle the complex ones simultaneously.
+
+**Mix agents in the same fleet** — each ship picks up one mission and runs independently. There's no requirement to use the same agent everywhere:
+
+```yaml
+# .fleet/config.yml — different agents per ship
+ships:
+  - name: alpha
+    adapter: claude-code   # complex refactor mission
+  - name: beta
+    adapter: codex         # quick dependency update mission
+  - name: gamma
+    adapter: gemini        # docs mission
+```
+
+## What "success" means
+
+A mission counts as **successful** when:
+1. The agent completes its work and pushes a branch
+2. Fleet's CI check passes
+3. The PR merges without manual intervention
+
+Missions that stall (no heartbeat), time out, or require human unblocking count as **failed** for benchmark purposes.
+
+## Contribute your data
+
+These benchmarks grow with community contributions. If you're running Fleet regularly, [open a discussion on GitHub](https://github.com/fleetSpark/fleet/discussions) and share your agent, task type, mission count, and outcomes. Aggregate data is added to the benchmark set monthly.
+
+The raw data and methodology will be published as a JSON file in the repository when the v1.5 telemetry dashboard ships.

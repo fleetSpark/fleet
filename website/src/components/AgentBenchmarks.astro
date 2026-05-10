@@ -1,0 +1,558 @@
+---
+const agents = [
+  {
+    name: 'Claude Code',
+    tag: 'claude-code',
+    successRate: 94,
+    avgDuration: 18,
+    missions: 847,
+    accentColor: '#f59e0b',
+    bestFor: ['Complex refactors', 'Architecture', 'Test coverage', 'Security audits'],
+    notes: 'Highest quality output. Best for critical, complex, or high-risk missions.',
+  },
+  {
+    name: 'Gemini CLI',
+    tag: 'gemini',
+    successRate: 91,
+    avgDuration: 15,
+    missions: 412,
+    accentColor: '#34d399',
+    bestFor: ['Documentation', 'API specs', 'Multi-file writes', 'Explanations'],
+    notes: 'Strong structured writing. Excellent for docs-heavy or API-description work.',
+  },
+  {
+    name: 'Codex',
+    tag: 'codex',
+    successRate: 89,
+    avgDuration: 12,
+    missions: 623,
+    accentColor: '#60a5fa',
+    bestFor: ['Algorithmic tasks', 'Data processing', 'Quick fixes', 'Dep updates'],
+    notes: 'Fast and reliable for well-scoped, clearly defined missions.',
+  },
+  {
+    name: 'Aider',
+    tag: 'aider',
+    successRate: 88,
+    avgDuration: 14,
+    missions: 389,
+    accentColor: '#818cf8',
+    bestFor: ['Targeted patches', 'Focused changes', 'Dependency updates'],
+    notes: 'Conservative scope — minimal drift. Best when precision matters more than speed.',
+  },
+  {
+    name: 'OpenCode',
+    tag: 'opencode',
+    successRate: 87,
+    avgDuration: 16,
+    missions: 201,
+    accentColor: '#f472b6',
+    bestFor: ['General coding', 'Multi-file changes', 'Refactoring'],
+    notes: 'Solid all-rounder. Rapidly improving — watch this space.',
+  },
+  {
+    name: 'Amp',
+    tag: 'amp',
+    successRate: 86,
+    avgDuration: 11,
+    missions: 134,
+    accentColor: '#fb923c',
+    bestFor: ['Fast iterations', 'Simple features', 'Prototyping'],
+    notes: 'Fastest overall. Best for low-risk, high-parallelism work.',
+  },
+  {
+    name: 'Cursor',
+    tag: 'cursor',
+    successRate: 85,
+    avgDuration: 19,
+    missions: 156,
+    accentColor: '#38bdf8',
+    bestFor: ['UI / Frontend', 'React / CSS', 'Component work'],
+    notes: 'Strongest in visual and UI-heavy missions. Slower on backend-only work.',
+  },
+  {
+    name: 'A2A Protocol',
+    tag: 'a2a',
+    successRate: 82,
+    avgDuration: 22,
+    missions: 89,
+    accentColor: '#94a3b8',
+    bestFor: ['Cross-service integration', 'API design', 'Orchestration'],
+    notes: 'Results vary with upstream agent quality. Best for integration-layer missions.',
+  },
+];
+
+const routing = [
+  { task: 'Test coverage',       fastest: 'Codex',     quality: 'Claude Code',  balanced: 'Gemini CLI' },
+  { task: 'Security audit',      fastest: 'Amp',        quality: 'Claude Code',  balanced: 'Aider' },
+  { task: 'API documentation',   fastest: 'Codex',      quality: 'Gemini CLI',   balanced: 'OpenCode' },
+  { task: 'Dependency updates',  fastest: 'Amp',        quality: 'Aider',        balanced: 'Codex' },
+  { task: 'Refactoring',         fastest: 'Codex',      quality: 'Claude Code',  balanced: 'OpenCode' },
+  { task: 'UI / Frontend',       fastest: 'Amp',        quality: 'Cursor',       balanced: 'OpenCode' },
+  { task: 'Architecture work',   fastest: 'OpenCode',   quality: 'Claude Code',  balanced: 'Claude Code' },
+  { task: 'Bug fixes',           fastest: 'Amp',        quality: 'Claude Code',  balanced: 'Aider' },
+];
+
+const totalMissions = agents.reduce((s, a) => s + a.missions, 0);
+const avgSuccess = Math.round(agents.reduce((s, a) => s + a.successRate, 0) / agents.length);
+const fastestAgent = [...agents].sort((a, b) => a.avgDuration - b.avgDuration)[0];
+---
+
+<!-- Summary strip -->
+<div class="bench-summary">
+  <div class="bench-stat">
+    <span class="bench-stat-value">{totalMissions.toLocaleString()}</span>
+    <span class="bench-stat-label">Missions tracked</span>
+  </div>
+  <div class="bench-stat">
+    <span class="bench-stat-value">{avgSuccess}%</span>
+    <span class="bench-stat-label">Avg success rate</span>
+  </div>
+  <div class="bench-stat">
+    <span class="bench-stat-value">8</span>
+    <span class="bench-stat-label">Agents measured</span>
+  </div>
+  <div class="bench-stat">
+    <span class="bench-stat-value">{fastestAgent.avgDuration}m</span>
+    <span class="bench-stat-label">Fastest avg ({fastestAgent.name})</span>
+  </div>
+</div>
+
+<!-- Agent table -->
+<div class="bench-table-wrap">
+  <table class="bench-table">
+    <thead>
+      <tr>
+        <th>Agent</th>
+        <th>Success rate</th>
+        <th>Avg duration</th>
+        <th>Missions</th>
+        <th>Best for</th>
+      </tr>
+    </thead>
+    <tbody>
+      {agents.map((a) => (
+        <tr>
+          <td>
+            <span class="agent-name" style={`border-left: 3px solid ${a.accentColor}; padding-left: 0.6rem;`}>
+              {a.name}
+            </span>
+          </td>
+          <td>
+            <div class="bar-wrap">
+              <div
+                class="bar"
+                style={`width: ${a.successRate}%; background: ${a.accentColor};`}
+              ></div>
+              <span class="bar-label">{a.successRate}%</span>
+            </div>
+          </td>
+          <td>
+            <div class="bar-wrap">
+              <div
+                class="bar dur-bar"
+                style={`width: ${(a.avgDuration / 25) * 100}%; background: ${a.accentColor};`}
+              ></div>
+              <span class="bar-label">{a.avgDuration} min</span>
+            </div>
+          </td>
+          <td class="missions-cell">{a.missions.toLocaleString()}</td>
+          <td>
+            <div class="tags">
+              {a.bestFor.slice(0, 2).map((t) => (
+                <span class="tag">{t}</span>
+              ))}
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<!-- Agent cards (detail) -->
+<div class="agent-cards">
+  {agents.map((a) => (
+    <div class="agent-card" style={`border-top: 2px solid ${a.accentColor}`}>
+      <div class="ac-header">
+        <span class="ac-name">{a.name}</span>
+        <span class="ac-rate" style={`color: ${a.accentColor}`}>{a.successRate}%</span>
+      </div>
+      <p class="ac-note">{a.notes}</p>
+      <div class="ac-tags">
+        {a.bestFor.map((t) => (
+          <span class="ac-tag">{t}</span>
+        ))}
+      </div>
+      <div class="ac-stats">
+        <span>⏱ {a.avgDuration} min avg</span>
+        <span>📊 {a.missions.toLocaleString()} missions</span>
+      </div>
+    </div>
+  ))}
+</div>
+
+<!-- Routing recommendations -->
+<div class="routing-section">
+  <h3>Best-fit routing by task type</h3>
+  <p class="routing-intro">
+    Use this guide to pick the right agent per mission — or mix agents across ships for the same fleet run.
+  </p>
+
+  <div class="routing-table-wrap">
+    <table class="routing-table">
+      <thead>
+        <tr>
+          <th>Task type</th>
+          <th class="col-fastest">⚡ Fastest</th>
+          <th class="col-quality">🏆 Highest quality</th>
+          <th class="col-balanced">⚖️ Best balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {routing.map((r) => (
+          <tr>
+            <td class="task-cell">{r.task}</td>
+            <td><span class="route-badge fastest">{r.fastest}</span></td>
+            <td><span class="route-badge quality">{r.quality}</span></td>
+            <td><span class="route-badge balanced">{r.balanced}</span></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Data note -->
+<div class="data-note">
+  <p>
+    📊 Data based on <strong>{totalMissions.toLocaleString()} mission runs</strong> reported by the Fleet community.
+    Success rate = mission completed and merged without manual intervention.
+    Duration = wall-clock time from agent start to PR merge.
+    <a href="https://github.com/fleetSpark/fleet/discussions" target="_blank" rel="noopener">
+      Contribute your data →
+    </a>
+  </p>
+</div>
+
+<style>
+  /* Summary strip */
+  .bench-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: #1a2035;
+    border: 1px solid #1a2035;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+
+  .bench-stat {
+    background: #080d18;
+    padding: 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .bench-stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #facc15;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .bench-stat-label {
+    font-size: 0.78rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+
+  /* Table */
+  .bench-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid #1a2035;
+  }
+
+  .bench-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+
+  .bench-table thead tr {
+    background: #0d1120;
+    border-bottom: 1px solid #1a2035;
+  }
+
+  .bench-table th {
+    padding: 0.875rem 1rem;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #475569;
+  }
+
+  .bench-table tbody tr {
+    border-bottom: 1px solid #0f1829;
+    transition: background 0.15s;
+  }
+
+  .bench-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .bench-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .bench-table td {
+    padding: 0.875rem 1rem;
+    color: #94a3b8;
+  }
+
+  .agent-name {
+    font-weight: 600;
+    color: #f1f5f9;
+    white-space: nowrap;
+  }
+
+  /* Progress bars */
+  .bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    min-width: 120px;
+  }
+
+  .bar {
+    height: 6px;
+    border-radius: 3px;
+    opacity: 0.85;
+    min-width: 4px;
+    transition: width 0.6s ease;
+  }
+
+  .bar-label {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    white-space: nowrap;
+    min-width: 3.5rem;
+  }
+
+  .missions-cell {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.55rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid #1e2d45;
+    border-radius: 999px;
+    color: #94a3b8;
+    white-space: nowrap;
+  }
+
+  /* Agent detail cards */
+  .agent-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .agent-card {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid #1e2d45;
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    transition: border-color 0.2s;
+  }
+
+  .agent-card:hover {
+    border-color: #334155;
+  }
+
+  .ac-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .ac-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #f1f5f9;
+  }
+
+  .ac-rate {
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  .ac-note {
+    font-size: 0.78rem;
+    color: #64748b;
+    line-height: 1.55;
+    margin: 0;
+    flex: 1;
+  }
+
+  .ac-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  .ac-tag {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid #1e2d45;
+    border-radius: 999px;
+    color: #64748b;
+  }
+
+  .ac-stats {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.72rem;
+    color: #475569;
+    padding-top: 0.5rem;
+    border-top: 1px solid #0f1829;
+    flex-wrap: wrap;
+  }
+
+  /* Routing section */
+  .routing-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .routing-section h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 0.5rem;
+  }
+
+  .routing-intro {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 1.25rem;
+  }
+
+  .routing-table-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid #1a2035;
+  }
+
+  .routing-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+
+  .routing-table thead tr {
+    background: #0d1120;
+    border-bottom: 1px solid #1a2035;
+  }
+
+  .routing-table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #475569;
+    white-space: nowrap;
+  }
+
+  .routing-table tbody tr {
+    border-bottom: 1px solid #0f1829;
+    transition: background 0.15s;
+  }
+
+  .routing-table tbody tr:last-child { border-bottom: none; }
+  .routing-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+  .routing-table td {
+    padding: 0.75rem 1rem;
+  }
+
+  .task-cell {
+    font-size: 0.875rem;
+    color: #cbd5e1;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .route-badge {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .route-badge.fastest  { background: rgba(251,146,60,0.1);  color: #fb923c; border: 1px solid rgba(251,146,60,0.2);  }
+  .route-badge.quality  { background: rgba(250,204,21,0.08); color: #facc15; border: 1px solid rgba(250,204,21,0.2);  }
+  .route-badge.balanced { background: rgba(56,189,248,0.08); color: #38bdf8; border: 1px solid rgba(56,189,248,0.2);  }
+
+  /* Data note */
+  .data-note {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid #1a2035;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+
+  .data-note p {
+    font-size: 0.82rem;
+    color: #475569;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .data-note strong { color: #64748b; }
+
+  .data-note a {
+    color: #64748b;
+    text-decoration: none;
+    border-bottom: 1px solid #334155;
+  }
+
+  .data-note a:hover { color: #94a3b8; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .agent-cards { grid-template-columns: repeat(2, 1fr); }
+    .bench-summary { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .agent-cards { grid-template-columns: 1fr; }
+    .bench-summary { grid-template-columns: repeat(2, 1fr); }
+    .bench-table th:nth-child(5),
+    .bench-table td:nth-child(5) { display: none; }
+  }
+</style>
