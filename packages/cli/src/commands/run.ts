@@ -1,7 +1,7 @@
 import type { Command } from 'commander';
 import * as readline from 'node:readline';
 import { loadConfig, getTemplate, resolveAdapter, PluginLoader } from '@fleetspark/core';
-import type { FleetPlugin, FleetContext } from '@fleetspark/core';
+import type { FleetPlugin, FleetContext, HookResult } from '@fleetspark/core';
 import type { Mission } from '@fleetspark/core';
 
 // ── Topological sort ─────────────────────────────────────────────────────────
@@ -14,18 +14,29 @@ interface TemplateMission {
   depends: string[];
 }
 
+/**
+ * DFS topological sort. Throws on circular dependencies (detected via
+ * an in-stack set separate from the visited set).
+ */
 export function topoSort(missions: TemplateMission[]): TemplateMission[] {
   const byId = new Map(missions.map((m) => [m.id, m]));
-  const visited = new Set<string>();
+  const visited = new Set<string>();   // fully processed nodes
+  const inStack = new Set<string>();   // nodes currently on the DFS call stack
   const result: TemplateMission[] = [];
 
   function visit(id: string): void {
     if (visited.has(id)) return;
-    visited.add(id);
+    if (inStack.has(id)) {
+      throw new Error(`Circular dependency detected in mission graph: "${id}" is part of a cycle`);
+    }
+    inStack.add(id);
     const m = byId.get(id);
-    if (!m) return;
-    for (const dep of m.depends) visit(dep);
-    result.push(m);
+    if (m) {
+      for (const dep of m.depends) visit(dep);
+      result.push(m);
+    }
+    inStack.delete(id);
+    visited.add(id);
   }
 
   for (const m of missions) visit(m.id);
@@ -41,14 +52,26 @@ function waitForEnter(prompt: string): Promise<void> {
   });
 }
 
+/**
+ * Polls `check()` at `intervalMs` until it returns false.
+ * Guards against overlapping async calls when `check()` takes longer than
+ * the interval — only one invocation runs at a time.
+ */
 function pollUntilDone(
   check: () => Promise<boolean>,
   intervalMs = 10_000
 ): Promise<void> {
   return new Promise((resolve) => {
+    let checking = false;
     const id = setInterval(async () => {
-      const alive = await check();
-      if (!alive) { clearInterval(id); resolve(); }
+      if (checking) return;
+      checking = true;
+      try {
+        const alive = await check();
+        if (!alive) { clearInterval(id); resolve(); }
+      } finally {
+        checking = false;
+      }
     }, intervalMs);
   });
 }
@@ -63,6 +86,13 @@ function toMission(tm: TemplateMission): Mission {
     depends: tm.depends,
     blocker: '',
   };
+}
+
+/** Format elapsed milliseconds as a human-readable string.
+ *  Uses seconds for runs under 2 minutes, minutes otherwise. */
+function formatElapsed(ms: number): string {
+  if (ms < 120_000) return `${Math.round(ms / 1000)}s`;
+  return `${Math.round(ms / 60_000)} min`;
 }
 
 function dim(s: string) { return `\x1b[2m${s}\x1b[0m`; }
@@ -84,12 +114,24 @@ async function runGateCheck(
     const hook = label === 'start' ? plugin.onBeforeMissionStart : plugin.onBeforeMerge;
     if (!hook) continue;
 
-    let result = await hook.call(plugin, mission, context);
+    // Wraps each hook call so a thrown error produces a clear terminal message
+    // instead of an unhandled rejection that crashes the process silently.
+    const callHook = async (): Promise<HookResult> => {
+      try {
+        return await hook.call(plugin, mission, context);
+      } catch (err) {
+        console.error(red(`  Plugin "${plugin.name}" threw during ${label} gate check: ${String(err)}`));
+        process.exit(1);
+        throw err; // unreachable; satisfies TypeScript control-flow analysis
+      }
+    };
+
+    let result = await callHook();
     while (result.block) {
       console.log(yellow(`\n  ⚠  Gate check failed (${plugin.name}):`));
       console.log(`     ${result.reason ?? 'No reason provided.'}`);
       await waitForEnter(`\n  Update ${label === 'start' ? 'workstreams.json' : 'workstreams.json / merge_gate'} then press Enter to re-check...`);
-      result = await hook.call(plugin, mission, context);
+      result = await callHook();
     }
   }
   console.log(green(`  ✓ Gate passed`));
@@ -131,7 +173,14 @@ export async function runSimulate(
     return output;
   }
 
-  const missions = topoSort(template.missions as TemplateMission[]);
+  let missions: TemplateMission[];
+  try {
+    missions = topoSort(template.missions as TemplateMission[]);
+  } catch (err) {
+    emit(red(`Template error: ${String(err)}`));
+    return output;
+  }
+
   const agentLabel = agentOverride ?? 'claude-code';
 
   // Header
@@ -187,10 +236,10 @@ export async function runSimulate(
   }
 
   // Summary
-  const elapsed = Math.round((Date.now() - startTime) / 1000);
+  const elapsed = formatElapsed(Date.now() - startTime);
   emit(`${'═'.repeat(50)}`);
   emit(bold(green(`⚡ All ${missions.length} missions complete!`)) + dim(' [simulated]'));
-  emit(dim(`Total time: ~${elapsed}s (simulated)\n`));
+  emit(dim(`Total time: ~${elapsed} (simulated)\n`));
   emit('Branches that would be created in a real run:');
   for (const m of missions) {
     emit(`  ${green('✓')} ${m.branch}`);
@@ -242,13 +291,19 @@ export function registerRunCommand(program: Command): void {
       const plugins = loader.getPlugins();
       const context: FleetContext = { workDir };
 
-      // Sort missions
-      const missions = topoSort(template.missions as TemplateMission[]);
+      // Sort missions (throws on circular dependencies)
+      let missions: TemplateMission[];
+      try {
+        missions = topoSort(template.missions as TemplateMission[]);
+      } catch (err) {
+        console.error(red(`Template error: ${String(err)}`));
+        process.exit(1);
+      }
 
       // Header
       console.log(`\n${bold('⚡ Fleet Run')} — ${template.name}`);
       console.log(dim(template.description));
-      console.log(dim(`\n${missions.length} missions · sequential · local execution`));
+      console.log(dim(`\n${missions!.length} missions · sequential · local execution`));
       if (plugins.length > 0) {
         console.log(dim(`Plugins: ${plugins.map((p) => p.name).join(', ')}`));
       }
@@ -256,10 +311,10 @@ export function registerRunCommand(program: Command): void {
 
       const startTime = Date.now();
 
-      for (let i = 0; i < missions.length; i++) {
-        const tm = options.agent ? { ...missions[i], agent: options.agent } : missions[i];
+      for (let i = 0; i < missions!.length; i++) {
+        const tm = options.agent ? { ...missions![i], agent: options.agent } : missions![i];
         const mission = toMission(tm);
-        const missionNum = `${i + 1}/${missions.length}`;
+        const missionNum = `${i + 1}/${missions!.length}`;
 
         console.log(`${'─'.repeat(50)}`);
         console.log(bold(`Mission ${missionNum}: ${tm.id}`));
@@ -309,7 +364,7 @@ export function registerRunCommand(program: Command): void {
         console.log(green(`\n  ✓ Mission ${tm.id} complete`));
 
         // Between-mission merge gate check (not after the last mission)
-        if (i < missions.length - 1 && plugins.length > 0) {
+        if (i < missions!.length - 1 && plugins.length > 0) {
           console.log('');
           process.stdout.write(dim(`  Checking merge gate before mission ${i + 2}...\n`));
           await runGateCheck(plugins, mission, context, 'merge');
@@ -318,13 +373,13 @@ export function registerRunCommand(program: Command): void {
         console.log('');
       }
 
-      // Summary
-      const elapsed = Math.round((Date.now() - startTime) / 60_000);
+      // Summary — use seconds for short runs, minutes for longer ones
+      const elapsed = formatElapsed(Date.now() - startTime);
       console.log(`${'═'.repeat(50)}`);
-      console.log(bold(green(`⚡ All ${missions.length} missions complete!`)));
-      console.log(dim(`Total time: ~${elapsed} min\n`));
+      console.log(bold(green(`⚡ All ${missions!.length} missions complete!`)));
+      console.log(dim(`Total time: ~${elapsed}\n`));
       console.log('Branches created during this run:');
-      for (const m of missions) {
+      for (const m of missions!) {
         console.log(`  ${green('✓')} ${m.branch}`);
       }
       console.log(`\nRun ${bold('fleet report')} for a full summary, or open PRs to merge.\n`);

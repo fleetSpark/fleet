@@ -90,7 +90,7 @@ interface FleetPlugin {
   // Runs before Fleet creates a merge PR — return block: true to prevent merge
   onBeforeMerge?(
     mission: Mission,
-    pr: PullRequest
+    context: FleetContext
   ): Promise<{ block: boolean; reason?: string }>;
 
   // Extend the CLI with new subcommands

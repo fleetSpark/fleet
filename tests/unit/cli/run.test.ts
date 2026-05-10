@@ -51,6 +51,19 @@ describe('topoSort', () => {
     expect(result.map((r) => r.id)).toContain('M1');
   });
 
+  it('throws on a direct circular dependency (A depends B, B depends A)', () => {
+    const m1 = { id: 'M1', branch: 'b1', brief: 'A', agent: 'claude', depends: ['M2'] };
+    const m2 = { id: 'M2', branch: 'b2', brief: 'B', agent: 'claude', depends: ['M1'] };
+    expect(() => topoSort([m1, m2])).toThrow(/[Cc]ircular/);
+  });
+
+  it('throws on a three-node cycle', () => {
+    const m1 = { id: 'M1', branch: 'b1', brief: 'A', agent: 'claude', depends: ['M3'] };
+    const m2 = { id: 'M2', branch: 'b2', brief: 'B', agent: 'claude', depends: ['M1'] };
+    const m3 = { id: 'M3', branch: 'b3', brief: 'C', agent: 'claude', depends: ['M2'] };
+    expect(() => topoSort([m1, m2, m3])).toThrow(/[Cc]ircular/);
+  });
+
   it('does not duplicate missions', () => {
     const m1 = { id: 'M1', branch: 'b1', brief: 'A', agent: 'claude', depends: [] };
     const m2 = { id: 'M2', branch: 'b2', brief: 'B', agent: 'claude', depends: ['M1'] };
