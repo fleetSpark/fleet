@@ -1,0 +1,279 @@
+---
+const offerings = [
+  {
+    icon: '⚡',
+    tag: 'Core',
+    tagColor: 'yellow',
+    title: 'Parallel execution',
+    why: 'One AI agent working at a time leaves every other machine idle.',
+    how: 'Fleet decomposes your goal into independent missions and dispatches them across all your machines simultaneously. Dependent missions unlock automatically when upstream work merges.',
+    command: 'fleet command --plan "Add auth, fix rate limiter, update docs"',
+    link: '/getting-started/',
+    linkLabel: 'Get started →',
+  },
+  {
+    icon: '📋',
+    tag: 'Templates',
+    tagColor: 'blue',
+    title: 'Start without a plan',
+    why: 'Most development tasks follow the same patterns — writing a mission plan from scratch every time wastes time.',
+    how: '6 built-in templates cover test coverage, security audits, API docs, dependency updates, refactoring, and governed development. No LLM API key needed.',
+    command: 'fleet command --template test-coverage',
+    link: '/templates/',
+    linkLabel: 'See all 6 templates →',
+  },
+  {
+    icon: '🎬',
+    tag: 'Demo',
+    tagColor: 'green',
+    title: 'Try it in 30 seconds',
+    why: 'You should see exactly how Fleet works before setting up a single thing.',
+    how: 'The demo simulates a full fleet run locally — no repo, no agents, no network required. Watch Fleet plan missions, dispatch ships, and merge results in real time.',
+    command: 'npx fleetspark demo',
+    link: '/getting-started/',
+    linkLabel: 'Run the demo →',
+  },
+  {
+    icon: '🔁',
+    tag: 'CI/CD',
+    tagColor: 'blue',
+    title: 'Run in GitHub Actions',
+    why: 'You already have CI machines. They sit idle between test runs.',
+    how: 'The fleet-action GitHub Action turns GitHub-hosted runners into ships. Trigger fleet runs from a workflow_dispatch — no extra machines, no extra infrastructure.',
+    command: 'uses: fleetspark/fleet-action@v1',
+    link: '/github-action/',
+    linkLabel: 'GitHub Action guide →',
+  },
+  {
+    icon: '📊',
+    tag: 'Reporting',
+    tagColor: 'yellow',
+    title: 'Know what happened',
+    why: 'Parallel execution is meaningless if you can\'t see what shipped and how long it took.',
+    how: 'fleet report generates a markdown summary after every run: each mission\'s outcome, branch merged, time taken, and estimated time saved versus running tasks sequentially.',
+    command: 'fleet report',
+    link: '/cli-reference/',
+    linkLabel: 'CLI reference →',
+  },
+  {
+    icon: '🛡️',
+    tag: 'Governance',
+    tagColor: 'purple',
+    title: 'Governed development',
+    why: 'Speed without quality control isn\'t enough for critical or team work.',
+    how: 'The drsti-dev-flow template runs a structured spec → implement → peer-review flow. Each mission gates the next. Workstream tracking, maturity levels, and review artifacts are built in.',
+    command: 'fleet command --template drsti-dev-flow',
+    link: '/ecosystem/',
+    linkLabel: 'Learn about governance →',
+  },
+];
+
+const tagColors: Record<string, { bg: string; text: string; border: string }> = {
+  yellow:  { bg: 'rgba(250,204,21,0.08)',  text: '#facc15', border: 'rgba(250,204,21,0.2)'  },
+  blue:    { bg: 'rgba(56,189,248,0.08)',  text: '#38bdf8', border: 'rgba(56,189,248,0.2)'  },
+  green:   { bg: 'rgba(34,197,94,0.08)',   text: '#22c55e', border: 'rgba(34,197,94,0.2)'   },
+  purple:  { bg: 'rgba(167,139,250,0.08)', text: '#a78bfa', border: 'rgba(167,139,250,0.2)' },
+};
+---
+
+<section class="offerings-section">
+  <div class="offerings-inner">
+    <div class="offerings-header">
+      <h2>Everything Fleet can do for you</h2>
+      <p class="offerings-subtitle">
+        Six ways Fleet accelerates development — from solo side projects to team workflows.
+      </p>
+    </div>
+
+    <div class="offerings-grid">
+      {offerings.map((o) => {
+        const c = tagColors[o.tagColor];
+        return (
+          <div class="offering-card">
+            <div class="card-top">
+              <span class="card-icon">{o.icon}</span>
+              <span
+                class="card-tag"
+                style={`background:${c.bg};color:${c.text};border-color:${c.border}`}
+              >
+                {o.tag}
+              </span>
+            </div>
+
+            <h3>{o.title}</h3>
+
+            <div class="card-why">
+              <span class="why-label">Why it exists</span>
+              <p>{o.why}</p>
+            </div>
+
+            <div class="card-how">
+              <span class="how-label">How it helps</span>
+              <p>{o.how}</p>
+            </div>
+
+            <div class="card-command">
+              <code>{o.command}</code>
+            </div>
+
+            <a href={o.link} class="card-link" style={`color:${c.text}`}>{o.linkLabel}</a>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .offerings-section {
+    width: 100%;
+    background: #080d18;
+    border-top: 1px solid #1a2035;
+    border-bottom: 1px solid #1a2035;
+    padding: 5rem 1.5rem;
+  }
+
+  .offerings-inner {
+    max-width: 72rem;
+    margin: 0 auto;
+  }
+
+  .offerings-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .offerings-header h2 {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 800;
+    color: #f1f5f9;
+    letter-spacing: -0.025em;
+    margin: 0 0 1rem;
+  }
+
+  .offerings-subtitle {
+    font-size: 1.1rem;
+    color: #64748b;
+    line-height: 1.65;
+    max-width: 38rem;
+    margin: 0 auto;
+  }
+
+  .offerings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .offering-card {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid #1e2d45;
+    border-radius: 14px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .offering-card:hover {
+    border-color: #334155;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+
+  .card-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid;
+  }
+
+  .offering-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .card-why,
+  .card-how {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .why-label,
+  .how-label {
+    font-size: 0.67rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #475569;
+  }
+
+  .card-why p,
+  .card-how p {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .card-command {
+    margin-top: 0.25rem;
+  }
+
+  .card-command code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.76rem;
+    color: #facc15;
+    background: rgba(250, 204, 21, 0.06);
+    border: 1px solid rgba(250, 204, 21, 0.14);
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    display: block;
+    word-break: break-all;
+  }
+
+  .card-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: auto;
+    transition: opacity 0.2s;
+  }
+
+  .card-link:hover {
+    opacity: 0.75;
+  }
+
+  @media (max-width: 900px) {
+    .offerings-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .offerings-grid {
+      grid-template-columns: 1fr;
+    }
+    .offerings-section {
+      padding: 3.5rem 1rem;
+    }
+  }
+</style>

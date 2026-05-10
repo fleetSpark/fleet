@@ -1,211 +1,86 @@
 ---
-const guides = [
-  {
-    icon: '⚡',
-    title: 'Try it in 30 seconds',
-    description: 'No repo, no agents, no network. Run the demo to see exactly how Fleet plans, assigns, and merges — before you set anything up.',
-    code: 'npx fleetspark demo',
-    link: '/getting-started/',
-    linkLabel: 'Get started',
-  },
-  {
-    icon: '📋',
-    title: 'Start without a plan',
-    description: '5 built-in templates: test coverage, security audit, API docs, dependency update, refactor. No LLM API key needed.',
-    code: 'fleet command --template test-coverage',
-    link: '/templates/',
-    linkLabel: 'See all templates',
-  },
-  {
-    icon: '🔁',
-    title: 'Run in CI',
-    description: 'No extra machines required. Use GitHub-hosted runners as ships and trigger fleet runs from a workflow dispatch.',
-    code: 'uses: fleetspark/fleet-action@v1',
-    link: '/github-action/',
-    linkLabel: 'GitHub Action guide',
-  },
-];
-
 const plugin = {
   name: 'drsti-dev-flow',
   npm: '@drsti/dev-flow',
-  description: 'Governance layer for AI-assisted development. Adds maturity levels, workstream tracking, and review gates to any project — works standalone or alongside FleetSpark.',
+  description: 'Governance layer for AI-assisted development. Adds maturity levels, workstream tracking, and structured review gates (spec → implement → peer-review) to any project — works standalone or alongside FleetSpark.',
   tags: ['Maturity levels L1–L4', 'Workstream state', 'Scope conflict checks', 'Level 4 review gates', 'Two-loop guardrail'],
   link: '/ecosystem/',
   source: 'https://drsti.ai',
 };
 ---
 
-<div class="ecosystem-wrapper">
-  <!-- Guides strip -->
-  <div class="landing-section guides-section">
-    <h2>Everything you need to start</h2>
-    <p class="subtitle">Zero-friction paths into Fleet — pick the one that fits your situation.</p>
+<div class="landing-section ecosystem-section">
+  <div class="ecosystem-label">
+    <span class="pill">Ecosystem</span>
+  </div>
 
-    <div class="guide-cards">
-      {guides.map((g) => (
-        <div class="guide-card">
-          <div class="guide-icon">{g.icon}</div>
-          <h3>{g.title}</h3>
-          <p>{g.description}</p>
-          <div class="guide-code"><code>{g.code}</code></div>
-          <a href={g.link} class="guide-link">{g.linkLabel} →</a>
-        </div>
+  <h2>Governance for critical work</h2>
+  <p class="subtitle">
+    FleetSpark ships the execution layer. For regulated or team-critical work that needs
+    structured review gates and workstream tracking, the ecosystem has you covered.
+  </p>
+
+  <div class="plugin-card">
+    <div class="plugin-header">
+      <div class="plugin-name-row">
+        <span class="plugin-name">{plugin.name}</span>
+        <span class="plugin-npm">{plugin.npm}</span>
+      </div>
+      <p class="plugin-desc">{plugin.description}</p>
+    </div>
+    <div class="plugin-tags">
+      {plugin.tags.map((tag) => (
+        <span class="plugin-tag">{tag}</span>
       ))}
     </div>
+    <div class="plugin-footer-row">
+      <div class="plugin-source">
+        Built by <a href={plugin.source} target="_blank" rel="noopener">drsti.ai</a>
+      </div>
+      <a href={plugin.link} class="plugin-link">Learn more →</a>
+    </div>
   </div>
 
-  <!-- Ecosystem / Plugin section -->
-  <div class="landing-section plugin-section">
-    <div class="plugin-header">
-      <div>
-        <span class="plugin-pill">Ecosystem</span>
-        <h2>Governance for critical work</h2>
-        <p class="subtitle">FleetSpark ships the execution layer. For governed development with structured review gates and workstream tracking, the ecosystem has you covered.</p>
-      </div>
-    </div>
-
-    <div class="plugin-card">
-      <div class="plugin-card-header">
-        <div class="plugin-name-row">
-          <span class="plugin-name">{plugin.name}</span>
-          <span class="plugin-npm">{plugin.npm}</span>
-        </div>
-        <p class="plugin-desc">{plugin.description}</p>
-      </div>
-      <div class="plugin-tags">
-        {plugin.tags.map((tag) => (
-          <span class="plugin-tag">{tag}</span>
-        ))}
-      </div>
-      <div class="plugin-footer-row">
-        <div class="plugin-source">
-          Built by <a href={plugin.source} target="_blank" rel="noopener">drsti.ai</a>
-        </div>
-        <a href={plugin.link} class="plugin-link">Learn more →</a>
-      </div>
-    </div>
-
-    <p class="plugin-coming-soon">
-      Plugin API (v1.5) will let packages register pre-mission hooks, pre-merge gates, manifest extensions, and CLI subcommands.
-      <a href="/ecosystem/">See what's planned →</a>
-    </p>
-  </div>
+  <p class="plugin-coming-soon">
+    Plugin API arriving in v1.5 — packages will register pre-mission hooks, pre-merge gates, manifest extensions, and CLI subcommands.
+    <a href="/ecosystem/">See what's planned →</a>
+  </p>
 </div>
 
 <style>
-  .ecosystem-wrapper {
-    width: 100%;
-  }
-
-  /* ── Guides strip ── */
-  .guides-section {
-    background: #080d18;
-    border-top: 1px solid #1a2035;
-    border-bottom: 1px solid #1a2035;
-  }
-
-  .guide-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-    gap: 1.25rem;
-    margin-top: 2.5rem;
-  }
-
-  .guide-card {
-    background: rgba(255, 255, 255, 0.025);
-    border: 1px solid #1e2d45;
-    border-radius: 12px;
-    padding: 1.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    transition: border-color 0.2s;
-  }
-
-  .guide-card:hover {
-    border-color: #334155;
-  }
-
-  .guide-icon {
-    font-size: 1.75rem;
-    line-height: 1;
-  }
-
-  .guide-card h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #f1f5f9;
-    margin: 0;
-  }
-
-  .guide-card p {
-    font-size: 0.9rem;
-    color: #94a3b8;
-    line-height: 1.6;
-    margin: 0;
-    flex: 1;
-  }
-
-  .guide-code {
-    margin-top: 0.25rem;
-  }
-
-  .guide-code code {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    font-size: 0.8rem;
-    color: #facc15;
-    background: rgba(250, 204, 21, 0.06);
-    border: 1px solid rgba(250, 204, 21, 0.15);
-    padding: 0.35rem 0.75rem;
-    border-radius: 6px;
-    display: inline-block;
-    word-break: break-all;
-  }
-
-  .guide-link {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #facc15;
-    text-decoration: none;
-    margin-top: auto;
-    transition: opacity 0.2s;
-  }
-
-  .guide-link:hover {
-    opacity: 0.8;
-  }
-
-  /* ── Plugin section ── */
-  .plugin-section {
+  .ecosystem-section {
     background: #0a0f1e;
+    border-top: 1px solid #1a2035;
   }
 
-  .plugin-pill {
+  .ecosystem-label {
+    margin-bottom: 1rem;
+  }
+
+  .pill {
     display: inline-block;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.09em;
     color: #facc15;
     background: rgba(250, 204, 21, 0.08);
     border: 1px solid rgba(250, 204, 21, 0.2);
     border-radius: 999px;
     padding: 0.25rem 0.85rem;
-    margin-bottom: 1rem;
   }
 
-  .plugin-section h2 {
-    font-size: 2rem;
+  .ecosystem-section h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 700;
     color: #f1f5f9;
     margin: 0 0 0.75rem;
   }
 
-  .plugin-section .subtitle {
+  .ecosystem-section .subtitle {
     color: #94a3b8;
-    font-size: 1.05rem;
-    max-width: 42rem;
+    font-size: 1rem;
+    max-width: 44rem;
     line-height: 1.65;
     margin-bottom: 2rem;
   }
@@ -235,14 +110,14 @@ const plugin = {
   }
 
   .plugin-name {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: #f1f5f9;
   }
 
   .plugin-npm {
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: #64748b;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid #1e2d45;
@@ -305,12 +180,10 @@ const plugin = {
     transition: opacity 0.2s;
   }
 
-  .plugin-link:hover {
-    opacity: 0.8;
-  }
+  .plugin-link:hover { opacity: 0.8; }
 
   .plugin-coming-soon {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: #475569;
     margin-top: 1.25rem;
     max-width: 52rem;
@@ -322,17 +195,5 @@ const plugin = {
     text-decoration: none;
   }
 
-  .plugin-coming-soon a:hover {
-    color: #94a3b8;
-  }
-
-  @media (max-width: 768px) {
-    .guide-cards {
-      grid-template-columns: 1fr;
-    }
-
-    .plugin-section h2 {
-      font-size: 1.5rem;
-    }
-  }
+  .plugin-coming-soon a:hover { color: #94a3b8; }
 </style>
