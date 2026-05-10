@@ -49,6 +49,7 @@ Fleet is an npm workspaces monorepo:
 | `packages/adapters/cursor` | `@fleetspark/adapter-cursor` | Cursor adapter |
 | `packages/adapters/amp` | `@fleetspark/adapter-amp` | Amp adapter |
 | `packages/adapters/a2a` | `@fleetspark/adapter-a2a` | A2A protocol adapter (any A2A-compatible agent) |
+| `packages/plugin-drsti-dev-flow` | `@fleetspark/plugin-drsti-dev-flow` | Governance plugin — maturity levels, review gates, pre-mission and pre-merge hooks |
 
 ```
 fleet/
@@ -66,10 +67,18 @@ fleet/
 │   │   ├── election/       Commander election protocol
 │   │   ├── notifications/  Webhook/Slack notifier
 │   │   ├── telemetry/      Mission throughput + ship utilization
-│   │   └── resources/      Ship resource limits + concurrency caps
+│   │   ├── resources/      Ship resource limits + concurrency caps
+│   │   ├── plugins/        FleetPlugin interface + PluginLoader
+│   │   └── templates/      6 built-in mission templates
 │   │
 │   ├── cli/src/
-│   │   └── commands/       init, status, command, ship, assign, brief, logs
+│   │   └── commands/       init, status, command, ship, assign, brief, logs,
+│   │                       dashboard, web, demo, report, plugin, run
+│   │
+│   ├── plugin-drsti-dev-flow/src/
+│   │   ├── workstream.ts   workstreams.json reader + branch→workstream lookup
+│   │   ├── gate-checker.ts L1–L4 gate enforcement logic
+│   │   └── index.ts        FleetPlugin implementation
 │   │
 │   └── adapters/
 │       ├── claude/         Spawns claude process
@@ -82,7 +91,7 @@ fleet/
 │       └── a2a/            JSON-RPC A2A protocol client
 │
 ├── tests/
-│   ├── unit/               230+ unit tests by module
+│   ├── unit/               283+ unit tests by module
 │   └── integration/        Tests against real local git repos
 │
 ├── website/                Astro Starlight documentation site

@@ -33,7 +33,7 @@ on:
         required: false
         default: ''
       template:
-        description: 'Built-in template name (test-coverage, security-audit, api-docs, dependency-update, refactor)'
+        description: 'Built-in template name (test-coverage, security-audit, api-docs, dependency-update, refactor, drsti-dev-flow)'
         required: false
         default: ''
 

@@ -15,6 +15,15 @@ npx fleetspark demo
 
 This simulates a complete 4-mission fleet run so you can see exactly how planning, ship assignment, parallel execution, and auto-merge work.
 
+Or preview a specific template before running it for real:
+
+```bash
+npx fleetspark run --template drsti-dev-flow --simulate
+npx fleetspark run --template test-coverage --simulate
+```
+
+`--simulate` shows the full terminal experience — mission headers, gate checks, branch summary — without touching your repo or needing any agent installed.
+
 ---
 
 ## Prerequisites

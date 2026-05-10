@@ -1,9 +1,9 @@
 ---
 const plugin = {
   name: 'drsti-dev-flow',
-  npm: '@drsti/dev-flow',
-  description: 'Governance layer for AI-assisted development. Adds maturity levels, workstream tracking, and structured review gates (spec → implement → peer-review) to any project — works standalone or alongside FleetSpark.',
-  tags: ['Maturity levels L1–L4', 'Workstream state', 'Scope conflict checks', 'Level 4 review gates', 'Two-loop guardrail'],
+  npm: '@fleetspark/plugin-drsti-dev-flow',
+  description: 'Governance plugin for AI-assisted development. Adds maturity levels, workstream tracking, and structured review gates (spec → implement → peer-review) to any fleet run — with enforceable pre-mission and pre-merge hooks.',
+  tags: ['Maturity levels L1–L4', 'Workstream state', 'Scope conflict checks', 'Level 4 review gates', 'Pre-mission + pre-merge hooks'],
   link: '/ecosystem/',
   source: 'https://drsti.ai',
 };
@@ -42,8 +42,9 @@ const plugin = {
   </div>
 
   <p class="plugin-coming-soon">
-    Plugin API arriving in v1.5 — packages will register pre-mission hooks, pre-merge gates, manifest extensions, and CLI subcommands.
-    <a href="/ecosystem/">See what's planned →</a>
+    Install in one command: <code>fleet plugin install @fleetspark/plugin-drsti-dev-flow</code>
+    — then run <code>fleet run --template drsti-dev-flow</code> to get full gate enforcement on your next feature.
+    <a href="/ecosystem/">See the full plugin architecture →</a>
   </p>
 </div>
 
