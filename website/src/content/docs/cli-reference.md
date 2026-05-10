@@ -218,3 +218,36 @@ Features:
 | `q` | Quit |
 
 The dashboard auto-refreshes every 10 seconds.
+
+---
+
+## fleet plugin
+
+Manage Fleet plugins — install governance layers, integrations, and extensions.
+
+```bash
+# Install a plugin and register it in .fleet/config.yml
+fleet plugin install @fleetspark/plugin-drsti-dev-flow
+
+# List registered plugins
+fleet plugin list
+```
+
+Plugins are loaded automatically on every `fleet ship --join` and during merge operations. They can block missions from starting or block PRs from being created based on project-defined rules.
+
+**Installing drsti-dev-flow governance:**
+
+```bash
+fleet plugin install @fleetspark/plugin-drsti-dev-flow
+```
+
+This registers the plugin in `.fleet/config.yml`:
+
+```yaml
+plugins:
+  - name: "@fleetspark/plugin-drsti-dev-flow"
+```
+
+From that point on, Fleet enforces review gates before impl missions start and before PRs are created — based on the maturity level in each workstream's `workstreams.json` entry.
+
+See [Ecosystem](/ecosystem/) for the full plugin architecture.

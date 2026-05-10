@@ -62,6 +62,14 @@ export const fleetConfigSchema = z
           .default([]),
       })
       .default({}),
+    plugins: z
+      .array(
+        z.object({
+          name: z.string(),
+          options: z.record(z.unknown()).optional(),
+        })
+      )
+      .default([]),
   })
   .default({});
 

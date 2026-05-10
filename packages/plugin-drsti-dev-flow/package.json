@@ -1,0 +1,26 @@
+{
+  "name": "@fleetspark/plugin-drsti-dev-flow",
+  "version": "1.0.0",
+  "description": "drsti-dev-flow governance plugin for FleetSpark — enforces maturity-level review gates before mission start and PR merge",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@fleetspark/core": "*",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9"
+  }
+}

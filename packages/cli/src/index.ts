@@ -11,6 +11,7 @@ import { registerDashboardCommand } from './commands/dashboard.js';
 import { registerWebCommand } from './commands/web.js';
 import { registerDemoCommand } from './commands/demo.js';
 import { registerReportCommand } from './commands/report.js';
+import { registerPluginCommand } from './commands/plugin.js';
 
 const program = new Command();
 
@@ -30,5 +31,6 @@ registerDashboardCommand(program);
 registerWebCommand(program);
 registerDemoCommand(program);
 registerReportCommand(program);
+registerPluginCommand(program);
 
 program.parse();

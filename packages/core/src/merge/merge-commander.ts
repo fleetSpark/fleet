@@ -1,10 +1,13 @@
 import type { GitOps, PRStatus } from '../git/git-ops.js';
 import type { FleetManifest, Mission } from '../protocol/types.js';
 import { ConflictDetector } from './conflict-detector.js';
+import type { FleetPlugin, FleetContext } from '../plugins/types.js';
 
 export interface MergeConfig {
   ciRequired: boolean;
   autoRebase: boolean;
+  /** Working directory of the repo — passed to plugin hooks */
+  workDir?: string;
 }
 
 export interface MergeResult {
@@ -17,7 +20,11 @@ export interface MergeResult {
 export class MergeCommander {
   private conflictDetector: ConflictDetector;
 
-  constructor(private gitOps: GitOps, private config: MergeConfig) {
+  constructor(
+    private gitOps: GitOps,
+    private config: MergeConfig,
+    private plugins: FleetPlugin[] = []
+  ) {
     this.conflictDetector = new ConflictDetector(gitOps);
   }
 
@@ -53,6 +60,18 @@ export class MergeCommander {
       }
     } catch {
       // Non-blocking — proceed without conflict info
+    }
+
+    // Run onBeforeMerge plugin hooks
+    const context: FleetContext = { workDir: this.config.workDir ?? process.cwd() };
+    for (const plugin of this.plugins) {
+      if (plugin.onBeforeMerge) {
+        const result = await plugin.onBeforeMerge(mission, context);
+        if (result.block) {
+          console.warn(`[fleet] Plugin "${plugin.name}" blocked merge for ${mission.id}: ${result.reason ?? 'no reason given'}`);
+          return { missionId: mission.id, action: 'ci-pending', requiresApproval: true };
+        }
+      }
     }
 
     const title = `fleet: merge ${mission.id} (${mission.branch})`;

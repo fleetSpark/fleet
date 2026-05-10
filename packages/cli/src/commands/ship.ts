@@ -10,6 +10,7 @@ import {
   transition,
   ShipHeartbeat,
   resolveAdapter,
+  PluginLoader,
 } from '@fleetspark/core';
 import type { Mission } from '@fleetspark/core';
 
@@ -86,8 +87,24 @@ export function registerShipCommand(program: Command): void {
         `fleet: ${mission.id} in-progress`
       );
 
-      // Load config and start adapter
+      // Load config, load plugins, run onBeforeMissionStart hooks
       const config = await loadConfig(workDir);
+      const loader = new PluginLoader();
+      await loader.load(config.plugins ?? []);
+      const plugins = loader.getPlugins();
+      const pluginContext = { workDir, repoUrl: repo };
+
+      for (const plugin of plugins) {
+        if (plugin.onBeforeMissionStart) {
+          const result = await plugin.onBeforeMissionStart(mission, pluginContext);
+          if (result.block) {
+            console.error(`\n[fleet] Plugin "${plugin.name}" blocked mission ${mission.id}:`);
+            console.error(`  ${result.reason ?? 'No reason provided.'}`);
+            console.error(`\nResolve the issue, then retry fleet ship --join.`);
+            process.exit(1);
+          }
+        }
+      }
 
       console.log(`Executing mission ${mission.id}: ${mission.branch}`);
       console.log(`Brief: ${missionLog.brief}`);

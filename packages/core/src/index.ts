@@ -19,3 +19,5 @@ export { TelemetryCollector, type TelemetrySnapshot } from './telemetry/telemetr
 export { CommanderElection, type ClaimResult } from './election/commander-election.js';
 export { listTemplates, getTemplate, type MissionTemplate } from './templates/index.js';
 export { generateReport, generateReportJson } from './report/report-generator.js';
+export { PluginLoader } from './plugins/plugin-loader.js';
+export type { FleetPlugin, FleetContext, HookResult, PluginConfig } from './plugins/types.js';

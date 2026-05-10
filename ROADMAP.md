@@ -108,7 +108,7 @@ Expand FleetSpark beyond the CLI into developer workflows and cloud infrastructu
 - [ ] Agent performance benchmarks — per-agent success rate, avg duration, best-fit tracking
 - [ ] Cloud ship provisioning — `fleet ship --spawn aws|fly` auto-provisions VMs
 - [ ] Discord/Linear/Telegram webhook integrations
-- [ ] **`@drsti/dev-flow` plugin** — official governance-layer plugin (`fleetspark plugin install @drsti/dev-flow`). Promotes the v1.1 `drsti-dev-flow` mission template into a first-class plugin with full schema enforcement (workstream maturity levels, `claim_files`, `last_heartbeat_at`, `model_routing`), L4 review-gate orchestration, and integration with FleetSpark's `ConflictDetector` (severity escalation: warning → hard L4 blocker). Maintained by the `drsti-dev-flow` project; FleetSpark exposes the plugin loader API only. See [drsti-flow.dev](https://drsti-flow.dev)
+- [x] **`@drsti/dev-flow` plugin** — governance plugin (`fleetspark plugin install @fleetspark/plugin-drsti-dev-flow`). Plugin loader API in core (`FleetPlugin` interface, `PluginLoader`), `onBeforeMissionStart` and `onBeforeMerge` hooks, `fleet plugin install/list` CLI commands, full gate enforcement for L3/L4 workstreams with maturity-level escalation. 22 unit tests.
 
 ---
 
