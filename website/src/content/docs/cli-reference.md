@@ -51,6 +51,39 @@ See [Mission Templates](/templates/) for the full list of built-in templates.
 
 ---
 
+## fleet run
+
+Run a mission template locally in sequence — no extra machines needed.
+
+```bash
+# Run a built-in template on the current repo
+fleet run --template drsti-dev-flow
+
+# Override the agent adapter for all missions
+fleet run --template test-coverage --agent codex
+
+# Run against a specific directory
+fleet run --template security-audit --cwd /path/to/project
+```
+
+`fleet run` is the single-machine shortcut for `fleet command` + `fleet ship`. It:
+
+1. Loads the named template and topologically sorts its missions by dependency.
+2. Checks pre-start gate conditions (if the `drsti-dev-flow` plugin is active).
+3. Spawns each mission's agent adapter and waits for it to complete.
+4. Checks the merge gate between missions, with an interactive retry loop so you can update `workstreams.json` in place.
+5. Prints a branch summary when all missions are done.
+
+| Flag | Description |
+|------|-------------|
+| `--template <name>` | Built-in mission template to run (required) |
+| `--cwd <path>` | Working directory (default: current directory) |
+| `--agent <adapter>` | Override the agent adapter for all missions |
+
+See [Mission Templates](/templates/) for available templates.
+
+---
+
 ## fleet ship
 
 Join the fleet as a worker ship.

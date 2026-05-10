@@ -12,6 +12,7 @@ import { registerWebCommand } from './commands/web.js';
 import { registerDemoCommand } from './commands/demo.js';
 import { registerReportCommand } from './commands/report.js';
 import { registerPluginCommand } from './commands/plugin.js';
+import { registerRunCommand } from './commands/run.js';
 
 const program = new Command();
 
@@ -32,5 +33,6 @@ registerWebCommand(program);
 registerDemoCommand(program);
 registerReportCommand(program);
 registerPluginCommand(program);
+registerRunCommand(program);
 
 program.parse();

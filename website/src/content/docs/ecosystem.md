@@ -27,23 +27,41 @@ FleetSpark ships the execution layer — parallel missions, multi-agent coordina
 - Teams running regulated or quality-critical work (auth, billing, data migrations)
 - Projects where context must survive across multiple AI sessions
 
-**Current status:** Available now as a standalone governance layer. FleetSpark plugin integration (enforcement hooks) is planned for v1.5 — see below.
+**Three ways to use drsti-dev-flow with FleetSpark:**
 
-**Get started (standalone):**
+| Mode | How | When to use |
+|------|-----|-------------|
+| **Standalone template** | `fleet command --template drsti-dev-flow` | Multi-machine fleet, multiple ships |
+| **Single-machine run** | `fleet run --template drsti-dev-flow` | One machine, sequential execution |
+| **Plugin enforcement** | `fleet plugin install @fleetspark/plugin-drsti-dev-flow` | Add gate checks to any fleet run |
+
+**Get started (single machine):**
+
+```bash
+# Install the governance plugin
+fleet plugin install @fleetspark/plugin-drsti-dev-flow
+
+# Run the drsti-dev-flow template with gate enforcement
+fleet run --template drsti-dev-flow
+```
+
+`fleet run` runs each mission in sequence on your local machine — no extra ships or machines needed. With the plugin installed, it checks the spec gate before implementation starts and the merge gate before moving to the next mission. If a gate fails, it prompts you to update `workstreams.json` and retries.
+
+**Get started (multi-machine):**
 
 ```bash
 # Copy the adapter template to your project
 cp drsti-dev-flow/templates/adapter.yml .drsti/adapter.yml
 
-# Use the Fleet mission template
+# Use the Fleet mission template across multiple ships
 fleet command --template drsti-dev-flow
 ```
 
 ---
 
-## `@drsti/dev-flow` plugin — how it works (v1.5)
+## `@fleetspark/plugin-drsti-dev-flow` — how it works
 
-The v1.1 `drsti-dev-flow` mission template gives agents *instructions* — write a spec, self-review, update the workstream file. The v1.5 plugin makes those instructions *enforceable* by hooking into FleetSpark's execution pipeline.
+The `drsti-dev-flow` mission template gives agents *instructions* — write a spec, self-review, update the workstream file. The `@fleetspark/plugin-drsti-dev-flow` plugin makes those instructions *enforceable* by hooking into FleetSpark's execution pipeline.
 
 ### The difference: instructions vs. enforcement
 
@@ -86,7 +104,7 @@ interface FleetPlugin {
 Install the plugin once, and it applies to every fleet run in that project:
 
 ```bash
-fleetspark plugin install @drsti/dev-flow
+fleet plugin install @fleetspark/plugin-drsti-dev-flow
 ```
 
 ### What the plugin enforces
@@ -160,11 +178,11 @@ A solo developer with one machine is a valid drsti-dev-flow user without FleetSp
 
 ---
 
-## Plugin API (v1.5, open for design input)
+## Plugin API
 
 If you're building a plugin and want to be involved in the API design — hook surface, manifest extensions, event subscriptions — open an issue on the [FleetSpark repository](https://github.com/fleetSpark/fleet) tagged `plugin-api`.
 
-drsti-dev-flow will be the reference implementation: the plugin API will be designed around what it needs to enforce, then opened to the community.
+`@fleetspark/plugin-drsti-dev-flow` is the reference implementation: its hook surface (`onBeforeMissionStart`, `onBeforeMerge`) defines the baseline API that is now open to the community.
 
 ---
 

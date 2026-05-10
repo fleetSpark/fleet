@@ -109,6 +109,7 @@ Expand FleetSpark beyond the CLI into developer workflows and cloud infrastructu
 - [ ] Cloud ship provisioning — `fleet ship --spawn aws|fly` auto-provisions VMs
 - [ ] Discord/Linear/Telegram webhook integrations
 - [x] **`@drsti/dev-flow` plugin** — governance plugin (`fleetspark plugin install @fleetspark/plugin-drsti-dev-flow`). Plugin loader API in core (`FleetPlugin` interface, `PluginLoader`), `onBeforeMissionStart` and `onBeforeMerge` hooks, `fleet plugin install/list` CLI commands, full gate enforcement for L3/L4 workstreams with maturity-level escalation. 22 unit tests.
+- [x] **`fleet run`** — single-machine sequential mission runner (`fleet run --template <name>`). Topological sort of missions by dependency, plugin gate enforcement with interactive retry loop, per-adapter spawn + poll, branch summary on completion. Works with any template including `drsti-dev-flow`. 7 unit tests.
 
 ---
 
