@@ -2,9 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { listTemplates, getTemplate, type MissionTemplate } from '@fleetspark/core';
 
 describe('listTemplates', () => {
-  it('returns 5 templates', () => {
+  it('returns 6 templates', () => {
     const templates = listTemplates();
-    expect(templates).toHaveLength(5);
+    expect(templates).toHaveLength(6);
   });
 
   it('each template has name, description, and missions', () => {
@@ -29,6 +29,19 @@ describe('getTemplate', () => {
   it('returns undefined for nonexistent template', () => {
     const t = getTemplate('nonexistent');
     expect(t).toBeUndefined();
+  });
+
+  it('returns drsti-dev-flow template with correct structure', () => {
+    const t = getTemplate('drsti-dev-flow');
+    expect(t).toBeDefined();
+    expect(t!.name).toBe('drsti-dev-flow');
+    expect(t!.description).toContain('Governed development workflow');
+    expect(t!.missions).toHaveLength(3);
+    expect(t!.missions[0].id).toBe('M1');
+    expect(t!.missions[1].id).toBe('M2');
+    expect(t!.missions[2].id).toBe('M3');
+    expect(t!.missions[1].depends).toContain('M1');
+    expect(t!.missions[2].depends).toContain('M2');
   });
 });
 

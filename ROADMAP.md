@@ -96,7 +96,7 @@ Remove friction at every stage of the user journey.
 - [x] Mission templates — 5 built-in reusable plans (`--template test-coverage|security-audit|api-docs|dependency-update|refactor`)
 - [x] `fleet report` — post-run markdown summary with timing, merge status, time-saved estimate
 - [x] GitHub Action (`fleetspark/fleet-action`) — run fleet operations in CI workflows
-- [ ] **`drsti-dev-flow` mission template** — governed-development mission template (`--template drsti-dev-flow`) that adds a maturity-level workstream schema, pre-proposal conflict checks, L4 review gates (spec → plan → code with writer/reviewer split), 2-loop guardrail, and recommended model/effort routing per phase. Sits on top of FleetSpark's existing `ConflictDetector`, `FleetAdapter` registry, and `FLEET_CONTEXT.md` broadcast — no new core primitives required. Authored and maintained by the `drsti-dev-flow` project (see [drsti-flow.dev](https://drsti-flow.dev) when published)
+- [x] **`drsti-dev-flow` mission template** — governed-development mission template (`--template drsti-dev-flow`) that adds a maturity-level workstream schema, pre-proposal conflict checks, L4 review gates (spec → plan → code with writer/reviewer split), 2-loop guardrail, and recommended model/effort routing per phase. Sits on top of FleetSpark's existing `ConflictDetector`, `FleetAdapter` registry, and `FLEET_CONTEXT.md` broadcast — no new core primitives required. Authored and maintained by the `drsti-dev-flow` project (see [drsti-flow.dev](https://drsti-flow.dev) when published)
 
 ---
 

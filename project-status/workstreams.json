@@ -39,36 +39,52 @@
     "maturity_rationale": "New feature with writer/reviewer split — adds to core template registry and requires tests",
     "owner": "claude",
     "reviewer": "human",
-    "branch": "",
+    "branch": "main",
     "worktree": ".",
     "base_branch": "main",
     "integration_branch": "main",
     "promotion_path": [],
-    "status": "planning",
-    "phase": "spec",
+    "status": "done",
+    "phase": "done",
     "scope": [
       "packages/core/src/templates/templates.ts",
-      "packages/core/src/templates/index.ts",
       "tests/unit/templates/templates.test.ts"
     ],
     "shared_contracts": ["MissionTemplate", "listTemplates", "getTemplate"],
     "blocked_by": [],
     "coordinated_with": [],
     "review_gate": {
-      "spec": { "artifact": null, "self_review": null, "peer_review": null },
+      "spec": {
+        "artifact": "inline spec in workstream notes",
+        "self_review": "clean — shape, constraints all pass, briefs actionable",
+        "peer_review": "4 issues found and resolved: dropped level label from description, noted branch-rename in briefs, strengthened test assertions, accepted missing plan phase as L3 design"
+      },
       "plan": { "artifact": null, "self_review": null, "peer_review": null },
-      "code": { "artifact": null, "self_review": null, "peer_review": null },
-      "tests_uat": null
+      "code": {
+        "artifact": "packages/core/src/templates/templates.ts + tests/unit/templates/templates.test.ts",
+        "self_review": "clean — all MissionTemplate constraints satisfied, 7/7 tests pass, no scope drift",
+        "peer_review": "1 issue found and resolved: description assertion strengthened from expect.any(String) to toContain('Governed development workflow')"
+      },
+      "tests_uat": "7/7 unit tests pass — listTemplates returns 6, drsti-dev-flow template shape verified, dependency chain M1→M2→M3 verified, all missions match structural constraints"
     },
     "review_artifacts": [],
     "archived_review_artifacts": [],
-    "verification": [],
+    "verification": [
+      "7/7 vitest unit tests pass (tests/unit/templates/templates.test.ts)",
+      "drsti-dev-flow template present in BUILTIN_TEMPLATES with correct id/branch/brief/agent/depends",
+      "Description contains 'Governed development workflow'",
+      "M2.depends contains 'M1', M3.depends contains 'M2'"
+    ],
     "external_verification": [],
-    "merge_gate": "not_ready",
+    "merge_gate": "ready",
     "notes": [
-      "4 missions: M1=spec workstream, M2=plan workstream, M3=implement workstream, M4=review workstream",
-      "Each mission maps to one drsti-dev-flow phase — L3 writer/reviewer split enforced per mission",
-      "Maturity level selector: user passes maturity_level param, template adjusts mission count (L1=1 mission, L2=2, L3=3, L4=4)"
+      "3-mission L3 template: M1=spec+self-review, M2=implement+self-review, M3=peer-review",
+      "Spec peer review raised 4 issues — all resolved before implementation",
+      "Issue 1 fix: removed level label from description, now says 'governed development workflow'",
+      "Issue 2: accepted — L3 does not require a plan phase, spec→implement→review is correct",
+      "Issue 3 fix: each brief instructs agent to rename branch for specific feature",
+      "Issue 4 fix: new test asserts name, description, missions[0].id, not just length",
+      "Code peer review raised 1 issue — resolved: description assertion strengthened to toContain('Governed development workflow')"
     ]
   }
 ]

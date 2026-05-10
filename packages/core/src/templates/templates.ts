@@ -160,4 +160,31 @@ export const BUILTIN_TEMPLATES: MissionTemplate[] = [
       },
     ],
   },
+  {
+    name: 'drsti-dev-flow',
+    description: 'Governed development workflow: spec, implementation, and peer-review phases. Each mission maps to one drsti-dev-flow phase. Rename each branch to match the specific feature before starting (e.g. feature/my-feature-spec).',
+    missions: [
+      {
+        id: 'M1',
+        branch: 'feature/governed-spec',
+        brief: 'Rename this branch to feature/<your-feature>-spec. Read the project adapter (.drsti/adapter.yml) and FLEET_CONTEXT.md. Run the pre-proposal coordination check against workstreams.json. Write a spec for the assigned feature covering scope, shared contracts, acceptance criteria, and risks. Self-review and record findings. Branch is ready when the spec is committed and the self-review is documented.',
+        agent: 'claude-code',
+        depends: [],
+      },
+      {
+        id: 'M2',
+        branch: 'feature/governed-impl',
+        brief: 'Rename this branch to feature/<your-feature>-impl. Read the spec committed on the M1 branch. Implement within the declared scope only — do not expand scope without updating workstream state. Write or update tests. Self-review the implementation against the spec and record verification results and unresolved risks before marking the branch ready.',
+        agent: 'claude-code',
+        depends: ['M1'],
+      },
+      {
+        id: 'M3',
+        branch: 'feature/governed-review',
+        brief: 'Rename this branch to feature/<your-feature>-review. Peer-review the M2 implementation against the M1 spec. Check spec compliance, test coverage, and scope drift. Record all findings. Approve the merge gate only when all blockers are resolved or explicitly deferred with recorded rationale.',
+        agent: 'claude-code',
+        depends: ['M2'],
+      },
+    ],
+  },
 ];
