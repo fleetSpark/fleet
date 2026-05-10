@@ -1,0 +1,58 @@
+---
+---
+<footer class="fs-credit">
+  <div class="fs-credit-inner">
+    <div class="fs-credit-left">
+      <span class="fs-bolt">⚡</span>
+      <span class="fs-credit-text">
+        <strong>FleetSpark</strong> is <a href="https://github.com/fleetSpark/fleet">open source under MIT</a>.
+        Built and maintained by the team behind <a href="https://drsti.ai" class="fs-drsti">drsti.ai</a>.
+      </span>
+    </div>
+    <div class="fs-credit-right">
+      <span class="fs-meta">v1.1.1 · {new Date().getFullYear()}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .fs-credit {
+    margin-top: 80px;
+    padding: 28px 0 12px;
+    border-top: 1px solid #1a2035;
+    font-size: 13px;
+    color: #64748b;
+  }
+  .fs-credit-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .fs-credit-left { display: flex; gap: 10px; align-items: center; }
+  .fs-bolt {
+    display: inline-grid; place-items: center;
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: linear-gradient(140deg, #facc15, #f59e0b);
+    color: #0a0e17;
+    font-size: 12px;
+    font-weight: 900;
+    box-shadow: 0 0 12px rgba(250,204,21,0.4);
+  }
+  .fs-credit-text strong { color: #f1f5f9; font-weight: 600; }
+  .fs-credit-text a {
+    color: #94a3b8;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color .15s, border-color .15s;
+  }
+  .fs-credit-text a:hover { color: #38bdf8; border-bottom-color: #38bdf8; }
+  .fs-drsti { color: #facc15 !important; font-weight: 600; }
+  .fs-drsti:hover { color: #facc15 !important; border-bottom-color: #facc15 !important; }
+  .fs-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+</style>

@@ -1,0 +1,278 @@
+---
+---
+<div class="landing-section gov-section">
+  <div class="gov-eyebrow">drsti-dev-flow</div>
+  <h2>Governed coding, not cowboy coding.</h2>
+  <p class="subtitle">
+    Most AI coding agents YOLO straight to a commit. FleetSpark's
+    <code>drsti-dev-flow</code> plugin enforces three phases on every mission —
+    spec, implementation, peer review — gated by maturity level.
+    Risky changes get stricter scrutiny. Trivial ones breeze through.
+    <strong>FleetSpark dogfoods this on itself.</strong>
+  </p>
+
+  <div class="gov-grid">
+    <!-- Animated flow -->
+    <div class="gov-flow-card">
+      <svg viewBox="0 0 720 280" class="gov-flow" id="gov-flow-svg" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <filter id="gov-blur"><feGaussianBlur stdDeviation="14"/></filter>
+          <linearGradient id="gov-track" x1="0" x2="1">
+            <stop offset="0" stop-color="#facc15" stop-opacity="0.15"/>
+            <stop offset="1" stop-color="#38bdf8" stop-opacity="0.15"/>
+          </linearGradient>
+        </defs>
+
+        <!-- track -->
+        <line x1="100" y1="140" x2="640" y2="140" stroke="#1a2035" stroke-width="2"/>
+
+        <!-- mission glyph (moves left to right) -->
+        <g id="gov-mission" transform="translate(80 140)">
+          <circle r="20" fill="rgba(250,204,21,0.15)" filter="url(#gov-blur)"/>
+          <rect x="-18" y="-14" width="36" height="28" rx="6" fill="#0a0e17" stroke="#facc15" stroke-width="1.4"/>
+          <text text-anchor="middle" y="4" fill="#facc15" font-size="11" font-family="monospace" font-weight="700">M</text>
+        </g>
+
+        <!-- three gates -->
+        <g class="gov-gate" data-idx="0" transform="translate(220 140)">
+          <rect x="-50" y="-46" width="100" height="92" rx="10" fill="#0a0e17" stroke="#232a44" stroke-width="1.4"/>
+          <text text-anchor="middle" y="-22" fill="#94a3b8" font-size="10" font-family="monospace" letter-spacing="0.12em">PHASE 01</text>
+          <text text-anchor="middle" y="-4" fill="#f1f5f9" font-size="14" font-weight="700" font-family="'Space Grotesk',sans-serif">spec</text>
+          <text text-anchor="middle" y="14" fill="#64748b" font-size="9.5" font-family="monospace">scope · contracts</text>
+          <text text-anchor="middle" y="28" fill="#64748b" font-size="9.5" font-family="monospace">acceptance</text>
+          <g class="gov-check" opacity="0">
+            <circle cx="34" cy="-34" r="9" fill="#34d399"/>
+            <path d="M30 -34 l3 3 l5 -5" stroke="#0a0e17" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </g>
+        </g>
+
+        <g class="gov-gate" data-idx="1" transform="translate(360 140)">
+          <rect x="-50" y="-46" width="100" height="92" rx="10" fill="#0a0e17" stroke="#232a44" stroke-width="1.4"/>
+          <text text-anchor="middle" y="-22" fill="#94a3b8" font-size="10" font-family="monospace" letter-spacing="0.12em">PHASE 02</text>
+          <text text-anchor="middle" y="-4" fill="#f1f5f9" font-size="14" font-weight="700" font-family="'Space Grotesk',sans-serif">implement</text>
+          <text text-anchor="middle" y="14" fill="#64748b" font-size="9.5" font-family="monospace">agent · commits</text>
+          <text text-anchor="middle" y="28" fill="#64748b" font-size="9.5" font-family="monospace">heartbeats</text>
+          <g class="gov-check" opacity="0">
+            <circle cx="34" cy="-34" r="9" fill="#34d399"/>
+            <path d="M30 -34 l3 3 l5 -5" stroke="#0a0e17" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </g>
+        </g>
+
+        <g class="gov-gate" data-idx="2" transform="translate(500 140)">
+          <rect x="-50" y="-46" width="100" height="92" rx="10" fill="#0a0e17" stroke="#232a44" stroke-width="1.4"/>
+          <text text-anchor="middle" y="-22" fill="#94a3b8" font-size="10" font-family="monospace" letter-spacing="0.12em">PHASE 03</text>
+          <text text-anchor="middle" y="-4" fill="#f1f5f9" font-size="14" font-weight="700" font-family="'Space Grotesk',sans-serif">review</text>
+          <text text-anchor="middle" y="14" fill="#64748b" font-size="9.5" font-family="monospace">peer pass</text>
+          <text text-anchor="middle" y="28" fill="#64748b" font-size="9.5" font-family="monospace">CI · gate</text>
+          <g class="gov-check" opacity="0">
+            <circle cx="34" cy="-34" r="9" fill="#34d399"/>
+            <path d="M30 -34 l3 3 l5 -5" stroke="#0a0e17" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </g>
+        </g>
+
+        <!-- merge target -->
+        <g transform="translate(640 140)">
+          <circle r="14" fill="#0a0e17" stroke="#34d399" stroke-width="1.6"/>
+          <text text-anchor="middle" y="3" fill="#34d399" font-size="10" font-family="monospace" font-weight="700">main</text>
+        </g>
+
+        <!-- maturity badge -->
+        <g id="gov-maturity" transform="translate(80 70)">
+          <rect x="-46" y="-14" width="92" height="28" rx="6" fill="rgba(56,189,248,0.08)" stroke="#38bdf8" stroke-width="1"/>
+          <text text-anchor="middle" y="4" fill="#38bdf8" font-size="11" font-family="monospace" font-weight="700">LEVEL 2</text>
+        </g>
+        <text x="80" y="100" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">maturity</text>
+
+        <!-- caption -->
+        <text x="360" y="240" text-anchor="middle" fill="#475569" font-size="11" font-family="monospace" letter-spacing="0.08em">
+          EVERY MISSION · THREE GATES · ONE MERGE
+        </text>
+      </svg>
+    </div>
+
+    <!-- Bullets -->
+    <div class="gov-bullets">
+      <div class="gov-bullet">
+        <div class="gov-bullet-num">01</div>
+        <div>
+          <h3>Maturity-leveled gates</h3>
+          <p>Auth, billing, schema changes — level 4 review. Doc tweaks — level 1. Configure triggers in <code>.drsti/adapter.yml</code>.</p>
+        </div>
+      </div>
+      <div class="gov-bullet">
+        <div class="gov-bullet-num">02</div>
+        <div>
+          <h3>Three branches per mission</h3>
+          <p>Spec, implementation, and review live on separate branches. Each phase is independently auditable.</p>
+        </div>
+      </div>
+      <div class="gov-bullet">
+        <div class="gov-bullet-num">03</div>
+        <div>
+          <h3>One command, governed by default</h3>
+          <p><code>fleet run --template drsti-dev-flow</code> wires the whole flow. Or opt out and run lean.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gov-cmd">
+    <span class="gov-prompt">$</span>
+    <span class="gov-cmd-text">fleet run --template drsti-dev-flow</span>
+  </div>
+</div>
+
+<style>
+  .gov-section { position: relative; }
+  .gov-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #facc15;
+    margin-bottom: 12px;
+  }
+  .gov-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 32px;
+    align-items: center;
+    margin-top: 32px;
+  }
+  @media (max-width: 900px) { .gov-grid { grid-template-columns: 1fr; } }
+
+  .gov-flow-card {
+    border: 1px solid #1a2035;
+    border-radius: 16px;
+    background: linear-gradient(180deg, #0a0e17, #07090f);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .gov-flow-card::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 90%);
+    pointer-events: none;
+  }
+  .gov-flow { width: 100%; height: auto; display: block; position: relative; z-index: 1; }
+
+  .gov-bullets { display: flex; flex-direction: column; gap: 18px; }
+  .gov-bullet { display: flex; gap: 14px; align-items: flex-start; }
+  .gov-bullet-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: #facc15;
+    font-size: 12px;
+    padding-top: 4px;
+    min-width: 24px;
+  }
+  .gov-bullet h3 { font-size: 16px; margin: 0 0 4px; color: #f1f5f9; font-weight: 700; }
+  .gov-bullet p { font-size: 14px; color: #94a3b8; margin: 0; line-height: 1.5; }
+  .gov-bullet code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #38bdf8;
+    background: rgba(56,189,248,0.06);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  .gov-cmd {
+    margin-top: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    padding: 14px 18px;
+    border: 1px dashed #232a44;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.02);
+    display: flex; gap: 10px; align-items: center;
+    max-width: 720px;
+  }
+  .gov-prompt { color: #facc15; font-weight: 700; }
+  .gov-cmd-text { color: #f1f5f9; }
+</style>
+
+<script is:inline>
+  (() => {
+    const svg = document.getElementById('gov-flow-svg');
+    if (!svg) return;
+    const mission = svg.querySelector('#gov-mission');
+    const maturity = svg.querySelector('#gov-maturity');
+    const maturityText = maturity.querySelector('text');
+    const maturityRect = maturity.querySelector('rect');
+    const gates = [...svg.querySelectorAll('.gov-gate')];
+    const checks = gates.map(g => g.querySelector('.gov-check'));
+
+    // Mission stops at gate positions then advances.
+    // Stop positions match the gate group translateX values: 220, 360, 500, then end at 640
+    const stops = [80, 220, 360, 500, 640];
+    const LEVELS = [
+      { label: 'LEVEL 2', color: '#38bdf8' },
+      { label: 'LEVEL 4', color: '#fb923c' },
+      { label: 'LEVEL 1', color: '#34d399' }
+    ];
+
+    let scenario = 0;
+    let step = 0;
+    let progress = 0;
+    let last = null;
+    const DURATION = 700;  // ms per segment
+    const HOLD = 600;      // ms hold at each gate
+    let holdUntil = 0;
+
+    function reset() {
+      checks.forEach(c => c.setAttribute('opacity', '0'));
+      step = 0;
+      progress = 0;
+      const lvl = LEVELS[scenario];
+      maturityText.textContent = lvl.label;
+      maturityText.setAttribute('fill', lvl.color);
+      maturityRect.setAttribute('stroke', lvl.color);
+      maturityRect.setAttribute('fill', `${lvl.color}14`);
+    }
+
+    function tick(now) {
+      if (!last) last = now;
+      const dt = now - last;
+      last = now;
+
+      if (now < holdUntil) {
+        requestAnimationFrame(tick);
+        return;
+      }
+
+      progress += dt / DURATION;
+      if (progress >= 1) {
+        progress = 0;
+        step += 1;
+        if (step <= 3) {
+          // Activate the gate's check (gates 0..2 correspond to steps 1..3)
+          checks[step - 1] && checks[step - 1].setAttribute('opacity', '1');
+          holdUntil = now + HOLD;
+        }
+        if (step > stops.length - 1) {
+          // Loop to next scenario after a beat
+          holdUntil = now + 1200;
+          scenario = (scenario + 1) % LEVELS.length;
+          setTimeout(reset, 1100);
+          requestAnimationFrame(tick);
+          return;
+        }
+      }
+
+      const from = stops[step];
+      const to = stops[Math.min(step + 1, stops.length - 1)];
+      const ease = progress < 0.5 ? 2*progress*progress : 1 - Math.pow(-2*progress+2, 2)/2;
+      const x = from + (to - from) * ease;
+      mission.setAttribute('transform', `translate(${x} 140)`);
+
+      requestAnimationFrame(tick);
+    }
+
+    reset();
+    requestAnimationFrame(tick);
+  })();
+</script>
