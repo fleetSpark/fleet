@@ -1,0 +1,74 @@
+[
+  {
+    "id": "ws-roadmap-close-v1.1",
+    "roadmap_item": "Mark v1.1 items as shipped in ROADMAP.md",
+    "applies_to": "",
+    "maturity_level": "1",
+    "maturity_rationale": "Docs-only change, no code, no risk",
+    "owner": "claude",
+    "reviewer": "human",
+    "branch": "main",
+    "worktree": ".",
+    "base_branch": "main",
+    "integration_branch": "main",
+    "promotion_path": [],
+    "status": "done",
+    "phase": "done",
+    "scope": ["ROADMAP.md"],
+    "shared_contracts": [],
+    "blocked_by": [],
+    "coordinated_with": [],
+    "review_gate": {
+      "spec": { "artifact": null, "self_review": null, "peer_review": null },
+      "plan": { "artifact": null, "self_review": null, "peer_review": null },
+      "code": { "artifact": null, "self_review": null, "peer_review": null },
+      "tests_uat": null
+    },
+    "review_artifacts": [],
+    "archived_review_artifacts": [],
+    "verification": ["Visually verified all 4 v1.1 items ticked in ROADMAP.md"],
+    "external_verification": [],
+    "merge_gate": "merged",
+    "notes": ["Level 1 — no branch needed, direct edit on main"]
+  },
+  {
+    "id": "ws-drsti-template-v1.1",
+    "roadmap_item": "drsti-dev-flow mission template — fleet command --template drsti-dev-flow",
+    "applies_to": "",
+    "maturity_level": "3",
+    "maturity_rationale": "New feature with writer/reviewer split — adds to core template registry and requires tests",
+    "owner": "claude",
+    "reviewer": "human",
+    "branch": "",
+    "worktree": ".",
+    "base_branch": "main",
+    "integration_branch": "main",
+    "promotion_path": [],
+    "status": "planning",
+    "phase": "spec",
+    "scope": [
+      "packages/core/src/templates/templates.ts",
+      "packages/core/src/templates/index.ts",
+      "tests/unit/templates/templates.test.ts"
+    ],
+    "shared_contracts": ["MissionTemplate", "listTemplates", "getTemplate"],
+    "blocked_by": [],
+    "coordinated_with": [],
+    "review_gate": {
+      "spec": { "artifact": null, "self_review": null, "peer_review": null },
+      "plan": { "artifact": null, "self_review": null, "peer_review": null },
+      "code": { "artifact": null, "self_review": null, "peer_review": null },
+      "tests_uat": null
+    },
+    "review_artifacts": [],
+    "archived_review_artifacts": [],
+    "verification": [],
+    "external_verification": [],
+    "merge_gate": "not_ready",
+    "notes": [
+      "4 missions: M1=spec workstream, M2=plan workstream, M3=implement workstream, M4=review workstream",
+      "Each mission maps to one drsti-dev-flow phase — L3 writer/reviewer split enforced per mission",
+      "Maturity level selector: user passes maturity_level param, template adjusts mission count (L1=1 mission, L2=2, L3=3, L4=4)"
+    ]
+  }
+]

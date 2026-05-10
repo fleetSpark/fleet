@@ -1,0 +1,68 @@
+# drsti-dev-flow adapter — FleetSpark
+# See drsti-dev-flow/adapters/adapter-spec.md for field documentation.
+# This project dogfoods drsti-dev-flow to govern its own development.
+
+version: "1.1"
+
+# ---------------------------------------------------------------------------
+# State
+# ---------------------------------------------------------------------------
+state:
+  workstreams: project-status/workstreams.json
+  review_artifacts: docs/superpowers/reviews/
+
+# ---------------------------------------------------------------------------
+# No applicability labels — FleetSpark is a single-tier OSS CLI tool.
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# Branch strategy
+# ---------------------------------------------------------------------------
+branches:
+  integration: main
+  promotion:
+    - main
+
+# ---------------------------------------------------------------------------
+# Maturity defaults
+# ---------------------------------------------------------------------------
+defaults:
+  maturity_level: 2
+  level_4_triggers:
+    - protocol breaking change
+    - FLEET.md schema change
+    - MISSION.md schema change
+    - npm publish
+    - FleetAdapter interface change
+    - auth
+    - billing
+    - plugin API
+    - security
+
+# ---------------------------------------------------------------------------
+# Concurrent-safe files — append-only, never trip the coordination check.
+# ---------------------------------------------------------------------------
+concurrent_safe_files:
+  - ROADMAP.md
+  - CHANGELOG.md
+  - package-lock.json
+
+# ---------------------------------------------------------------------------
+# Deploy gate — npm publish requires manual approval.
+# ---------------------------------------------------------------------------
+deploy:
+  require_user_approval: true
+  command: "npm publish --workspace packages/core --access public && npm publish --workspace packages/cli --access public"
+
+# ---------------------------------------------------------------------------
+# Test / UAT
+# ---------------------------------------------------------------------------
+testing:
+  require_user_approval_for_full_uat: false
+  runner_url: ""
+
+# ---------------------------------------------------------------------------
+# Review rules
+# ---------------------------------------------------------------------------
+review:
+  rules_file: CLAUDE.md
