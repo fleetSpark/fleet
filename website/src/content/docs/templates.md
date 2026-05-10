@@ -3,7 +3,7 @@ title: Mission Templates
 description: Run a fleet instantly with built-in mission templates — no LLM API key required.
 ---
 
-Mission templates let you start a fleet run with a single command, no LLM decomposition needed. Each template is a pre-defined set of missions that works on any codebase.
+Mission templates let you start a fleet run with a single command, no LLM decomposition needed. Each template is a pre-defined set of missions that works on any codebase. FleetSpark ships with 6 built-in templates.
 
 ## Using a template
 
@@ -98,6 +98,26 @@ Improve codebase structure and maintainability. 4 missions.
 ```bash
 fleet command --template refactor
 ```
+
+---
+
+### `drsti-dev-flow`
+
+Governed development workflow: spec, implementation, and peer-review — one mission per phase. Designed for teams using the [drsti-dev-flow](https://github.com/drsti-ai/dev-flow) maturity model but works on any project.
+
+| Mission | What it does |
+|---------|-------------|
+| M1 (spec) | Read the adapter config and codebase context. Run a pre-proposal coordination check. Write a spec covering scope, contracts, acceptance criteria, and risks. Self-review and commit. |
+| M2 (impl) | Read the M1 spec. Implement within declared scope, write or update tests, self-review against the spec. |
+| M3 (review) | Peer-review the M2 implementation against the M1 spec — spec compliance, test coverage, scope drift. Record findings and approve only when all blockers are resolved. |
+
+Each brief instructs the agent to rename its branch before starting (e.g. `feature/my-feature-spec`). Run the template once per feature.
+
+```bash
+fleet command --template drsti-dev-flow
+```
+
+> **Note:** M2 depends on M1, M3 depends on M2 — missions run sequentially, not in parallel. This is intentional: each phase gates the next.
 
 ---
 

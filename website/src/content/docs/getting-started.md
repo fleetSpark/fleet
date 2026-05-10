@@ -47,7 +47,7 @@ npx fleetspark command --template test-coverage
 npx fleetspark command --plan-file missions.yml
 ```
 
-The commander decomposes your goal into independent missions with dependencies, creates branches, and writes the plan to `FLEET.md`. Templates give you a ready-to-run plan with no LLM required — see [Mission Templates](/templates/) for all five built-in options.
+The commander decomposes your goal into independent missions with dependencies, creates branches, and writes the plan to `FLEET.md`. Templates give you a ready-to-run plan with no LLM required — see [Mission Templates](/templates/) for all six built-in options.
 
 ## Join the fleet
 
