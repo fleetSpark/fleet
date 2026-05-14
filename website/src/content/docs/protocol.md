@@ -45,7 +45,7 @@ timeout_minutes: 15
 | `stalled` | No MISSION.md progress past stall threshold |
 | `completed` | Ship marked done |
 | `merge-queued` | Merge commander triggered |
-| `merged` | PR approved and merged to main |
+| `merged` | PR merged to main |
 | `failed` | Unrecoverable — needs human |
 
 ---
@@ -117,10 +117,10 @@ When the commander assigns a mission, it writes `.fleet/task_brief.json` to the 
 
 | Config key | Default | Behaviour |
 |------------|---------|-----------|
-| `heartbeat_interval_seconds` | 60 | How often ship pushes MISSION.md |
-| `stall_threshold_minutes` | 30 | No progress → shadow ship dispatched |
-| `unresponsive_threshold_minutes` | 10 | No heartbeat → ship flagged dead |
-| `commander_poll_minutes` | 5 | How often commander reads all ship states |
+| `heartbeat.interval_seconds` | 60 | How often ship pushes MISSION.md |
+| `execution.stall_threshold_min` | 30 | Stale long enough → marked dead/stalled |
+| `execution.unresponsive_threshold_min` | 10 | No heartbeat → ship flagged stale |
+| `commander.poll_interval_minutes` | 5 | How often commander reads all ship states |
 
 ---
 

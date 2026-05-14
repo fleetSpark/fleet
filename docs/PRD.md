@@ -40,10 +40,10 @@ Every existing AI coding tool requires an active human session. Close the laptop
 
 | Primitive | What it does | File / interface |
 |-----------|-------------|-----------------|
-| FLEET.md | Fleet manifest — active missions, ships, merge queue | Git file on main branch |
+| FLEET.md | Fleet manifest — active missions, ships, merge queue | Git file on the `fleet/state` branch |
 | MISSION.md | Per-ship mission log — task, steps, blockers, heartbeat | Git file on each ship's branch |
 | Commander | Plans, dispatches, monitors, merges — global view only | `fleet command` |
-| Ship adapters | Thin wrappers making Claude Code, Codex, Aider A2A-compatible | `@fleetspark/claude` · `@fleetspark/codex` · `@fleetspark/aider` |
+| Ship adapters | Thin wrappers making Claude Code, Codex, Aider, OpenCode, Gemini, Cursor, Amp, and A2A-compatible agents available to Fleet | `@fleetspark/adapter-claude` · `@fleetspark/adapter-codex` · `@fleetspark/adapter-aider` |
 
 ### 3.1 How a Fleet run works
 
@@ -52,8 +52,8 @@ Every existing AI coding tool requires an active human session. Close the laptop
 3. Each ship: git clone/checkout → pull MISSION.md → start agent → execute
 4. Ships push MISSION.md every 60 seconds as heartbeat
 5. Commander detects completions, unblocks dependencies, queues merges
-6. Merge commander: diff, conflict scan, CI gate, rebase, PR draft
-7. Developer wakes up to PRs waiting for approval — Fleet never merges without human sign-off
+6. Merge commander: diff, conflict scan, CI gate, PR creation, and optional clean PR merge
+7. Developer wakes up to merged code or PRs waiting for approval, depending on CI/branch protection and governance plugin gates
 
 ---
 
@@ -76,9 +76,13 @@ Fleet is purpose-built for the solo developer who treats their personal machines
 | `fleet ship --join <repo>` | Join fleet as a ship: clone, read assignment, start agent |
 | `fleet brief --generate` | Generate `FLEET_CONTEXT.md` — broadcast codebase summary to all ships |
 | `fleet status` | Print current mission board (`--watch` for live) |
-| `fleet merge <branch>` | Trigger merge pipeline |
 | `fleet logs <ship>` | Tail `MISSION.md` for a ship (`--follow` for live) |
 | `fleet assign <mission> <ship>` | Manually reassign a mission |
+| `fleet demo` | Run a simulated fleet demo |
+| `fleet report` | Generate a markdown or JSON run summary |
+| `fleet run --template <name>` | Run a built-in template locally in sequence |
+| `fleet web` | Start the browser dashboard |
+| `fleet plugin install <package>` | Register a Fleet plugin |
 
 ---
 
@@ -161,10 +165,10 @@ Any machine can claim commander role via `fleet command --resume`. Full state li
 
 | Key | Default | Behaviour |
 |-----|---------|-----------|
-| `heartbeat_interval_seconds` | 60 | How often ship pushes MISSION.md |
-| `stall_threshold_minutes` | 30 | No progress → shadow ship dispatched |
-| `unresponsive_threshold_minutes` | 10 | No heartbeat → ship flagged dead |
-| `commander_poll_minutes` | 5 | How often commander reads all ship states |
+| `heartbeat.interval_seconds` | 60 | How often ship pushes MISSION.md |
+| `execution.stall_threshold_min` | 30 | Stale long enough → marked dead/stalled |
+| `execution.unresponsive_threshold_min` | 10 | No heartbeat → ship flagged stale |
+| `commander.poll_interval_minutes` | 5 | How often commander reads all ship states |
 
 ---
 
@@ -174,7 +178,7 @@ Any machine can claim commander role via `fleet command --resume`. Full state li
 Every mission with no dependencies starts immediately. Ships fan out simultaneously.
 
 ### 8.2 Shadow dispatch
-Stalled ship? Commander clones mission to spare ship. First to complete wins, other is cancelled.
+Current implementation marks stale missions for shadow dispatch. Full duplicate execution on a spare ship, first-result-wins cancellation, and automatic reassignment are roadmap work.
 
 ### 8.3 Fleet brief
 One codebase analysis pass before dispatch. Every ship skips exploration phase.
@@ -185,7 +189,7 @@ One codebase analysis pass before dispatch. Every ship skips exploration phase.
 |------|----------|--------|-------|----------|
 | `sequential` | No | No | No | Debugging |
 | `mapreduce` | Yes | No | Optional | Default |
-| `spark` | Yes | Yes | Yes | Max speed |
+| `spark` | Planned | Planned | Planned | Max speed |
 
 ---
 
@@ -203,11 +207,14 @@ export interface FleetAdapter {
 
 | Adapter | Package | v1 status |
 |---------|---------|-----------|
-| Claude Code | `@fleetspark/claude` | v1.0 |
-| OpenAI Codex | `@fleetspark/codex` | v1.0 |
-| Aider | `@fleetspark/aider` | v1.0 |
-| OpenCode | `@fleetspark/opencode` | v1.1 |
-| Custom / A2A | `@fleetspark/a2a` | v1.1 |
+| Claude Code | `@fleetspark/adapter-claude` | shipped |
+| OpenAI Codex | `@fleetspark/adapter-codex` | shipped |
+| Aider | `@fleetspark/adapter-aider` | shipped |
+| OpenCode | `@fleetspark/adapter-opencode` | shipped |
+| Gemini CLI | `@fleetspark/adapter-gemini` | shipped |
+| Cursor CLI | `@fleetspark/adapter-cursor` | shipped |
+| Amp CLI | `@fleetspark/adapter-amp` | shipped |
+| Custom / A2A | `@fleetspark/adapter-a2a` | shipped |
 
 ---
 
@@ -221,23 +228,17 @@ commander:
   max_concurrent_ships: 8
 
 execution:
-  strategy: spark             # sequential | mapreduce | spark
+  strategy: mapreduce         # sequential | mapreduce
+  shadow_dispatch: true       # optional duplicate dispatch for stalled missions
   stall_threshold_min: 30
-  shadow_max_duplicates: 1
 
 merge:
   ci_required: true
   auto_rebase: true
-  notify: terminal            # terminal | slack
-
-broadcast:
-  enabled: true
-  context_file: FLEET_CONTEXT.md
 
 ships:
   - id: ship-a
     adapter: claude
-    mode: local               # local | remote
 ```
 
 ---
@@ -258,8 +259,14 @@ fleet/
 │   ├── adapters/
 │   │   ├── claude/
 │   │   ├── codex/
-│   │   └── aider/
-│   └── merge/       # Diff, CI gate, rebase, PR creation
+│   │   ├── aider/
+│   │   ├── opencode/
+│   │   ├── gemini/
+│   │   ├── cursor/
+│   │   ├── amp/
+│   │   └── a2a/
+│   ├── web-dashboard/
+│   └── plugin-drsti-dev-flow/
 ├── docs/
 │   ├── PRD.md       # This file
 │   ├── protocol.md  # Full protocol spec
@@ -292,7 +299,7 @@ fleet/
 | v0.1 | Week 1-2 | `fleet init`, `fleet status`, `fleet ship --join`, Claude adapter |
 | v0.5 | Week 3-4 | Codex adapter, merge commander, Spark mode, **Show HN post** |
 | v1.0 | Week 5-6 | Aider adapter, commander failover, examples, **Product Hunt** |
-| v1.1 | Month 2-3 | OpenCode adapter, Windows native, hosted commander free tier |
+| v1.1 | Month 2-3 | OpenCode adapter, Windows-native workflow, growth/onboarding features |
 
 ---
 
@@ -301,9 +308,9 @@ fleet/
 | Tier | Price | What changes |
 |------|-------|-------------|
 | Fleet OSS | Free forever | Self-managed. Full protocol. MIT. |
-| fleetspark.dev Free | Free | Hosted commander, 3 ships max |
-| fleetspark.dev Pro | $19/mo | 5 cloud ships, Spark mode |
-| fleetspark.dev Scale | $49/mo | 20 cloud ships, priority execution |
+| fleetspark.dev Free | Free | Proposed hosted commander, 3 ships max |
+| fleetspark.dev Pro | $19/mo | Proposed 5 cloud ships and full Spark mode |
+| fleetspark.dev Scale | $49/mo | Proposed 20 cloud ships and priority execution |
 
 BYOK always. Fleet charges for coordination infrastructure, never for LLM usage.
 
@@ -324,7 +331,7 @@ BYOK always. Fleet charges for coordination infrastructure, never for LLM usage.
 
 ## 15. Open Questions
 
-1. FLEET.md on main branch or dedicated `fleet/` branch?
+1. Full shadow-dispatch semantics: duplicate branch, cloned task branch, or reassignment marker?
 2. Commander as daemon vs manual invocation?
 3. Web dashboard in v0.5 or v1.0?
 4. Auto-PR vs always hold for human approval? (Default: always hold)

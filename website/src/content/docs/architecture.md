@@ -199,7 +199,7 @@ Drives the post-completion lifecycle automatically:
 The commander polls every 5 minutes (configurable). Each cycle runs phases in order:
 
 1. **Health check** — read each ship's MISSION.md, classify alive/stale/dead
-2. **Shadow dispatch** — if enabled, re-dispatch stalled missions to another ship after configurable delay
+2. **Shadow dispatch** — if enabled, mark stale missions for duplicate execution after configurable delay; full spare-ship reassignment is roadmap work
 3. **Merge check** — handle completed missions through the PR/CI/merge lifecycle
 4. **DAG resolve** — promote newly unblocked missions to `ready`
 5. **Single atomic write** — push updated FLEET.md if anything changed
@@ -235,7 +235,7 @@ Supports raw JSON payloads and Slack-formatted messages. Configure in `.fleet/co
 
 ## Resource management
 
-The ResourceManager enforces fleet-wide limits:
+The ResourceManager provides the core checks for fleet-wide limits:
 
 - **Per-ship concurrency** — maximum missions running on a single ship (default: 1)
 - **Global ship cap** — maximum number of active ships (default: 8)
@@ -306,7 +306,7 @@ See [Adapters](/adapters/) for implementation details.
    → Starts heartbeat (pushes MISSION.md every 60s)
 
 3. Commander monitor loop (every 5 min)
-   → Health check → Shadow dispatch → Merge check → DAG resolve → Write state
+   → Health check → Shadow-dispatch marking → Merge check → DAG resolve → Write state
    → Notifications sent for key events
 
 4. Ship completes mission

@@ -9,7 +9,7 @@ git clone git@github.com:fleetspark/fleet.git
 cd fleet
 npm install
 npm run build
-npm run test:all   # 218+ tests must pass
+npm run test:all   # 271+ tests must pass
 ```
 
 ## What we need most
@@ -64,7 +64,7 @@ These are non-negotiable. PRs that violate them will be rejected.
 Every PR must:
 
 - [ ] Pass `npm run build` (zero TypeScript errors)
-- [ ] Pass `npm run test:all` (all 218+ tests green)
+- [ ] Pass `npm run test:all` (all 271+ tests green)
 - [ ] Include tests for new code (unit tests at minimum, integration tests for git-related features)
 - [ ] Have a focused scope (one feature or fix per PR)
 - [ ] Fill out the PR template

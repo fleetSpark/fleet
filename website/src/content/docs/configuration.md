@@ -19,7 +19,7 @@ execution:
   strategy: mapreduce          # sequential | mapreduce
   stall_threshold_min: 30      # Mark ship dead after this many minutes
   unresponsive_threshold_min: 10  # Mark ship stale after this many minutes
-  shadow_dispatch: false       # Enable parallel re-dispatch for stalled ships
+  shadow_dispatch: false       # Mark stale missions for shadow dispatch
   shadow_delay_min: 15         # Minutes before shadow dispatch triggers
 
 heartbeat:
@@ -68,7 +68,7 @@ ships:
 | `strategy` | string | `mapreduce` | `sequential` or `mapreduce` |
 | `stall_threshold_min` | number | `30` | Minutes before a ship is marked dead |
 | `unresponsive_threshold_min` | number | `10` | Minutes before a ship is marked stale |
-| `shadow_dispatch` | boolean | `false` | Re-dispatch stalled missions to another ship |
+| `shadow_dispatch` | boolean | `false` | Mark stale missions for shadow dispatch; full spare-ship duplicate execution is roadmap work |
 | `shadow_delay_min` | number | `15` | Minutes before shadow dispatch activates |
 
 ## Heartbeat settings

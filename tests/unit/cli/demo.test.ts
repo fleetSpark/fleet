@@ -67,6 +67,14 @@ describe('fleet demo --benchmark', () => {
     expect(text).toContain('npx fleetspark command');
   });
 
+  it('prints only existing ship join commands in reproduce steps', () => {
+    const { lines, log } = captureLog();
+    runBenchmark(3, log);
+    const text = lines.join('\n');
+    expect(text).not.toContain('ship register');
+    expect(text).toContain('npx fleetspark ship --join');
+  });
+
   it('shows wave breakdown', () => {
     const { lines, log } = captureLog();
     runBenchmark(3, log);

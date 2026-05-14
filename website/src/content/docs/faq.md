@@ -34,7 +34,7 @@ Fleet is free and open source (MIT license). You'll need API keys for the coding
 The commander monitors heartbeats — each ship pushes a status update every 60 seconds. If a ship stops responding:
 - After **10 minutes**: marked as stale (warning)
 - After **30 minutes**: marked as dead, mission transitions to stalled
-- If **shadow dispatch** is enabled: the mission is automatically re-assigned to another ship
+- If **shadow dispatch** is enabled: the mission is marked for duplicate execution; full automatic spare-ship reassignment is roadmap work
 
 ### What about merge conflicts?
 

@@ -2,7 +2,7 @@
 
 An adapter is a thin wrapper that translates between Fleet's mission brief format and a specific coding agent's CLI or API. Writing one takes about 30 lines of TypeScript.
 
-> **Status:** Interface is stable. Claude Code adapter shipping in v0.1. Codex (v0.5), Aider (v1.0), OpenCode (v1.1) planned.
+> **Status:** Interface is stable. Claude Code, Codex, Aider, OpenCode, Gemini, Cursor, Amp, and A2A adapters are implemented.
 
 ---
 
@@ -119,4 +119,4 @@ function buildPrompt(mission: MissionBrief, contextPath?: string): string {
 4. Add a test: does `fleet ship --join` work with your adapter on a real repo?
 5. Open a PR — include the agent name, install instructions, and a short demo
 
-Adapters for **Gemini CLI**, **OpenCode**, **Cursor CLI**, and **Amp** are all wanted.
+Adapters for additional coding agents are welcome. Existing adapters cover Claude Code, Codex, Aider, OpenCode, Gemini CLI, Cursor CLI, Amp, and A2A-compatible agents.

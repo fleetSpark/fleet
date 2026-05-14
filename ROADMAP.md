@@ -50,9 +50,9 @@ Close the gaps that prevent Fleet from running a real mission without manual int
 
 ---
 
-## v0.5 — Multi-agent + Spark (shipped)
+## v0.5 — Multi-agent + Spark-Inspired Execution (shipped)
 
-Support for additional coding agents and the full Spark execution model.
+Support for additional coding agents and the core Spark-inspired execution model.
 
 - [x] Adapter registry — dynamic resolution of adapters by name (`resolveAdapter`)
 - [x] Codex adapter (`@fleetspark/adapter-codex`) — spawns `codex --full-auto --quiet`
@@ -61,7 +61,7 @@ Support for additional coding agents and the full Spark execution model.
 - [x] GitOps: `diffNameOnly` method for cross-branch file comparison
 - [x] Conflict detection before merge (cross-branch file overlap via `ConflictDetector`)
 - [x] Conflict warnings integrated into MergeCommander PR body
-- [x] Shadow dispatch — stalled ship triggers parallel execution after configurable delay
+- [x] Shadow-dispatch detection — stale missions are marked for duplicate execution after configurable delay
 - [x] `fleet status --json` — machine-readable output
 - [x] 116 tests across 24 test files (15 new)
 
@@ -78,7 +78,7 @@ Full multi-agent support, production hardening, and documentation.
 - [x] Amp CLI adapter (`@fleetspark/adapter-amp`)
 - [x] Slack/webhook notifications — Notifier with JSON + Slack formatting, event filtering
 - [x] Commander election protocol — optimistic locking via git push races, heartbeat, graceful release
-- [x] Ship resource limits and concurrency caps — per-ship + global limits, mission timeout detection
+- [x] Resource manager primitives — per-ship/global limits and mission timeout detection library
 - [x] Telemetry dashboard — TelemetryCollector with mission counts, ship utilization, throughput metrics
 - [x] Documentation site — Astro Starlight with architecture, adapters, CLI reference, configuration docs
 - [x] Interactive TUI dashboard (`fleet dashboard` — Ink/React)
@@ -107,6 +107,7 @@ Expand FleetSpark beyond the CLI into developer workflows and cloud infrastructu
 - [ ] VS Code extension — sidebar mission board, ship health, command palette integration
 - [ ] Agent performance benchmarks — per-agent success rate, avg duration, best-fit tracking
 - [ ] Cloud ship provisioning — `fleet ship --spawn aws|fly` auto-provisions VMs
+- [ ] Full spare-ship shadow execution — duplicate a stalled mission onto an available ship and accept the first completed result
 - [ ] Discord/Linear/Telegram webhook integrations
 - [x] **`@drsti/dev-flow` plugin** — governance plugin (`fleetspark plugin install @fleetspark/plugin-drsti-dev-flow`). Plugin loader API in core (`FleetPlugin` interface, `PluginLoader`), `onBeforeMissionStart` and `onBeforeMerge` hooks, `fleet plugin install/list` CLI commands, full gate enforcement for L3/L4 workstreams with maturity-level escalation. 22 unit tests.
 - [x] **`fleet run`** — single-machine sequential mission runner (`fleet run --template <name>`). Topological sort of missions by dependency, plugin gate enforcement with interactive retry loop, per-adapter spawn + poll, branch summary on completion. Works with any template including `drsti-dev-flow`. 7 unit tests.

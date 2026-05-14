@@ -1,6 +1,7 @@
 import type { FleetAdapter } from '../protocol/types.js';
 
 const builtinAdapters: Record<string, string> = {
+  'claude': '@fleetspark/adapter-claude',
   'claude-code': '@fleetspark/adapter-claude',
   'codex': '@fleetspark/adapter-codex',
   'aider': '@fleetspark/adapter-aider',

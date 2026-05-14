@@ -11,4 +11,10 @@ describe('resolveAdapter', () => {
     expect(adapter.name).toBe('claude-code');
     expect(typeof adapter.start).toBe('function');
   });
+
+  it('resolves claude as an alias for the Claude Code adapter', async () => {
+    const adapter = await resolveAdapter('claude');
+    expect(adapter.name).toBe('claude-code');
+    expect(typeof adapter.start).toBe('function');
+  });
 });

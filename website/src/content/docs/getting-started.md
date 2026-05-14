@@ -13,7 +13,7 @@ Before setting anything up, run the demo — no repo, no agents, no network requ
 npx fleetspark demo
 ```
 
-This simulates a complete 4-mission fleet run so you can see exactly how planning, ship assignment, parallel execution, and auto-merge work.
+This simulates a complete 4-mission fleet run so you can see the shape of planning, ship assignment, parallel execution, and merge flow.
 
 Or preview a specific template before running it for real:
 
@@ -97,7 +97,7 @@ The dashboard shows every ship's status, health, progress, merge queue, and bloc
 Fleet is configured via `.fleet/config.yml`. See the [Configuration reference](/configuration/) for all options, including:
 
 - Agent selection per ship (Claude Code, Codex, Aider, OpenCode, Gemini CLI, Cursor, Amp, A2A)
-- Shadow dispatch for stalled ship recovery
+- Shadow-dispatch detection for stalled ship recovery
 - Webhook notifications (Slack, custom)
 - Resource limits (per-ship concurrency, mission timeouts)
 

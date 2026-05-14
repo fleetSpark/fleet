@@ -123,9 +123,9 @@ export function runBenchmark(minutesPerStep = 3, log: LogFn = console.log): void
   log('');
   log('Reproduce this:');
   log('  npx fleetspark init');
-  log('  npx fleetspark ship register laptop --agent claude-code');
-  log('  npx fleetspark ship register desktop --agent codex');
-  log('  npx fleetspark ship register ec2 --agent aider');
+  log('  npx fleetspark ship --join git@github.com:you/your-repo.git');
+  log('  npx fleetspark ship --join git@github.com:you/your-repo.git');
+  log('  npx fleetspark ship --join git@github.com:you/your-repo.git');
   log('  npx fleetspark command --template test-coverage');
   log('');
 }

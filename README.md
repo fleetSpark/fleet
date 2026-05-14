@@ -63,19 +63,20 @@ GitHub (message bus)
 
 ---
 
-## Spark execution
+## Spark-Inspired Execution
 
-Fleet implements three speed optimisations from Apache Spark:
+Fleet implements Spark-inspired execution primitives:
 
 **Parallel DAG dispatch** — every mission with no dependencies starts immediately. Independent branches never wait for each other.
 
-**Shadow dispatch** — stalled ship? Commander clones the mission to a spare machine. First to finish wins.
+**Shadow-dispatch detection** — stalled ship? Commander can mark the mission for duplicate execution. Full spare-ship cloning/reassignment is on the roadmap.
 
 **Fleet brief** — one codebase analysis pass before missions start. Every ship skips the 15-30 turn exploration phase and executes immediately.
 
 ```yaml
 execution:
-  strategy: spark   # sequential | mapreduce | spark
+  strategy: mapreduce   # sequential | mapreduce
+  shadow_dispatch: true # optional duplicate dispatch for stalled missions
 ```
 
 ---
@@ -131,10 +132,16 @@ Full protocol spec → [protocol.md](protocol.md)
 | `fleet init` | Create `FLEET.md` and `.fleet/config.yml` in your repo |
 | `fleet command --plan <goal>` | Decompose goal into missions, assign ships, start orchestration |
 | `fleet command --resume` | Resume commander role from `FLEET.md` on any machine |
+| `fleet command --template <name>` | Create missions from a built-in template |
 | `fleet ship --join <repo>` | Join fleet as a ship: clone, read assignment, start agent |
 | `fleet brief --generate` | Generate `FLEET_CONTEXT.md` — broadcast codebase summary to all ships |
 | `fleet status` | Print current mission board |
 | `fleet logs <ship>` | Tail `MISSION.md` for a ship |
+| `fleet demo --benchmark` | Preview FleetSpark speedup without a repo or agents |
+| `fleet report` | Generate a markdown or JSON summary of the current fleet run |
+| `fleet run --template <name>` | Run a built-in template locally in sequence |
+| `fleet web` | Start the browser dashboard |
+| `fleet plugin install <package>` | Register a Fleet plugin in `.fleet/config.yml` |
 
 ---
 
@@ -144,11 +151,14 @@ Any coding agent works. Adapters handle the translation between Fleet's mission 
 
 | Adapter | Package | Status |
 |---------|---------|--------|
-| Claude Code | `@fleetspark/claude` | v0.1 — shipping |
-| OpenAI Codex | `@fleetspark/codex` | v0.5 — planned |
-| Aider | `@fleetspark/aider` | v1.0 — planned |
-| OpenCode | `@fleetspark/opencode` | v1.1 — planned |
-| Custom / A2A | `@fleetspark/a2a` | v1.1 — planned |
+| Claude Code | `@fleetspark/adapter-claude` | shipped |
+| OpenAI Codex | `@fleetspark/adapter-codex` | shipped |
+| Aider | `@fleetspark/adapter-aider` | shipped |
+| OpenCode | `@fleetspark/adapter-opencode` | shipped |
+| Gemini CLI | `@fleetspark/adapter-gemini` | shipped |
+| Cursor CLI | `@fleetspark/adapter-cursor` | shipped |
+| Amp CLI | `@fleetspark/adapter-amp` | shipped |
+| Custom / A2A | `@fleetspark/adapter-a2a` | shipped |
 
 Writing an adapter takes ~30 lines. See [adapters.md](adapters.md).
 
@@ -186,17 +196,17 @@ commander:
   poll_interval_minutes: 5
 
 execution:
-  strategy: spark             # sequential | mapreduce | spark
+  strategy: mapreduce         # sequential | mapreduce
   stall_threshold_min: 30     # shadow dispatch after this
+  shadow_dispatch: true
 
 merge:
   ci_required: true
-  notify: terminal            # terminal | slack
+  auto_rebase: true
 
 ships:
   - id: ship-a
     adapter: claude
-    mode: local               # local | remote
 ```
 
 ---
@@ -224,16 +234,17 @@ Fleet answers that question.
 
 ## Status
 
-**v0.1 — core CLI shipped.** Protocol spec is stable. Core commands implemented and tested.
+**v1.1.1 — growth CLI shipped.** Protocol spec is stable. Core commands, templates, reporting, dashboard, and adapters are implemented and tested.
 
 | Component | Status |
 |-----------|--------|
 | Protocol (FLEET.md / MISSION.md) | Stable — spec v1.0 |
-| `fleet init`, `fleet status` | Shipped |
-| `fleet ship --join`, `fleet command` | Shipped |
-| Claude adapter | Shipped |
-| Codex / Aider adapters | Planned (v0.5 / v1.0) |
-| Merge commander, Spark mode | Planned (v0.5) |
+| `fleet init`, `fleet status`, `fleet command`, `fleet ship --join` | Shipped |
+| `fleet demo`, `fleet report`, `fleet run`, `fleet web` | Shipped |
+| Claude, Codex, Aider, OpenCode, Gemini, Cursor, Amp, A2A adapters | Shipped |
+| Merge commander, heartbeat monitoring, shadow-dispatch detection | Shipped |
+| Full spare-ship shadow execution | Roadmap |
+| `drsti-dev-flow` template and governance plugin | Shipped |
 
 Star the repo to follow along. Issues and PRs welcome.
 

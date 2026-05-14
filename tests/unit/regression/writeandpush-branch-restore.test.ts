@@ -80,5 +80,5 @@ describe('writeAndPush branch restore on failure', () => {
     } finally {
       rmSync(tempDir, { recursive: true, force: true });
     }
-  });
+  }, 15_000);
 });

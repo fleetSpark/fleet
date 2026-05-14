@@ -98,7 +98,7 @@
     { label: 'Commander',  title: 'fleet command --plan "your goal"',    sub: 'Your laptop becomes the commander. It decomposes your goal into independent missions.' },
     { label: 'GitHub bus', title: 'Missions are pushed to GitHub.',      sub: 'Each mission lives on its own branch with a MISSION.md. No SSH. No shared filesystem. No infra.' },
     { label: 'Map',        title: 'fleet ship --join — every machine picks a mission.', sub: 'Claude Code on your laptop. Codex on the desktop. Aider on EC2. Map step of the map-reduce.' },
-    { label: 'Parallel',   title: 'Ships work in parallel. Heartbeats every 60 s.', sub: 'Each ship pushes progress to its branch. The commander watches, retries stalled ships, kicks off shadow dispatch.' },
+  { label: 'Parallel',   title: 'Ships work in parallel. Heartbeats every 60 s.', sub: 'Each ship pushes progress to its branch. The commander watches health and marks stale missions for recovery.' },
     { label: 'Merge',      title: 'Reduce: CI passes, branches merge into main.',   sub: 'Three missions. Twenty-three minutes. While you slept.' }
   ];
   const SCENE_LEN = 6, TOTAL = SCENES.length * SCENE_LEN;

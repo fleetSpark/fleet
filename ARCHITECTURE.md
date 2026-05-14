@@ -51,7 +51,14 @@ fleet/
 │   │       └── commands/  init, status, command, ship, assign, brief (v0.2), logs (v0.2)
 │   │
 │   └── adapters/
-│       └── claude/        @fleetspark/adapter-claude — Claude Code adapter
+│       ├── claude/        @fleetspark/adapter-claude — Claude Code adapter
+│       ├── codex/         @fleetspark/adapter-codex — OpenAI Codex adapter
+│       ├── aider/         @fleetspark/adapter-aider — Aider adapter
+│       ├── opencode/      @fleetspark/adapter-opencode — OpenCode adapter
+│       ├── gemini/        @fleetspark/adapter-gemini — Gemini CLI adapter
+│       ├── cursor/        @fleetspark/adapter-cursor — Cursor CLI adapter
+│       ├── amp/           @fleetspark/adapter-amp — Amp CLI adapter
+│       └── a2a/           @fleetspark/adapter-a2a — A2A protocol adapter
 │           └── src/
 │               └── index.ts  Spawns claude process, tracks PIDs
 │
@@ -213,20 +220,22 @@ execution:
   strategy: mapreduce          # sequential | mapreduce
   stall_threshold_min: 30
   unresponsive_threshold_min: 10
-  heartbeat_interval_seconds: 60
+  shadow_dispatch: false
+  shadow_delay_min: 15
+
+heartbeat:
+  interval_seconds: 60
 
 merge:
   ci_required: true
-  auto_rebase: true            # commander attempts rebase on conflict
-  notify: terminal
+  auto_rebase: true
 
-brief:                          # v0.2
+brief:
   mode: static                 # static | llm
 
 ships:
   - id: ship-a
     adapter: claude
-    mode: local
 ```
 
 ---
@@ -245,7 +254,7 @@ interface FleetAdapter {
 }
 ```
 
-Currently shipped: Claude Code adapter. Planned: Codex, Aider, OpenCode, A2A.
+Currently shipped: Claude Code, Codex, Aider, OpenCode, Gemini CLI, Cursor CLI, Amp CLI, and A2A adapters.
 
 ---
 

@@ -9,7 +9,7 @@ Fleet v1 focuses on:
 - Solo developer workflows across personal machines
 - Git-native coordination via `FLEET.md` + `MISSION.md`
 - Commander planning/dispatch, ship execution, heartbeat monitoring
-- Spark-inspired execution (`sequential`, `mapreduce`, `spark`)
+- Spark-inspired execution (`sequential`, `mapreduce`; full `spark` auto-strategy is planned)
 
 ## North Star
 
