@@ -117,7 +117,7 @@ async function handlePlanFile(
   // Create feature branches and initial MISSION.md for each mission
   for (const mission of missions) {
     const brief = planData.missions.find((m) => m.id === mission.id)?.brief ?? '';
-    await git.createBranch(mission.branch, 'main');
+    await git.createBranch(mission.branch, config.merge?.target_branch ?? 'main');
 
     const missionLog: MissionLog = {
       branch: mission.branch,
