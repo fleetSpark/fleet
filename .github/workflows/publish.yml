@@ -5,11 +5,16 @@ on:
     tags:
       - 'v*'
 
-# Each per-package publish step is independent. We use `continue-on-error: true`
-# so that publishing a package whose version is unchanged (npm responds with
-# EPUBLISHCONFLICT) does not halt subsequent steps. This lets a release tag
-# bump only the packages that changed without forcing version bumps on every
-# adapter and plugin.
+# Each per-package publish step calls a small shell precheck that compares
+# the workspace's local package.json version with the version currently on
+# the npm registry. We only run `npm publish` when they differ, so a release
+# tag can bump only the packages that changed — unchanged adapters and
+# plugins skip cleanly instead of halting the workflow with EPUBLISHCONFLICT.
+#
+# IMPORTANT: do NOT add `continue-on-error: true` to these steps. Auth
+# failures (ENEEDAUTH), build failures, or registry outages must fail loud
+# so a broken release does not silently look "successful." The precheck is
+# the deliberate skip mechanism; everything else is a real error.
 
 jobs:
   publish:
@@ -32,43 +37,106 @@ jobs:
       - run: npm run test:all
 
       - name: Publish @fleetspark/core
-        run: npm publish --workspace packages/core --access public
-        continue-on-error: true
+        run: |
+          PKG_DIR=packages/core
+          NAME=$(node -p "require('./$PKG_DIR/package.json').name")
+          LOCAL=$(node -p "require('./$PKG_DIR/package.json').version")
+          REMOTE=$(npm view "$NAME" version 2>/dev/null || echo "")
+          if [ "$LOCAL" = "$REMOTE" ]; then
+            echo "Skipping $NAME — version $LOCAL already published"
+          else
+            echo "Publishing $NAME@$LOCAL (remote: ${REMOTE:-none})"
+            npm publish --workspace "$PKG_DIR" --access public
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @fleetspark/adapter-claude
-        run: npm publish --workspace packages/adapters/claude --access public
-        continue-on-error: true
+        run: |
+          PKG_DIR=packages/adapters/claude
+          NAME=$(node -p "require('./$PKG_DIR/package.json').name")
+          LOCAL=$(node -p "require('./$PKG_DIR/package.json').version")
+          REMOTE=$(npm view "$NAME" version 2>/dev/null || echo "")
+          if [ "$LOCAL" = "$REMOTE" ]; then
+            echo "Skipping $NAME — version $LOCAL already published"
+          else
+            echo "Publishing $NAME@$LOCAL (remote: ${REMOTE:-none})"
+            npm publish --workspace "$PKG_DIR" --access public
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @fleetspark/adapter-codex
-        run: npm publish --workspace packages/adapters/codex --access public
-        continue-on-error: true
+        run: |
+          PKG_DIR=packages/adapters/codex
+          NAME=$(node -p "require('./$PKG_DIR/package.json').name")
+          LOCAL=$(node -p "require('./$PKG_DIR/package.json').version")
+          REMOTE=$(npm view "$NAME" version 2>/dev/null || echo "")
+          if [ "$LOCAL" = "$REMOTE" ]; then
+            echo "Skipping $NAME — version $LOCAL already published"
+          else
+            echo "Publishing $NAME@$LOCAL (remote: ${REMOTE:-none})"
+            npm publish --workspace "$PKG_DIR" --access public
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @fleetspark/adapter-aider
-        run: npm publish --workspace packages/adapters/aider --access public
-        continue-on-error: true
+        run: |
+          PKG_DIR=packages/adapters/aider
+          NAME=$(node -p "require('./$PKG_DIR/package.json').name")
+          LOCAL=$(node -p "require('./$PKG_DIR/package.json').version")
+          REMOTE=$(npm view "$NAME" version 2>/dev/null || echo "")
+          if [ "$LOCAL" = "$REMOTE" ]; then
+            echo "Skipping $NAME — version $LOCAL already published"
+          else
+            echo "Publishing $NAME@$LOCAL (remote: ${REMOTE:-none})"
+            npm publish --workspace "$PKG_DIR" --access public
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @fleetspark/adapter-opencode
-        run: npm publish --workspace packages/adapters/opencode --access public
-        continue-on-error: true
+        run: |
+          PKG_DIR=packages/adapters/opencode
+          NAME=$(node -p "require('./$PKG_DIR/package.json').name")
+          LOCAL=$(node -p "require('./$PKG_DIR/package.json').version")
+          REMOTE=$(npm view "$NAME" version 2>/dev/null || echo "")
+          if [ "$LOCAL" = "$REMOTE" ]; then
+            echo "Skipping $NAME — version $LOCAL already published"
+          else
+            echo "Publishing $NAME@$LOCAL (remote: ${REMOTE:-none})"
+            npm publish --workspace "$PKG_DIR" --access public
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @fleetspark/adapter-a2a
-        run: npm publish --workspace packages/adapters/a2a --access public
-        continue-on-error: true
+        run: |
+          PKG_DIR=packages/adapters/a2a
+          NAME=$(node -p "require('./$PKG_DIR/package.json').name")
+          LOCAL=$(node -p "require('./$PKG_DIR/package.json').version")
+          REMOTE=$(npm view "$NAME" version 2>/dev/null || echo "")
+          if [ "$LOCAL" = "$REMOTE" ]; then
+            echo "Skipping $NAME — version $LOCAL already published"
+          else
+            echo "Publishing $NAME@$LOCAL (remote: ${REMOTE:-none})"
+            npm publish --workspace "$PKG_DIR" --access public
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish fleetspark
-        run: npm publish --workspace packages/cli --access public
-        continue-on-error: true
+        run: |
+          PKG_DIR=packages/cli
+          NAME=$(node -p "require('./$PKG_DIR/package.json').name")
+          LOCAL=$(node -p "require('./$PKG_DIR/package.json').version")
+          REMOTE=$(npm view "$NAME" version 2>/dev/null || echo "")
+          if [ "$LOCAL" = "$REMOTE" ]; then
+            echo "Skipping $NAME — version $LOCAL already published"
+          else
+            echo "Publishing $NAME@$LOCAL (remote: ${REMOTE:-none})"
+            npm publish --workspace "$PKG_DIR" --access public
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
