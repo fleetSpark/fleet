@@ -5,6 +5,12 @@ on:
     tags:
       - 'v*'
 
+# Each per-package publish step is independent. We use `continue-on-error: true`
+# so that publishing a package whose version is unchanged (npm responds with
+# EPUBLISHCONFLICT) does not halt subsequent steps. This lets a release tag
+# bump only the packages that changed without forcing version bumps on every
+# adapter and plugin.
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -27,35 +33,42 @@ jobs:
 
       - name: Publish @fleetspark/core
         run: npm publish --workspace packages/core --access public
+        continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @fleetspark/adapter-claude
         run: npm publish --workspace packages/adapters/claude --access public
+        continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @fleetspark/adapter-codex
         run: npm publish --workspace packages/adapters/codex --access public
+        continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @fleetspark/adapter-aider
         run: npm publish --workspace packages/adapters/aider --access public
+        continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @fleetspark/adapter-opencode
         run: npm publish --workspace packages/adapters/opencode --access public
+        continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @fleetspark/adapter-a2a
         run: npm publish --workspace packages/adapters/a2a --access public
+        continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish fleetspark
         run: npm publish --workspace packages/cli --access public
+        continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
