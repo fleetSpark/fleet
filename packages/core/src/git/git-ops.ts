@@ -40,8 +40,41 @@ export class RealGitOps implements GitOps {
   constructor(private cwd: string) {}
 
   private async exec(...args: string[]): Promise<string> {
-    const { stdout } = await execFile('git', args, { cwd: this.cwd });
-    return stdout.trim();
+    // Retry once on transient index.lock contention. Concurrent git ops
+    // (e.g. ship's commit racing with a heartbeat push, or a killed
+    // child process that left a stale lock) can produce
+    // "fatal: Unable to create '.git/index.lock': File exists".
+    // Fix is to wait briefly (the OTHER op usually finishes inside 500ms)
+    // and retry. If the lock is genuinely stale (older than 30s),
+    // we delete it; that's the same recovery `git` itself recommends.
+    let lastErr: unknown;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const { stdout } = await execFile('git', args, { cwd: this.cwd });
+        return stdout.trim();
+      } catch (err) {
+        lastErr = err;
+        const stderr = String((err as { stderr?: string })?.stderr ?? '');
+        if (!stderr.includes('index.lock')) throw err;
+
+        // Lock-contention path
+        await new Promise((r) => setTimeout(r, 500));
+
+        // Check lock age — if it's clearly orphaned, remove it.
+        try {
+          const { stat, unlink } = await import('node:fs/promises');
+          const { join } = await import('node:path');
+          const lockPath = join(this.cwd, '.git', 'index.lock');
+          const lockStat = await stat(lockPath).catch(() => null);
+          if (lockStat && Date.now() - lockStat.mtimeMs > 30_000) {
+            await unlink(lockPath).catch(() => {});
+          }
+        } catch {
+          // best-effort cleanup; fall through to retry
+        }
+      }
+    }
+    throw lastErr;
   }
 
   async clone(repo: string, dir: string): Promise<void> {

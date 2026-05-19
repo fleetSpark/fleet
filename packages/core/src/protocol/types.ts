@@ -98,10 +98,26 @@ export interface AgentSession {
   startedAt: Date;
 }
 
+export interface AgentExitInfo {
+  /** True if the process exited cleanly (exitCode === 0 and no signal). */
+  cleanExit: boolean;
+  /** Process exit code if it exited normally; undefined if killed by signal or still alive. */
+  exitCode?: number;
+  /** Signal that terminated the process (e.g. 'SIGTERM', 'SIGKILL'); undefined if exited normally. */
+  signal?: string;
+}
+
 export interface FleetAdapter {
   name: string;
   start(mission: MissionBrief, context?: string): Promise<AgentSession>;
   isAlive(session: AgentSession): Promise<boolean>;
+  /**
+   * Optional: return exit code + signal when isAlive() returns false. Lets callers
+   * differentiate clean completion (cleanExit: true) from signal-kill / crash
+   * (cleanExit: false). Adapters that can't track this safely omit the method;
+   * callers should treat its absence as "can't tell — assume clean exit".
+   */
+  getExitInfo?(session: AgentSession): Promise<AgentExitInfo | undefined>;
   send(session: AgentSession, message: string): Promise<void>;
   stop(session: AgentSession): Promise<void>;
 }

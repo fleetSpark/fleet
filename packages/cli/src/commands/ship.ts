@@ -146,7 +146,54 @@ export function registerShipCommand(program: Command): void {
           if (!alive) {
             clearInterval(checkInterval);
             heartbeat.stop();
-            console.log(`Mission ${mission!.id} agent has exited. Marking completed.`);
+
+            // Distinguish clean exit from signal-kill / crash. Adapters that
+            // implement getExitInfo() let us avoid the v1.1.6-and-prior bug
+            // where any process disappearance was marked `completed` — including
+            // SIGTERM/SIGKILL from the operator. If the adapter can't tell
+            // (older adapter, race condition), fall back to legacy "assume
+            // completed" behavior to preserve compatibility.
+            const exitInfo = adapter.getExitInfo
+              ? await adapter.getExitInfo(session)
+              : undefined;
+            const cleanExit = exitInfo ? exitInfo.cleanExit : true;
+
+            if (!cleanExit) {
+              console.log(
+                `Mission ${mission!.id} agent terminated abnormally ` +
+                  `(exitCode=${exitInfo?.exitCode ?? 'null'}, signal=${exitInfo?.signal ?? 'null'}). ` +
+                  `Marking failed — NOT completed. MISSION.md left untouched so the next operator can inspect.`
+              );
+              try {
+                missionLog.status = 'failed';
+                missionLog.blockers = [
+                  ...(missionLog.blockers ?? []),
+                  `agent terminated abnormally: signal=${exitInfo?.signal ?? 'null'}, exitCode=${exitInfo?.exitCode ?? 'null'}`,
+                ];
+                const { writeMissionLog } = await import('@fleetspark/core');
+                await git.writeAndPush(
+                  mission!.branch,
+                  'MISSION.md',
+                  writeMissionLog(missionLog),
+                  `fleet: ${mission!.id} failed (agent killed/crashed)`
+                );
+
+                mission!.status = transition(mission!.status, 'fail');
+                manifest.updated = new Date();
+                await git.writeAndPush(
+                  'fleet/state',
+                  'FLEET.md',
+                  writeFleetManifest(manifest),
+                  `fleet: ${mission!.id} failed`
+                );
+                console.log(`Mission ${mission!.id} marked as failed.`);
+              } catch (err) {
+                console.error(`Failed to update mission status to failed:`, err);
+              }
+              return;
+            }
+
+            console.log(`Mission ${mission!.id} agent has exited cleanly. Marking completed.`);
 
             try {
               // Update MISSION.md status
