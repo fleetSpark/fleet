@@ -67,7 +67,15 @@ export class RealGitOps implements GitOps {
   }
 
   async readFile(branch: string, path: string): Promise<string> {
-    return this.exec('show', `${branch}:${path}`);
+    try {
+      return await this.exec('show', `${branch}:${path}`);
+    } catch (err) {
+      // After a fresh `git clone`, only remote-tracking refs exist for branches
+      // beyond the default HEAD. Fall back to origin/<branch> so callers that
+      // only need to read state (ships, monitors, status views) don't have to
+      // pre-create local tracking refs.
+      return await this.exec('show', `origin/${branch}:${path}`);
+    }
   }
 
   async writeAndPush(
