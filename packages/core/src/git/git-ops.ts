@@ -142,7 +142,17 @@ export class RealGitOps implements GitOps {
       await this.exec('add', path);
       await this.exec('commit', '-m', message);
 
-      // Retry on conflict: pull --rebase then push (max 3 attempts)
+      // Retry on conflict: pull --rebase --autostash then push (max 3 attempts).
+      //
+      // V1.1.9: --autostash is critical. The ship's heartbeat fires writeAndPush
+      // every 60s on the mission branch, while the spawned agent is independently
+      // writing files to the same working tree. Without --autostash, the heartbeat's
+      // pull --rebase fails the moment the agent has any unstaged changes
+      // ("error: cannot pull with rebase: You have unstaged changes"), and the
+      // ship process crashes mid-mission. With --autostash, git automatically
+      // stash-saves uncommitted changes before the rebase + restores them after,
+      // so the heartbeat coexists cleanly with the agent's in-flight edits.
+      // The agent's commit (when it lands) then includes whatever it just wrote.
       let pushed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
         try {
@@ -150,7 +160,7 @@ export class RealGitOps implements GitOps {
           pushed = true;
           break;
         } catch {
-          await this.exec('pull', '--rebase', 'origin', branch);
+          await this.exec('pull', '--rebase', '--autostash', 'origin', branch);
         }
       }
       if (!pushed) {
