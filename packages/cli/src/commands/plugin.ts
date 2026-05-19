@@ -2,7 +2,7 @@ import type { Command } from 'commander';
 import { execSync } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { load as yamlLoad, dump as yamlDump } from 'js-yaml';
+import { parse as yamlLoad, stringify as yamlDump } from 'yaml';
 
 export function registerPluginCommand(program: Command): void {
   const pluginCmd = program
