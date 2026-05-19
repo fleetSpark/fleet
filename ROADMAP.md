@@ -97,6 +97,7 @@ Remove friction at every stage of the user journey.
 - [x] `fleet report` — post-run markdown summary with timing, merge status, time-saved estimate
 - [x] GitHub Action (`fleetspark/fleet-action`) — run fleet operations in CI workflows
 - [x] **`drsti-dev-flow` mission template** — governed-development mission template (`--template drsti-dev-flow`) that adds a maturity-level workstream schema, pre-proposal conflict checks, L4 review gates (spec → plan → code with writer/reviewer split), 2-loop guardrail, and recommended model/effort routing per phase. Sits on top of FleetSpark's existing `ConflictDetector`, `FleetAdapter` registry, and `FLEET_CONTEXT.md` broadcast — no new core primitives required. Authored and maintained by the `drsti-dev-flow` project (see [drsti-flow.dev](https://drsti-flow.dev) when published)
+- [x] **Configurable `merge.target_branch`** — repos with non-`main` integration branches (long-lived feature branches, `develop`, `release/*`) can now point Fleet at a custom merge target without forking. `merge-commander` PR creation and `conflict-detector` diff base both honor the config; defaults to `main` so existing fleets are unaffected.
 
 ---
 
