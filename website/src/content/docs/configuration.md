@@ -28,7 +28,8 @@ heartbeat:
 
 merge:
   ci_required: true            # Require CI pass before auto-merge
-  auto_rebase: true            # Attempt rebase on merge conflicts
+  auto_rebase: true            # Reserved for rebase-capable merge flows
+  target_branch: main          # Branch to target for PRs and conflict detection
 
 brief:
   mode: static                 # static | llm — FLEET_CONTEXT.md generation mode
@@ -83,7 +84,8 @@ ships:
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | `ci_required` | boolean | `true` | Require CI pass before auto-merge |
-| `auto_rebase` | boolean | `true` | Attempt rebase on merge conflicts |
+| `auto_rebase` | boolean | `true` | Reserved for rebase-capable merge flows; current merge commander flags conflicts for review |
+| `target_branch` | string | `main` | Branch to target for PR creation and conflict-detection diff base. Set to your integration branch (e.g. `develop`, `release/next`, or a long-lived feature branch) when your repo does not merge directly to `main`. |
 
 ## Brief settings
 
@@ -115,7 +117,7 @@ ships:
 | `pr-merged` | PR was merged into main |
 | `ci-failed` | CI checks failed on a mission branch |
 | `ship-stalled` | A ship stopped sending heartbeats |
-| `shadow-dispatched` | Commander re-dispatched a stalled mission |
+| `shadow-dispatched` | Commander marked a stalled mission for duplicate execution |
 | `conflict-detected` | File conflicts detected between branches |
 | `all-missions-complete` | All missions in the fleet are done |
 

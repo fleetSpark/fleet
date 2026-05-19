@@ -35,8 +35,8 @@ fleet command --template list
 # Resume an existing fleet (re-claim commander)
 fleet command --resume
 
-# Resume with graceful handoff support
-fleet command --resume --handoff
+# Release commander role for another machine to resume
+fleet command --handoff
 ```
 
 | Flag | Description |
@@ -45,7 +45,7 @@ fleet command --resume --handoff
 | `--plan-file <path>` | YAML file with pre-defined missions |
 | `--template <name>` | Use a built-in mission template; use `list` to see all |
 | `--resume` | Resume monitoring existing missions |
-| `--handoff` | Enable implicit commander handoff (any machine can resume) |
+| `--handoff` | Release the active commander role so another machine can resume |
 
 See [Mission Templates](/templates/) for the full list of built-in templates.
 
@@ -67,6 +67,9 @@ fleet run --template test-coverage --agent codex
 
 # Run against a specific directory
 fleet run --template security-audit --cwd /path/to/project
+
+# Append a summary entry to FLEET_LOG.md
+fleet run --template test-coverage --simulate --log
 ```
 
 `fleet run` is the single-machine shortcut for `fleet command` + `fleet ship`. It:
@@ -85,6 +88,7 @@ fleet run --template security-audit --cwd /path/to/project
 | `--simulate` | Simulate the run without real agents (UAT / preview mode) |
 | `--cwd <path>` | Working directory (default: current directory) |
 | `--agent <adapter>` | Override the agent adapter for all missions |
+| `--log` | Append a run summary entry to `FLEET_LOG.md` |
 
 See [Mission Templates](/templates/) for available templates.
 
@@ -123,7 +127,7 @@ fleet status --json
 
 | Flag | Description |
 |------|-------------|
-| `--watch` | Refresh the display every 30 seconds |
+| `--watch` | Refresh the display every 5 seconds |
 | `--json` | Output fleet state as JSON |
 
 ---
@@ -204,9 +208,17 @@ Run a zero-friction simulated fleet — no repo, no agents, no network required.
 fleet demo
 # or
 npx fleetspark demo
+
+# Print parallel vs sequential timing
+fleet demo --benchmark
 ```
 
-Simulates a complete fleet run with 4 missions, showing planning, ship assignment, parallel execution, dependency unblocking, and auto-merge. The ideal way to see Fleet in action before setting up a real fleet.
+Simulates a complete fleet run with 4 missions, showing planning, ship assignment, parallel execution, dependency unblocking, and merge flow. The ideal way to see Fleet in action before setting up a real fleet.
+
+| Flag | Description |
+|------|-------------|
+| `--benchmark` | Print parallel vs sequential speedup analysis |
+| `--step-minutes <n>` | Minutes per simulated agent step in benchmark mode |
 
 ---
 

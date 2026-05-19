@@ -38,7 +38,7 @@ The commander monitors heartbeats — each ship pushes a status update every 60 
 
 ### What about merge conflicts?
 
-Fleet has built-in conflict detection. Before creating a PR, it checks file overlap between active branches. If conflicts exist, they're noted in the PR body. The merge commander can attempt auto-rebase, or flag it for human review.
+Fleet has built-in conflict detection. Before creating a PR, it checks file overlap between active branches. If conflicts exist, they're noted in the PR body and flagged for human review.
 
 ### Can two ships accidentally work on the same task?
 
