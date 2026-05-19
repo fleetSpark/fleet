@@ -11,7 +11,10 @@ export interface ConflictReport {
 }
 
 export class ConflictDetector {
-  constructor(private gitOps: GitOps) {}
+  constructor(
+    private gitOps: GitOps,
+    private targetBranch: string = 'main'
+  ) {}
 
   async check(mission: Mission, activeMissions: Mission[]): Promise<ConflictReport> {
     const report: ConflictReport = {
@@ -22,7 +25,7 @@ export class ConflictDetector {
 
     let myFiles: string[];
     try {
-      myFiles = await this.gitOps.diffNameOnly('main', mission.branch);
+      myFiles = await this.gitOps.diffNameOnly(this.targetBranch, mission.branch);
     } catch {
       return report;
     }
@@ -32,7 +35,7 @@ export class ConflictDetector {
       if (!['in-progress', 'completed', 'merge-queued'].includes(other.status)) continue;
 
       try {
-        const theirFiles = await this.gitOps.diffNameOnly('main', other.branch);
+        const theirFiles = await this.gitOps.diffNameOnly(this.targetBranch, other.branch);
         const overlap = myFiles.filter((f) => theirFiles.includes(f));
         for (const file of overlap) {
           report.overlappingFiles.push({ file, conflictsWith: other.branch });

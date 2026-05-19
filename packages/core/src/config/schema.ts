@@ -28,6 +28,7 @@ export const fleetConfigSchema = z
       .object({
         ci_required: z.boolean().default(true),
         auto_rebase: z.boolean().default(true),
+        target_branch: z.string().default('main'),
       })
       .default({}),
     brief: z
