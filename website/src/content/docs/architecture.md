@@ -189,7 +189,7 @@ Drives the post-completion lifecycle automatically:
 4. Mission transitions to `merge-queued`
 5. Commander monitors CI status:
    - **CI passes, no conflicts** — auto-merge to `main`
-   - **CI passes, merge conflict** — attempt rebase if configured, otherwise flag for human
+   - **CI passes, merge conflict** — flag for human review
    - **CI fails** — reject back to `in-progress` for rework
 
 ---

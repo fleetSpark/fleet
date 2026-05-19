@@ -317,6 +317,7 @@ async function startMonitorLoop(git: RealGitOps, config: any): Promise<void> {
   const mergeCommander = new MergeCommander(git, {
     ciRequired: config.merge.ci_required,
     autoRebase: config.merge.auto_rebase,
+    targetBranch: config.merge.target_branch,
   });
 
   const pollMs = config.commander.poll_interval_minutes * 60 * 1000;

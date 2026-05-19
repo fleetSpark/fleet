@@ -98,7 +98,7 @@ Fleet is configured via `.fleet/config.yml`. See the [Configuration reference](/
 
 - Agent selection per ship (Claude Code, Codex, Aider, OpenCode, Gemini CLI, Cursor, Amp, A2A)
 - Shadow-dispatch detection for stalled ship recovery
-- Webhook notifications (Slack, custom)
+- Webhook notification configuration (Slack, custom); event dispatch coverage is still expanding
 - Resource limits (per-ship concurrency, mission timeouts)
 
 ## After a run

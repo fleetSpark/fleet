@@ -134,4 +134,27 @@ describe('MergeCommander', () => {
     expect(results).toHaveLength(0);
     expect(git.createPR).not.toHaveBeenCalled();
   });
+
+  it('targets main by default when no targetBranch configured', async () => {
+    const git = createMockGitOps();
+    const mc = new MergeCommander(git, { ciRequired: true, autoRebase: true });
+    await mc.tick(makeManifest([makeMission({ status: 'completed' })]));
+    expect(git.createPR).toHaveBeenCalledWith('feature/test', 'main', expect.any(String), expect.any(String));
+  });
+
+  it('targets configured branch when targetBranch is set', async () => {
+    const git = createMockGitOps();
+    const mc = new MergeCommander(git, {
+      ciRequired: true,
+      autoRebase: true,
+      targetBranch: 'claude/multi-tenant-studio-setup-3VDFC',
+    });
+    await mc.tick(makeManifest([makeMission({ status: 'completed' })]));
+    expect(git.createPR).toHaveBeenCalledWith(
+      'feature/test',
+      'claude/multi-tenant-studio-setup-3VDFC',
+      expect.any(String),
+      expect.any(String)
+    );
+  });
 });
