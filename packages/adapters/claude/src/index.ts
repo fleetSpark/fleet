@@ -29,9 +29,24 @@ export const claudeAdapter: FleetAdapter = {
   async start(mission: MissionBrief, context?: string): Promise<AgentSession> {
     const prompt = buildPrompt(mission, context);
 
-    const proc = spawn('claude', ['--dangerously-skip-permissions'], {
-      stdio: ['pipe', 'pipe', 'pipe'],
-    });
+    // V1.1.8: switch from piped-stdin REPL mode to `-p` (print/non-interactive)
+    // batch mode. The previous approach (`spawn('claude', [...], {stdio: pipe})`
+    // + `proc.stdin.write(prompt)`) caused claude-code to silently hang for
+    // hours: without a TTY the CLI couldn't read piped stdin in its expected
+    // shape, and instead entered a wait-for-input limbo that burned ~0.3s of
+    // CPU per minute and produced zero work output. Fleet's ship-side heartbeat
+    // kept ticking, masking the hang.
+    //
+    // `-p "<prompt>"` makes claude-code accept the entire prompt as a single
+    // argv entry and run to completion non-interactively, exiting when done.
+    // stdin is closed (`stdio[0] = 'ignore'`) so the CLI doesn't wait for it.
+    const proc = spawn(
+      'claude',
+      ['-p', prompt, '--dangerously-skip-permissions'],
+      {
+        stdio: ['ignore', 'pipe', 'pipe'],
+      }
+    );
 
     if (!proc.pid) {
       throw new Error('Failed to spawn claude process');
@@ -51,8 +66,6 @@ export const claudeAdapter: FleetAdapter = {
       });
       processes.delete(pid);
     });
-
-    proc.stdin?.write(prompt + '\n');
 
     return {
       pid: proc.pid,
