@@ -19,7 +19,7 @@ const program = new Command();
 program
   .name('fleet')
   .description('Steroids for AI coding — multi-machine orchestration for coding agents')
-  .version('1.1.1');
+  .version('1.1.9');
 
 registerInitCommand(program);
 registerStatusCommand(program);
