@@ -110,6 +110,12 @@ Expand FleetSpark beyond the CLI into developer workflows and cloud infrastructu
 - [ ] Cloud ship provisioning — `fleet ship --spawn aws|fly` auto-provisions VMs
 - [ ] Full spare-ship shadow execution — duplicate a stalled mission onto an available ship and accept the first completed result
 - [ ] Discord/Linear/Telegram webhook integrations
+- [ ] **Planner integration & autonomous coordination** (5 items — close the coordination loop above mission execution; no protocol change):
+  - [ ] **`--plan-source <adapter>`** — consume an external planner's validated, conflict-checked batch block (a third plan source alongside `--plan` and `--plan-file`), so a scheduled PM agent feeds missions directly instead of hand-written YAML.
+  - [ ] **`fleet heartbeat` + machine `mode: mission\|manual`** — non-mission liveness publisher so a commander, an idle box, or a manually-driven agent session shows alive without running `fleet ship` (today liveness is mission-bound, so non-mission machines false-alarm as stale/dark).
+  - [ ] **`fleet report --live`** + web-dashboard risk panel — continuous health/risk view (CI-failure trends, aging/stalled missions, idle-ship-while-queue-nonempty, blocked dependency chains, stale-unapproved batches). Extends the post-run `fleet report`.
+  - [ ] **`fleet outcomes`** — mission-outcome event stream (the merge commander already classifies every terminal state) so a planner can detect failed/stalled batches and, gated behind a clean-run ramp, advance toward auto-assign.
+  - [ ] **Action-item ingestion adapter** — opt-in planner-side adapter that scans reviews/chat/commits and *proposes* backlog items (never auto-dispatches).
 - [x] **`@drsti/dev-flow` plugin** — governance plugin (`fleetspark plugin install @fleetspark/plugin-drsti-dev-flow`). Plugin loader API in core (`FleetPlugin` interface, `PluginLoader`), `onBeforeMissionStart` and `onBeforeMerge` hooks, `fleet plugin install/list` CLI commands, full gate enforcement for L3/L4 workstreams with maturity-level escalation. 22 unit tests.
 - [x] **`fleet run`** — single-machine sequential mission runner (`fleet run --template <name>`). Topological sort of missions by dependency, plugin gate enforcement with interactive retry loop, per-adapter spawn + poll, branch summary on completion. Works with any template including `drsti-dev-flow`. 7 unit tests.
 
