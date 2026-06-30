@@ -18,6 +18,7 @@ import { registerHeartbeatCommand } from './commands/heartbeat.js';
 import { registerBenchmarksCommand } from './commands/benchmarks.js';
 import { registerReplayCommand } from './commands/replay.js';
 import { registerMarketplaceCommand } from './commands/marketplace.js';
+import { registerTeamCommand } from './commands/team.js';
 
 const program = new Command();
 
@@ -44,5 +45,6 @@ registerHeartbeatCommand(program);
 registerBenchmarksCommand(program);
 registerReplayCommand(program);
 registerMarketplaceCommand(program);
+registerTeamCommand(program);
 
 program.parse();

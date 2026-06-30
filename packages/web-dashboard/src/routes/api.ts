@@ -1,5 +1,5 @@
 import type { FastifyInstance, FastifyPluginOptions } from 'fastify';
-import { analyzeRisk } from '@fleetspark/core';
+import { analyzeRisk, meterUsage, priceUsage } from '@fleetspark/core';
 import type { StateCache } from '../state.js';
 
 interface ApiPluginOptions extends FastifyPluginOptions {
@@ -27,6 +27,15 @@ export async function apiRoutes(
     }
     const report = analyzeRisk(snapshot.manifest);
     return reply.send(report);
+  });
+
+  app.get('/api/usage', async (_request, reply) => {
+    const snapshot = cache.getLatestSnapshot();
+    if (!snapshot) {
+      return reply.code(503).send({ error: 'Fleet state not yet available' });
+    }
+    const usage = meterUsage(snapshot.manifest);
+    return reply.send({ usage, priced: priceUsage(usage) });
   });
 
   app.get<{ Params: { missionId: string } }>(

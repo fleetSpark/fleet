@@ -105,7 +105,7 @@ Remove friction at every stage of the user journey.
 
 Expand FleetSpark beyond the CLI into developer workflows and cloud infrastructure.
 
-- [ ] VS Code extension — sidebar mission board, ship health, command palette integration
+- [x] VS Code extension — sidebar mission board, ship health, command palette integration (`editors/vscode`: Missions + Ship Health tree views polling `fleet status --json`, command palette for plan/report/outcomes/replay/status; compiles clean with `@types/vscode`)
 - [x] Agent performance benchmarks — per-agent success rate, avg duration, best-fit tracking (`computeBenchmarks`/`renderBenchmarks` in core; `fleet benchmarks [--json]`)
 - [x] Cloud ship provisioning — `fleet ship --spawn aws|fly` auto-provisions VMs (`ShipProvisioner` generates cloud-init + launch command for aws|fly|gcp; `fleet ship --spawn <provider> --repo <url> [--apply]`)
 - [x] Full spare-ship shadow execution — duplicate a stalled mission onto an available ship and accept the first completed result (`ShadowExecutor`: spare-ship selection, isolated shadow branch, first-completed-wins resolution; wired into the commander shadow-dispatch path)
@@ -125,8 +125,8 @@ Expand FleetSpark beyond the CLI into developer workflows and cloud infrastructu
 
 Transform FleetSpark from a CLI tool into a collaborative development platform.
 
-- [ ] Fleet for Teams — shared mission board with invite links, multi-developer coordination
-- [ ] Fleet Cloud SaaS — hosted commander + cloud ships, usage-based pricing
+- [x] Fleet for Teams (**Team Lite**) — Git-native ownership lanes, reviewer routing, and role-aware approval policy via an optional `.fleet/team.yml` (`parseTeamConfig`/`routeReviewers`/`evaluateApproval` in core; `fleet team show|route`). Note: the *hosted* shared board + invite links build on Fleet Cloud below.
+- [~] Fleet Cloud SaaS — hosted commander + cloud ships, usage-based pricing. **In-repo foundation shipped:** usage metering + pricing model (`meterUsage`/`priceUsage`) and a `/api/usage` control-plane endpoint on the web-dashboard; cloud ships land via `fleet ship --spawn` above. The hosted multi-tenant service (auth, billing, tenancy ops) is operated outside this repo and remains in progress.
 - [x] `fleet replay <mission-id>` — re-run a failed mission (`applyReplay` resets ship/blocker/queue/completed records and returns the mission to the scheduler; `fleet replay <id>` recreates the branch + MISSION.md)
 - [x] Git provider abstraction (GitLab, Bitbucket support) — `GitProvider` interface + `GitHubProvider` (gh), `GitLabProvider` (glab), `BitbucketProvider` (REST); `detectProvider` from remote URL; `RealGitOps` delegates PR/MR ops
 - [x] Mission marketplace — community-contributed templates (`loadMarketplaceIndex`/`searchMarketplace` over builtins + a JSON/URL index; `fleet marketplace list|search|install`)

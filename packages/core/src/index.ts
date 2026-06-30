@@ -111,3 +111,27 @@ export {
   type ProvisionOptions,
   type ProvisionSpec,
 } from './provision/ship-provisioner.js';
+export {
+  parseTeamConfig,
+  routeReviewers,
+  evaluateApproval,
+  matchesPattern,
+  globToRegExp,
+  type TeamConfig,
+  type TeamMember,
+  type OwnershipRule,
+  type ApprovalPolicy,
+  type Role,
+  type ReviewRouting,
+  type ApprovalResult,
+} from './team/team.js';
+export {
+  meterUsage,
+  priceUsage,
+  DEFAULT_PRICING,
+  type UsageRecord,
+  type PricingModel,
+  type PricedUsage,
+  type PriceLineItem,
+  type MeterOptions,
+} from './cloud/usage-meter.js';
