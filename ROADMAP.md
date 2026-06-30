@@ -107,7 +107,7 @@ Expand FleetSpark beyond the CLI into developer workflows and cloud infrastructu
 
 - [ ] VS Code extension — sidebar mission board, ship health, command palette integration
 - [x] Agent performance benchmarks — per-agent success rate, avg duration, best-fit tracking (`computeBenchmarks`/`renderBenchmarks` in core; `fleet benchmarks [--json]`)
-- [ ] Cloud ship provisioning — `fleet ship --spawn aws|fly` auto-provisions VMs
+- [x] Cloud ship provisioning — `fleet ship --spawn aws|fly` auto-provisions VMs (`ShipProvisioner` generates cloud-init + launch command for aws|fly|gcp; `fleet ship --spawn <provider> --repo <url> [--apply]`)
 - [x] Full spare-ship shadow execution — duplicate a stalled mission onto an available ship and accept the first completed result (`ShadowExecutor`: spare-ship selection, isolated shadow branch, first-completed-wins resolution; wired into the commander shadow-dispatch path)
 - [x] Discord/Linear/Telegram webhook integrations (`Notifier` gains `discord`/`telegram`/`linear` formats + `chat_id` config + per-provider payloads)
 - [x] **Planner integration & autonomous coordination** (5 items — close the coordination loop above mission execution; no protocol change):
@@ -127,6 +127,6 @@ Transform FleetSpark from a CLI tool into a collaborative development platform.
 
 - [ ] Fleet for Teams — shared mission board with invite links, multi-developer coordination
 - [ ] Fleet Cloud SaaS — hosted commander + cloud ships, usage-based pricing
-- [ ] `fleet replay <mission-id>` — re-run a failed mission
-- [ ] Git provider abstraction (GitLab, Bitbucket support)
-- [ ] Mission marketplace — community-contributed templates
+- [x] `fleet replay <mission-id>` — re-run a failed mission (`applyReplay` resets ship/blocker/queue/completed records and returns the mission to the scheduler; `fleet replay <id>` recreates the branch + MISSION.md)
+- [x] Git provider abstraction (GitLab, Bitbucket support) — `GitProvider` interface + `GitHubProvider` (gh), `GitLabProvider` (glab), `BitbucketProvider` (REST); `detectProvider` from remote URL; `RealGitOps` delegates PR/MR ops
+- [x] Mission marketplace — community-contributed templates (`loadMarketplaceIndex`/`searchMarketplace` over builtins + a JSON/URL index; `fleet marketplace list|search|install`)

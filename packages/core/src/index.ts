@@ -7,6 +7,17 @@ export { getReadyMissions, validateDAG } from './scheduler/dag.js';
 export { parseConfig, DEFAULT_CONFIG, type FleetConfig } from './config/schema.js';
 export { loadConfig } from './config/loader.js';
 export { type GitOps, RealGitOps, type PRStatus } from './git/git-ops.js';
+export {
+  detectProvider,
+  resolveProvider,
+  GitHubProvider,
+  GitLabProvider,
+  BitbucketProvider,
+  rollupToCiStatus,
+  gitlabPipelineToCiStatus,
+  type GitProvider,
+  type GitProviderName,
+} from './git/providers.js';
 export { ShipHeartbeat } from './heartbeat/ship-heartbeat.js';
 export { CommanderMonitor, type MonitorConfig, type ShipHealth } from './heartbeat/commander-monitor.js';
 export { MergeCommander, type MergeConfig, type MergeResult } from './merge/merge-commander.js';
@@ -83,3 +94,20 @@ export {
   type ShadowResolution,
   type ShadowWinner,
 } from './execution/shadow-executor.js';
+export { applyReplay, type ReplayOutcome } from './replay/replay.js';
+export {
+  loadMarketplaceIndex,
+  searchMarketplace,
+  getEntry,
+  entryToPlan,
+  builtinEntries,
+  type MarketplaceEntry,
+  type MarketplaceIndex,
+} from './marketplace/marketplace.js';
+export {
+  buildProvisionSpec,
+  renderProvisionSpec,
+  type CloudProvider,
+  type ProvisionOptions,
+  type ProvisionSpec,
+} from './provision/ship-provisioner.js';

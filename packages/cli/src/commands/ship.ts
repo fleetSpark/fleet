@@ -11,6 +11,9 @@ import {
   ShipHeartbeat,
   resolveAdapter,
   PluginLoader,
+  buildProvisionSpec,
+  renderProvisionSpec,
+  type CloudProvider,
 } from '@fleetspark/core';
 import type { Mission } from '@fleetspark/core';
 
@@ -18,8 +21,22 @@ export function registerShipCommand(program: Command): void {
   program
     .command('ship')
     .description('Join a fleet as a ship')
-    .requiredOption('--join <repo>', 'Git repository URL to join')
+    .option('--join <repo>', 'Git repository URL to join')
+    .option('--spawn <provider>', 'Provision a cloud ship: aws|fly|gcp')
+    .option('--repo <url>', 'Repo URL for the spawned ship to join (with --spawn)')
+    .option('--agent <name>', 'Coding agent the spawned ship should run')
+    .option('--size <size>', 'Cloud machine size (with --spawn)')
+    .option('--region <region>', 'Cloud region/zone (with --spawn)')
+    .option('--apply', 'Execute the provisioning command (default: print artifacts)')
     .action(async (options) => {
+      if (options.spawn) {
+        await handleSpawn(options);
+        return;
+      }
+      if (!options.join) {
+        console.error('Specify --join <repo> to join a fleet, or --spawn <provider> to provision a cloud ship.');
+        process.exit(1);
+      }
       const repo = options.join;
       const shipId = `ship-${hostname()}`;
       const workDir = join(process.cwd(), `fleet-ship-${Date.now()}`);
@@ -227,6 +244,68 @@ export function registerShipCommand(program: Command): void {
         process.exit(1);
       }
     });
+}
+
+async function handleSpawn(options: {
+  spawn: string;
+  repo?: string;
+  join?: string;
+  agent?: string;
+  size?: string;
+  region?: string;
+  apply?: boolean;
+}): Promise<void> {
+  const provider = options.spawn as CloudProvider;
+  if (!['aws', 'fly', 'gcp'].includes(provider)) {
+    console.error(`Unsupported provider "${provider}". Use aws, fly, or gcp.`);
+    process.exit(1);
+  }
+  const repo = options.repo ?? options.join;
+  if (!repo) {
+    console.error('Provisioning requires a repo URL. Pass --repo <url>.');
+    process.exit(1);
+  }
+
+  let spec;
+  try {
+    spec = buildProvisionSpec({
+      provider,
+      repo,
+      ...(options.agent ? { agent: options.agent } : {}),
+      ...(options.size ? { size: options.size } : {}),
+      ...(options.region ? { region: options.region } : {}),
+    });
+  } catch (err) {
+    console.error((err as Error).message);
+    process.exit(1);
+  }
+
+  // Always write the cloud-init script so the launch command can reference it.
+  const { writeFile } = await import('node:fs/promises');
+  const initPath = 'fleet-ship-cloud-init.sh';
+  await writeFile(initPath, spec.cloudInit, 'utf-8');
+
+  console.log(renderProvisionSpec(spec));
+  console.log(`\ncloud-init written to ${initPath}`);
+
+  if (!options.apply) {
+    console.log('\n(dry run — re-run with --apply to execute the launch command)');
+    return;
+  }
+
+  console.log(`\nLaunching ${provider} ship "${spec.name}"...`);
+  const { execFile } = await import('node:child_process');
+  const { promisify } = await import('node:util');
+  const run = promisify(execFile);
+  try {
+    const { stdout } = await run(spec.launchCommand[0], spec.launchCommand.slice(1));
+    console.log(stdout);
+    console.log(`Ship "${spec.name}" provisioning started.`);
+  } catch (err) {
+    console.error(`Provisioning failed: ${(err as Error).message}`);
+    console.error(`Ensure the ${provider} CLI is installed and authenticated. ${spec.notes}`);
+    process.exit(1);
+  }
 }
 
 async function waitForMission(git: RealGitOps, shipId: string): Promise<Mission> {
