@@ -36,7 +36,17 @@ describe('rollupToCiStatus (GitHub)', () => {
     expect(rollupToCiStatus([])).toBe('none');
     expect(rollupToCiStatus(undefined)).toBe('none');
   });
-  it('returns pending when any check is in progress', () => {
+  it('returns pending when an in-progress check carries a conclusion (IN_PROGRESS branch)', () => {
+    // Every element has a truthy conclusion, so `!c.conclusion` is false for all;
+    // 'pending' can only come from the `status === 'IN_PROGRESS'` clause.
+    expect(rollupToCiStatus([{ status: 'IN_PROGRESS', conclusion: 'SUCCESS' }, { conclusion: 'SUCCESS' }])).toBe('pending');
+  });
+
+  it('returns pending for the PENDING status branch', () => {
+    expect(rollupToCiStatus([{ status: 'PENDING', conclusion: 'SUCCESS' }, { conclusion: 'SUCCESS' }])).toBe('pending');
+  });
+
+  it('returns pending when a check has no conclusion yet', () => {
     expect(rollupToCiStatus([{ status: 'IN_PROGRESS' }, { conclusion: 'SUCCESS' }])).toBe('pending');
   });
   it('returns success when all checks pass', () => {
