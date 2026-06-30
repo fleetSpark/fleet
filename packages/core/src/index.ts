@@ -21,3 +21,52 @@ export { listTemplates, getTemplate, type MissionTemplate } from './templates/in
 export { generateReport, generateReportJson } from './report/report-generator.js';
 export { PluginLoader } from './plugins/plugin-loader.js';
 export type { FleetPlugin, FleetContext, HookResult, PluginConfig } from './plugins/types.js';
+export {
+  classifyOutcomes,
+  summarizeOutcomes,
+  generateOutcomesJson,
+  renderOutcomes,
+  type MissionOutcome,
+  type OutcomeKind,
+  type OutcomeBatchSummary,
+} from './outcomes/outcome-stream.js';
+export {
+  LivenessPublisher,
+  parsePresence,
+  serializePresence,
+  presencePath,
+  sanitizeHost,
+  isPresenceAlive,
+  type Presence,
+  type MachineMode,
+  type LivenessOptions,
+} from './heartbeat/liveness.js';
+export {
+  validateBatchBlock,
+  loadBatchBlock,
+  resolvePlanSource,
+  registerPlanSource,
+  type BatchBlock,
+  type PlanSource,
+  type PlanMissionSpec,
+  type ValidationResult,
+} from './planner/plan-source.js';
+export {
+  ingestActionItems,
+  ingestFromAdapters,
+  type ActionItemSource,
+  type ActionItemAdapter,
+  type ProposedBacklogItem,
+  type ProposalConfidence,
+  type IngestOptions,
+} from './planner/action-item-ingestion.js';
+export {
+  analyzeRisk,
+  renderRiskPanel,
+  type RiskReport,
+  type RiskItem,
+  type RiskSignals,
+  type RiskSeverity,
+  type RiskKind,
+  type RiskOptions,
+} from './report/risk-analyzer.js';
