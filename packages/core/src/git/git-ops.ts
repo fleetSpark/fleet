@@ -1,5 +1,11 @@
 import { execFile as execFileCb } from 'node:child_process';
 import { promisify } from 'node:util';
+import {
+  detectProvider,
+  resolveProvider,
+  type GitProvider,
+  type GitProviderName,
+} from './providers.js';
 
 const execFile = promisify(execFileCb);
 
@@ -37,7 +43,28 @@ export interface GitOps {
 }
 
 export class RealGitOps implements GitOps {
-  constructor(private cwd: string) {}
+  private provider: GitProvider | null = null;
+
+  constructor(
+    private cwd: string,
+    /** Force a specific provider; otherwise detected from the remote URL. */
+    private providerName?: GitProviderName
+  ) {}
+
+  /** Resolve (and cache) the hosting provider for PR/MR operations. */
+  private async getProvider(): Promise<GitProvider> {
+    if (this.provider) return this.provider;
+    let name: GitProviderName = this.providerName ?? 'github';
+    if (!this.providerName) {
+      try {
+        name = detectProvider(await this.getRemoteUrl());
+      } catch {
+        name = 'github';
+      }
+    }
+    this.provider = resolveProvider(name);
+    return this.provider;
+  }
 
   private async exec(...args: string[]): Promise<string> {
     // Retry once on transient index.lock contention. Concurrent git ops
@@ -209,52 +236,18 @@ export class RealGitOps implements GitOps {
   }
 
   async createPR(branch: string, base: string, title: string, body: string): Promise<string> {
-    const { stdout } = await execFile('gh', ['pr', 'create',
-      '--head', branch, '--base', base,
-      '--title', title, '--body', body,
-    ], { cwd: this.cwd });
-    return stdout.trim();
+    const provider = await this.getProvider();
+    return provider.createPR(this.cwd, branch, base, title, body);
   }
 
   async getPRStatus(branch: string): Promise<PRStatus | null> {
-    try {
-      const { stdout } = await execFile('gh', ['pr', 'view', branch,
-        '--json', 'state,mergeable,statusCheckRollup,url',
-      ], { cwd: this.cwd });
-      const data = JSON.parse(stdout);
-
-      let ciStatus: PRStatus['ciStatus'] = 'none';
-      if (data.statusCheckRollup?.length > 0) {
-        const allPassed = data.statusCheckRollup.every(
-          (c: any) => c.conclusion === 'SUCCESS'
-        );
-        const anyPending = data.statusCheckRollup.some(
-          (c: any) => !c.conclusion || c.status === 'PENDING' || c.status === 'IN_PROGRESS'
-        );
-        if (anyPending) ciStatus = 'pending';
-        else if (allPassed) ciStatus = 'success';
-        else ciStatus = 'failure';
-      }
-
-      return {
-        state: data.state.toLowerCase(),
-        mergeable: data.mergeable !== 'CONFLICTING',
-        ciStatus,
-        hasConflicts: data.mergeable === 'CONFLICTING',
-        url: data.url,
-      };
-    } catch (err) {
-      // Only return null for "no PR found" — log other errors
-      const msg = err instanceof Error ? err.message : String(err);
-      if (!msg.includes('no pull requests found') && !msg.includes('Could not resolve')) {
-        console.error(`getPRStatus error for ${branch}: ${msg}`);
-      }
-      return null;
-    }
+    const provider = await this.getProvider();
+    return provider.getPRStatus(this.cwd, branch);
   }
 
   async mergePR(branch: string, method: 'merge' | 'squash' | 'rebase' = 'merge'): Promise<void> {
-    await execFile('gh', ['pr', 'merge', branch, `--${method}`, '--delete-branch'], { cwd: this.cwd });
+    const provider = await this.getProvider();
+    return provider.mergePR(this.cwd, branch, method);
   }
 
   async diffNameOnly(base: string, head: string): Promise<string[]> {

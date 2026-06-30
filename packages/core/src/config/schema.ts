@@ -24,6 +24,17 @@ export const fleetConfigSchema = z
         squash_on_complete: z.boolean().default(true),
       })
       .default({}),
+    machine: z
+      .object({
+        /**
+         * Liveness mode for this machine. `mission` ships publish liveness via
+         * MISSION.md; `manual` machines (commander, idle box, hand-driven agent)
+         * publish via `fleet heartbeat` so they don't false-alarm as dark.
+         */
+        mode: z.enum(['mission', 'manual']).default('mission'),
+        id: z.string().optional(),
+      })
+      .default({}),
     merge: z
       .object({
         ci_required: z.boolean().default(true),
@@ -57,7 +68,8 @@ export const fleetConfigSchema = z
             z.object({
               url: z.string(),
               events: z.array(z.string()).optional(),
-              format: z.enum(['json', 'slack']).default('json'),
+              format: z.enum(['json', 'slack', 'discord', 'telegram', 'linear']).default('json'),
+              chat_id: z.string().optional(),
             })
           )
           .default([]),

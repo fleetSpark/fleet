@@ -1,0 +1,68 @@
+{
+  "name": "fleetspark-vscode",
+  "displayName": "FleetSpark",
+  "description": "Mission board, ship health, and command palette for FleetSpark multi-agent orchestration",
+  "version": "0.1.0",
+  "publisher": "fleetspark",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other", "SCM Providers"],
+  "main": "./dist/extension.js",
+  "scripts": {
+    "build": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "fleetspark",
+          "title": "FleetSpark",
+          "icon": "media/fleet.svg"
+        }
+      ]
+    },
+    "views": {
+      "fleetspark": [
+        { "id": "fleetMissions", "name": "Missions" },
+        { "id": "fleetShips", "name": "Ship Health" }
+      ]
+    },
+    "commands": [
+      { "command": "fleetspark.refresh", "title": "FleetSpark: Refresh", "icon": "$(refresh)" },
+      { "command": "fleetspark.status", "title": "FleetSpark: Show Status" },
+      { "command": "fleetspark.plan", "title": "FleetSpark: Plan Missions…" },
+      { "command": "fleetspark.report", "title": "FleetSpark: Generate Report" },
+      { "command": "fleetspark.outcomes", "title": "FleetSpark: Show Outcomes" },
+      { "command": "fleetspark.replayMission", "title": "FleetSpark: Replay Mission…" }
+    ],
+    "menus": {
+      "view/title": [
+        { "command": "fleetspark.refresh", "when": "view == fleetMissions", "group": "navigation" }
+      ]
+    },
+    "configuration": {
+      "title": "FleetSpark",
+      "properties": {
+        "fleetspark.cliPath": {
+          "type": "string",
+          "default": "fleet",
+          "description": "Path to the fleet CLI executable."
+        },
+        "fleetspark.refreshIntervalSeconds": {
+          "type": "number",
+          "default": 30,
+          "description": "Auto-refresh interval for the mission board."
+        }
+      }
+    }
+  },
+  "activationEvents": ["onView:fleetMissions", "onView:fleetShips"],
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.9.3"
+  }
+}

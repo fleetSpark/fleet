@@ -13,6 +13,12 @@ import { registerDemoCommand } from './commands/demo.js';
 import { registerReportCommand } from './commands/report.js';
 import { registerPluginCommand } from './commands/plugin.js';
 import { registerRunCommand } from './commands/run.js';
+import { registerOutcomesCommand } from './commands/outcomes.js';
+import { registerHeartbeatCommand } from './commands/heartbeat.js';
+import { registerBenchmarksCommand } from './commands/benchmarks.js';
+import { registerReplayCommand } from './commands/replay.js';
+import { registerMarketplaceCommand } from './commands/marketplace.js';
+import { registerTeamCommand } from './commands/team.js';
 
 const program = new Command();
 
@@ -34,5 +40,11 @@ registerDemoCommand(program);
 registerReportCommand(program);
 registerPluginCommand(program);
 registerRunCommand(program);
+registerOutcomesCommand(program);
+registerHeartbeatCommand(program);
+registerBenchmarksCommand(program);
+registerReplayCommand(program);
+registerMarketplaceCommand(program);
+registerTeamCommand(program);
 
 program.parse();

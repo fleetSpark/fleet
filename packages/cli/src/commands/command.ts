@@ -16,6 +16,9 @@ import {
   parseMissionLog,
   getTemplate,
   listTemplates,
+  loadBatchBlock,
+  validateBatchBlock,
+  ShadowExecutor,
 } from '@fleetspark/core';
 import type { FleetManifest, Mission, MissionLog, TaskBrief, MergeResult } from '@fleetspark/core';
 
@@ -25,6 +28,7 @@ export function registerCommandCommand(program: Cmd): void {
     .description('Start or resume the commander role')
     .option('--plan <goal>', 'Decompose a goal into missions using LLM')
     .option('--plan-file <path>', 'Load missions from a YAML file')
+    .option('--plan-source <source>', "Consume an external planner's approved batch block (file or registered adapter)")
     .option('--resume', 'Resume commander from existing FLEET.md state')
     .option('--handoff', 'Transfer commander role to another machine')
     .option('--template <name>', 'Use a built-in mission template')
@@ -35,6 +39,8 @@ export function registerCommandCommand(program: Cmd): void {
 
       if (options.planFile) {
         await handlePlanFile(git, cwd, config, options.planFile);
+      } else if (options.planSource) {
+        await handlePlanSource(git, cwd, config, options.planSource);
       } else if (options.plan) {
         await handlePlan(git, cwd, config, options.plan);
       } else if (options.resume) {
@@ -45,11 +51,44 @@ export function registerCommandCommand(program: Cmd): void {
         await handleTemplate(git, cwd, config, options.template);
       } else {
         console.error(
-          'Specify --plan <goal>, --plan-file <path>, --resume, --handoff, or --template <name>'
+          'Specify --plan <goal>, --plan-file <path>, --plan-source <source>, --resume, --handoff, or --template <name>'
         );
         process.exit(1);
       }
     });
+}
+
+async function handlePlanSource(
+  git: RealGitOps,
+  cwd: string,
+  config: any,
+  source: string
+): Promise<void> {
+  let block;
+  try {
+    block = await loadBatchBlock(source);
+  } catch (err) {
+    console.error(`Failed to load plan source "${source}": ${(err as Error).message}`);
+    process.exit(1);
+  }
+
+  const validation = validateBatchBlock(block);
+  if (!validation.valid) {
+    console.error(`Plan source "${source}" rejected — batch block is not dispatchable:`);
+    for (const e of validation.errors) console.error(`  - ${e}`);
+    process.exit(1);
+  }
+
+  console.log(
+    `Plan source "${block.source}" accepted: ${block.missions.length} approved, conflict-checked mission(s).`
+  );
+
+  const { writeFile: wf } = await import('node:fs/promises');
+  const { join } = await import('node:path');
+  const planPath = join(cwd, '.fleet', 'last-plan.yml');
+  await wf(planPath, yamlStringify({ missions: block.missions }), 'utf-8');
+
+  await handlePlanFile(git, cwd, config, planPath);
 }
 
 async function handlePlanFile(
@@ -343,16 +382,40 @@ async function startMonitorLoop(git: RealGitOps, config: any): Promise<void> {
 
       // Shadow dispatch: spawn parallel ship on stale missions
       if (config.execution.shadow_dispatch) {
+        const shadowExecutor = new ShadowExecutor();
+        const fleetShips: string[] = (config.ships ?? []).map((s: { id: string }) => s.id);
+        const busyShips = new Set(
+          manifest.missions
+            .filter((m) => m.ship && (m.status === 'in-progress' || m.status === 'assigned'))
+            .map((m) => m.ship as string)
+        );
+
         for (const h of health) {
           if (h.status === 'stale') {
             const mission = manifest.missions.find((m) => m.id === h.missionId);
-            if (!mission || mission.blocker === 'shadow-dispatched') continue;
+            if (!mission || mission.blocker.startsWith('shadow-dispatched')) continue;
 
             const minutesSinceStale = (Date.now() - h.lastSeen.getTime()) / 60_000;
             if (minutesSinceStale >= config.execution.shadow_delay_min) {
-              mission.blocker = 'shadow-dispatched';
+              // Full spare-ship shadow execution: pick an idle ship and record
+              // an isolated shadow branch so it can duplicate the stalled work.
+              const plan =
+                fleetShips.length > 0
+                  ? shadowExecutor.planShadow(mission, fleetShips, busyShips)
+                  : null;
+              if (plan) {
+                busyShips.add(plan.shadowShip);
+                mission.blocker = `shadow-dispatched -> ${plan.shadowShip} (${plan.shadowBranch})`;
+                console.log(
+                  `Shadow dispatch: ${mission.id} duplicated onto ${plan.shadowShip} on ${plan.shadowBranch} (primary stale ${Math.round(minutesSinceStale)}m)`
+                );
+              } else {
+                mission.blocker = 'shadow-dispatched';
+                console.log(
+                  `Shadow dispatch triggered for ${mission.id} (ship ${h.ship} stale for ${Math.round(minutesSinceStale)}m); no spare ship available`
+                );
+              }
               changed = true;
-              console.log(`Shadow dispatch triggered for ${mission.id} (ship ${h.ship} stale for ${Math.round(minutesSinceStale)}m)`);
             }
           }
         }

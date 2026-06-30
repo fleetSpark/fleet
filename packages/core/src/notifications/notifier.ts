@@ -8,10 +8,14 @@ export type FleetEvent =
   | { type: 'conflict-detected'; missionId: string; files: string[] }
   | { type: 'all-missions-complete'; total: number };
 
+export type WebhookFormat = 'json' | 'slack' | 'discord' | 'telegram' | 'linear';
+
 export interface WebhookConfig {
   url: string;
   events?: string[];
-  format?: 'json' | 'slack';
+  format?: WebhookFormat;
+  /** Telegram chat id (required for the `telegram` format). */
+  chatId?: string;
 }
 
 export interface NotificationConfig {
@@ -27,9 +31,7 @@ export class Notifier {
         continue;
       }
 
-      const body = webhook.format === 'slack'
-        ? this.formatSlack(event)
-        : event;
+      const body = this.formatBody(event, webhook);
 
       try {
         await fetch(webhook.url, {
@@ -43,36 +45,70 @@ export class Notifier {
     }
   }
 
-  private formatSlack(event: FleetEvent): object {
-    let text: string;
+  /** Public so callers/tests can inspect the exact payload per provider. */
+  formatBody(event: FleetEvent, webhook: WebhookConfig): object {
+    switch (webhook.format) {
+      case 'slack':
+        return { text: this.plainText(event) };
+      case 'discord':
+        // Discord incoming webhooks read the `content` field.
+        return { content: this.plainText(event) };
+      case 'telegram':
+        // Telegram bot sendMessage payload.
+        return {
+          chat_id: webhook.chatId ?? '',
+          text: this.plainText(event),
+          parse_mode: 'Markdown',
+        };
+      case 'linear':
+        // Structured payload for a Linear-compatible automation endpoint.
+        return this.formatLinear(event);
+      case 'json':
+      default:
+        return event;
+    }
+  }
+
+  private plainText(event: FleetEvent): string {
     switch (event.type) {
       case 'mission-completed':
-        text = `✅ Mission *${event.missionId}* completed on \`${event.branch}\``;
-        break;
+        return `✅ Mission *${event.missionId}* completed on \`${event.branch}\``;
       case 'pr-created':
-        text = `🔀 PR created for *${event.missionId}*: ${event.prUrl}`;
-        break;
+        return `🔀 PR created for *${event.missionId}*: ${event.prUrl}`;
       case 'pr-merged':
-        text = `🎉 PR merged for *${event.missionId}* (\`${event.branch}\`)`;
-        break;
+        return `🎉 PR merged for *${event.missionId}* (\`${event.branch}\`)`;
       case 'ci-failed':
-        text = `❌ CI failed for *${event.missionId}* (\`${event.branch}\`)`;
-        break;
+        return `❌ CI failed for *${event.missionId}* (\`${event.branch}\`)`;
       case 'ship-stalled':
-        text = `⚠️ Ship *${event.ship}* stalled on *${event.missionId}*`;
-        break;
+        return `⚠️ Ship *${event.ship}* stalled on *${event.missionId}*`;
       case 'shadow-dispatched':
-        text = `👥 Shadow dispatch triggered for *${event.missionId}*`;
-        break;
+        return `👥 Shadow dispatch triggered for *${event.missionId}*`;
       case 'conflict-detected':
-        text = `⚡ Conflict detected on *${event.missionId}*: ${event.files.join(', ')}`;
-        break;
+        return `⚡ Conflict detected on *${event.missionId}*: ${event.files.join(', ')}`;
       case 'all-missions-complete':
-        text = `🏁 All *${event.total}* missions complete!`;
-        break;
+        return `🏁 All *${event.total}* missions complete!`;
       default:
-        text = `Fleet event: ${(event as any).type}`;
+        return `Fleet event: ${(event as { type: string }).type}`;
     }
-    return { text };
+  }
+
+  private formatLinear(event: FleetEvent): object {
+    const title = (() => {
+      switch (event.type) {
+        case 'ci-failed':
+          return `CI failed for ${event.missionId}`;
+        case 'ship-stalled':
+          return `Ship ${event.ship} stalled on ${event.missionId}`;
+        case 'conflict-detected':
+          return `Merge conflict on ${event.missionId}`;
+        default:
+          return `Fleet: ${event.type}`;
+      }
+    })();
+    return {
+      title,
+      description: this.plainText(event).replace(/[*`]/g, ''),
+      labels: ['fleet', event.type],
+    };
   }
 }

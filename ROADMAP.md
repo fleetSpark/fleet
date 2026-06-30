@@ -105,17 +105,17 @@ Remove friction at every stage of the user journey.
 
 Expand FleetSpark beyond the CLI into developer workflows and cloud infrastructure.
 
-- [ ] VS Code extension — sidebar mission board, ship health, command palette integration
-- [ ] Agent performance benchmarks — per-agent success rate, avg duration, best-fit tracking
-- [ ] Cloud ship provisioning — `fleet ship --spawn aws|fly` auto-provisions VMs
-- [ ] Full spare-ship shadow execution — duplicate a stalled mission onto an available ship and accept the first completed result
-- [ ] Discord/Linear/Telegram webhook integrations
-- [ ] **Planner integration & autonomous coordination** (5 items — close the coordination loop above mission execution; no protocol change):
-  - [ ] **`--plan-source <adapter>`** — consume an external planner's validated, conflict-checked batch block (a third plan source alongside `--plan` and `--plan-file`), so a scheduled PM agent feeds missions directly instead of hand-written YAML.
-  - [ ] **`fleet heartbeat` + machine `mode: mission\|manual`** — non-mission liveness publisher so a commander, an idle box, or a manually-driven agent session shows alive without running `fleet ship` (today liveness is mission-bound, so non-mission machines false-alarm as stale/dark).
-  - [ ] **`fleet report --live`** + web-dashboard risk panel — continuous health/risk view (CI-failure trends, aging/stalled missions, idle-ship-while-queue-nonempty, blocked dependency chains, stale-unapproved batches). Extends the post-run `fleet report`.
-  - [ ] **`fleet outcomes`** — mission-outcome event stream (the merge commander already classifies every terminal state) so a planner can detect failed/stalled batches and, gated behind a clean-run ramp, advance toward auto-assign.
-  - [ ] **Action-item ingestion adapter** — opt-in planner-side adapter that scans reviews/chat/commits and *proposes* backlog items (never auto-dispatches).
+- [x] VS Code extension — sidebar mission board, ship health, command palette integration (`editors/vscode`: Missions + Ship Health tree views polling `fleet status --json`, command palette for plan/report/outcomes/replay/status; compiles clean with `@types/vscode`)
+- [x] Agent performance benchmarks — per-agent success rate, avg duration, best-fit tracking (`computeBenchmarks`/`renderBenchmarks` in core; `fleet benchmarks [--json]`)
+- [x] Cloud ship provisioning — `fleet ship --spawn aws|fly` auto-provisions VMs (`ShipProvisioner` generates cloud-init + launch command for aws|fly|gcp; `fleet ship --spawn <provider> --repo <url> [--apply]`)
+- [x] Full spare-ship shadow execution — duplicate a stalled mission onto an available ship and accept the first completed result (`ShadowExecutor`: spare-ship selection, isolated shadow branch, first-completed-wins resolution; wired into the commander shadow-dispatch path)
+- [x] Discord/Linear/Telegram webhook integrations (`Notifier` gains `discord`/`telegram`/`linear` formats + `chat_id` config + per-provider payloads)
+- [x] **Planner integration & autonomous coordination** (5 items — close the coordination loop above mission execution; no protocol change):
+  - [x] **`--plan-source <adapter>`** — consume an external planner's validated, conflict-checked batch block (a third plan source alongside `--plan` and `--plan-file`), so a scheduled PM agent feeds missions directly instead of hand-written YAML. `BatchBlock` + `validateBatchBlock` (enforces `approved`/`conflictChecked` + DAG) + `loadBatchBlock` (file or registered `PlanSource`) in core; `fleet command --plan-source <source>` in CLI.
+  - [x] **`fleet heartbeat` + machine `mode: mission\|manual`** — non-mission liveness publisher so a commander, an idle box, or a manually-driven agent session shows alive without running `fleet ship`. `LivenessPublisher` writes `presence/<host>.json` to `fleet/state`; `machine.mode` config + `fleet heartbeat [--mode] [--once]` CLI; `isPresenceAlive` reader for dashboards.
+  - [x] **`fleet report --live`** + web-dashboard risk panel — continuous health/risk view (CI-failure trends, aging/stalled missions, idle-ship-while-queue-nonempty, blocked dependency chains, stale-unapproved batches). `analyzeRisk`/`renderRiskPanel` in core; `fleet report --live`; `/api/risk` endpoint in web-dashboard.
+  - [x] **`fleet outcomes`** — mission-outcome event stream (the merge commander already classifies every terminal state) so a planner can detect failed/stalled batches and, gated behind a clean-run ramp (`summary.cleanRun`), advance toward auto-assign. `classifyOutcomes`/`generateOutcomesJson` in core; `fleet outcomes [--json] [--watch]` CLI.
+  - [x] **Action-item ingestion adapter** — opt-in planner-side adapter that scans reviews/chat/commits and *proposes* backlog items (never auto-dispatches). `ingestActionItems`/`ingestFromAdapters` + `ActionItemAdapter` interface in core.
 - [x] **`@drsti/dev-flow` plugin** — governance plugin (`fleetspark plugin install @fleetspark/plugin-drsti-dev-flow`). Plugin loader API in core (`FleetPlugin` interface, `PluginLoader`), `onBeforeMissionStart` and `onBeforeMerge` hooks, `fleet plugin install/list` CLI commands, full gate enforcement for L3/L4 workstreams with maturity-level escalation. 22 unit tests.
 - [x] **`fleet run`** — single-machine sequential mission runner (`fleet run --template <name>`). Topological sort of missions by dependency, plugin gate enforcement with interactive retry loop, per-adapter spawn + poll, branch summary on completion. Works with any template including `drsti-dev-flow`. 7 unit tests.
 
@@ -125,8 +125,8 @@ Expand FleetSpark beyond the CLI into developer workflows and cloud infrastructu
 
 Transform FleetSpark from a CLI tool into a collaborative development platform.
 
-- [ ] Fleet for Teams — shared mission board with invite links, multi-developer coordination
-- [ ] Fleet Cloud SaaS — hosted commander + cloud ships, usage-based pricing
-- [ ] `fleet replay <mission-id>` — re-run a failed mission
-- [ ] Git provider abstraction (GitLab, Bitbucket support)
-- [ ] Mission marketplace — community-contributed templates
+- [x] Fleet for Teams (**Team Lite**) — Git-native ownership lanes, reviewer routing, and role-aware approval policy via an optional `.fleet/team.yml` (`parseTeamConfig`/`routeReviewers`/`evaluateApproval` in core; `fleet team show|route`). Note: the *hosted* shared board + invite links build on Fleet Cloud below.
+- [~] Fleet Cloud SaaS — hosted commander + cloud ships, usage-based pricing. **In-repo foundation shipped:** usage metering + pricing model (`meterUsage`/`priceUsage`) and a `/api/usage` control-plane endpoint on the web-dashboard; cloud ships land via `fleet ship --spawn` above. The hosted multi-tenant service (auth, billing, tenancy ops) is operated outside this repo and remains in progress.
+- [x] `fleet replay <mission-id>` — re-run a failed mission (`applyReplay` resets ship/blocker/queue/completed records and returns the mission to the scheduler; `fleet replay <id>` recreates the branch + MISSION.md)
+- [x] Git provider abstraction (GitLab, Bitbucket support) — `GitProvider` interface + `GitHubProvider` (gh), `GitLabProvider` (glab), `BitbucketProvider` (REST); `detectProvider` from remote URL; `RealGitOps` delegates PR/MR ops
+- [x] Mission marketplace — community-contributed templates (`loadMarketplaceIndex`/`searchMarketplace` over builtins + a JSON/URL index; `fleet marketplace list|search|install`)
