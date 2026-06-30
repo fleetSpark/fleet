@@ -106,10 +106,10 @@ Remove friction at every stage of the user journey.
 Expand FleetSpark beyond the CLI into developer workflows and cloud infrastructure.
 
 - [ ] VS Code extension — sidebar mission board, ship health, command palette integration
-- [ ] Agent performance benchmarks — per-agent success rate, avg duration, best-fit tracking
+- [x] Agent performance benchmarks — per-agent success rate, avg duration, best-fit tracking (`computeBenchmarks`/`renderBenchmarks` in core; `fleet benchmarks [--json]`)
 - [ ] Cloud ship provisioning — `fleet ship --spawn aws|fly` auto-provisions VMs
-- [ ] Full spare-ship shadow execution — duplicate a stalled mission onto an available ship and accept the first completed result
-- [ ] Discord/Linear/Telegram webhook integrations
+- [x] Full spare-ship shadow execution — duplicate a stalled mission onto an available ship and accept the first completed result (`ShadowExecutor`: spare-ship selection, isolated shadow branch, first-completed-wins resolution; wired into the commander shadow-dispatch path)
+- [x] Discord/Linear/Telegram webhook integrations (`Notifier` gains `discord`/`telegram`/`linear` formats + `chat_id` config + per-provider payloads)
 - [x] **Planner integration & autonomous coordination** (5 items — close the coordination loop above mission execution; no protocol change):
   - [x] **`--plan-source <adapter>`** — consume an external planner's validated, conflict-checked batch block (a third plan source alongside `--plan` and `--plan-file`), so a scheduled PM agent feeds missions directly instead of hand-written YAML. `BatchBlock` + `validateBatchBlock` (enforces `approved`/`conflictChecked` + DAG) + `loadBatchBlock` (file or registered `PlanSource`) in core; `fleet command --plan-source <source>` in CLI.
   - [x] **`fleet heartbeat` + machine `mode: mission\|manual`** — non-mission liveness publisher so a commander, an idle box, or a manually-driven agent session shows alive without running `fleet ship`. `LivenessPublisher` writes `presence/<host>.json` to `fleet/state`; `machine.mode` config + `fleet heartbeat [--mode] [--once]` CLI; `isPresenceAlive` reader for dashboards.

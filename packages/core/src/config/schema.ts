@@ -68,7 +68,8 @@ export const fleetConfigSchema = z
             z.object({
               url: z.string(),
               events: z.array(z.string()).optional(),
-              format: z.enum(['json', 'slack']).default('json'),
+              format: z.enum(['json', 'slack', 'discord', 'telegram', 'linear']).default('json'),
+              chat_id: z.string().optional(),
             })
           )
           .default([]),

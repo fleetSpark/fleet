@@ -13,7 +13,7 @@ export { MergeCommander, type MergeConfig, type MergeResult } from './merge/merg
 export { ConflictDetector, type ConflictReport } from './merge/conflict-detector.js';
 export { BriefGenerator } from './brief/brief-generator.js';
 export { resolveAdapter } from './adapters/registry.js';
-export { Notifier, type FleetEvent, type NotificationConfig, type WebhookConfig } from './notifications/notifier.js';
+export { Notifier, type FleetEvent, type NotificationConfig, type WebhookConfig, type WebhookFormat } from './notifications/notifier.js';
 export { ResourceManager, type ResourceConfig } from './resources/resource-manager.js';
 export { TelemetryCollector, type TelemetrySnapshot } from './telemetry/telemetry.js';
 export { CommanderElection, type ClaimResult } from './election/commander-election.js';
@@ -70,3 +70,16 @@ export {
   type RiskKind,
   type RiskOptions,
 } from './report/risk-analyzer.js';
+export {
+  computeBenchmarks,
+  renderBenchmarks,
+  type AgentBenchmark,
+  type BenchmarkReport,
+  type BenchmarkOptions,
+} from './benchmarks/agent-benchmarks.js';
+export {
+  ShadowExecutor,
+  type ShadowAssignment,
+  type ShadowResolution,
+  type ShadowWinner,
+} from './execution/shadow-executor.js';
